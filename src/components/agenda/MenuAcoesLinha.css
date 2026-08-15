@@ -1,0 +1,53 @@
+.menu-acoes-linha {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.menu-acoes-linha__botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-pill);
+  color: var(--text-3-aa);
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.menu-acoes-linha__botao:hover {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+.menu-acoes-linha__menu {
+  position: absolute;
+  top: calc(100% + var(--space-3));
+  right: 0;
+  z-index: 15;
+  min-width: 140px;
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-row);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
+}
+
+.menu-acoes-linha__menu button {
+  padding: var(--space-10);
+  text-align: left;
+  border-radius: calc(var(--radius-row) - 3px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.menu-acoes-linha__menu button:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.menu-acoes-linha__menu button.menu-acoes-linha__excluir {
+  color: var(--warning);
+}

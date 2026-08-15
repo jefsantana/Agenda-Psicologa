@@ -1,0 +1,114 @@
+.shell {
+  min-height: 100dvh;
+  display: flex;
+  background: var(--bg-app-mobile);
+}
+
+@media (min-width: 1024px) {
+  .shell {
+    background: var(--bg-app);
+  }
+}
+
+.shell__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.shell__header {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-16);
+  padding: var(--space-18) var(--space-16) var(--space-12);
+  background: color-mix(in srgb, var(--bg-app-mobile) 85%, transparent);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+}
+
+@media (min-width: 1024px) {
+  .shell__header {
+    padding: var(--space-18) var(--content-padding);
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+.shell__header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+.shell__avatar-mobile {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: var(--radius-avatar-mobile);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--on-primary);
+  background: var(--gradient-primary);
+}
+
+@media (min-width: 1024px) {
+  .shell__avatar-mobile {
+    display: none;
+  }
+}
+
+.shell__title {
+  font-size: 1.35rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+@media (min-width: 1024px) {
+  .shell__title {
+    font-size: 1.55rem;
+  }
+}
+
+.shell__subtitle {
+  margin-top: var(--space-2);
+  font-size: 0.8rem;
+  color: var(--text-3-aa);
+}
+
+.shell__content {
+  flex: 1;
+  padding: 0 var(--space-16) var(--space-18);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  animation: shell-content-in 0.4s var(--ease-out);
+}
+
+@media (min-width: 1024px) {
+  .shell__content {
+    padding: 0 var(--content-padding) var(--content-padding);
+    gap: var(--space-16);
+  }
+}
+
+@keyframes shell-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

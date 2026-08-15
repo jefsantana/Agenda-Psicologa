@@ -1,0 +1,113 @@
+.calendario {
+  padding: var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+.calendario__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-12);
+}
+
+.calendario__cabecalho h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.calendario__nav {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.calendario__nav button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-chip);
+  color: var(--text-3-aa);
+  background: var(--surface-2);
+  transition: color 0.15s var(--ease-out);
+}
+
+.calendario__nav button:hover {
+  color: var(--text);
+}
+
+.calendario__grade {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: var(--space-2);
+}
+
+.calendario__grade--cabecalho {
+  margin-bottom: var(--space-4);
+}
+
+.calendario__grade--cabecalho span {
+  text-align: center;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-3);
+  padding-bottom: var(--space-4);
+}
+
+.calendario__dia {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: var(--text-2);
+  border-radius: 50%;
+  transition: background-color 0.15s var(--ease-out);
+}
+
+.calendario__ponto {
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.calendario__dia:hover {
+  background: var(--surface-3);
+}
+
+.calendario__dia--fora {
+  color: var(--text-4);
+}
+
+.calendario__dia--hoje {
+  color: var(--primary-text);
+  font-weight: 600;
+}
+
+.calendario__dia--selecionado {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+  box-shadow: 0 0 0 4px rgba(124, 107, 245, 0.22);
+}
+
+.calendario__dia--intervalo {
+  background: rgba(124, 107, 245, 0.18);
+  border-radius: var(--radius-chip);
+  color: var(--primary-soft);
+}
+
+.calendario__dia--intervalo-ponta {
+  background: var(--primary);
+  color: var(--on-primary);
+  font-weight: 600;
+}

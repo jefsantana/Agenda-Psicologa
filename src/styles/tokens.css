@@ -1,0 +1,100 @@
+/*
+  Tokens — v5 (tema escuro), conforme documento de especificação de
+  agosto/2026. Valores exatos; não inventar cores fora desta lista.
+*/
+
+:root {
+  /* Superfícies e texto */
+  --bg-app: #0d0f14;
+  --bg-app-mobile: #0f1117;
+  --surface: #14171e;
+  --surface-2: #1a1e27;
+  --surface-3: #1b1f28;
+  --surface-inset: #101319;
+  --border: #212530;
+  --border-strong: #262b36;
+  --text: #e6e8ee;
+  --text-2: #b4bac8;
+  --text-3: #7c8494;
+  --text-3-aa: #a0a7b8; /* variante AA para --text-3 abaixo de 12px */
+  --text-4: #616878;
+
+  /* Acentos semânticos */
+  --primary: #7c6bf5;
+  --primary-strong: #6355e8;
+  --primary-text: #a797fa;
+  --primary-soft: #b6abfb;
+  --success: #3fcf8e;
+  --success-text: #4fd79a;
+  --warning: #f5a25d;
+  --info: #4ea8f5;
+  --pink: #e86aa6;
+  --amber: #f5c15d;
+
+  --gradient-primary: linear-gradient(100deg, #7c6bf5, #6355e8);
+  --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */
+  --whatsapp: #25d366;
+  --checkbox-vazio: #2e3442; /* especificado no documento de design (seção 6, estado "Vazio" do checkbox) */
+
+  /* Tipografia */
+  --font-body: "Inter Tight", system-ui, sans-serif;
+  --font-mono: "Inter Tight", system-ui, sans-serif; /* números tabulares na mesma família, conforme doc */
+
+  /* Espaçamento (grade oficial do documento) */
+  --space-2: 2px;
+  --space-3: 3px; /* microajuste: aba/pílula interna — não está na grade original, mas segue a mesma convenção de nome */
+  --space-4: 4px; /* microajuste: espaçamentos internos bem apertados (ex.: calendário) */
+  --space-7: 7px;
+  --space-10: 10px;
+  --space-12: 12px;
+  --space-14: 14px; /* estava sendo referenciado em 7 lugares sem nunca ter sido definido — corrigido nesta revisão */
+  --space-16: 16px;
+  --space-18: 18px;
+
+  /* Raios */
+  --radius-panel: 20px;
+  --radius-kpi: 18px;
+  --radius-row: 14px;
+  --radius-chip: 7px;
+  --radius-pill: 999px;
+  --radius-checkbox: 5px;
+  --radius-avatar-desktop: 14px;
+  --radius-avatar-mobile: 12px;
+
+  /* Layout */
+  --sidebar-width: 236px;
+  --right-column-width: 322px;
+  --content-padding: 18px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/*
+  Variações de acento — escolhidas em Configurações → Aparência (src/lib/tema.js).
+  "Roxo" é o acento oficial do documento de design e é o padrão do :root acima;
+  as demais são a mesma identidade com a cor de destaque trocada.
+*/
+:root[data-accent="azul"] {
+  --primary: #3b82f6;
+  --primary-strong: #2f6fe0;
+  --primary-text: #8fb8fb;
+  --primary-soft: #a9c9fc;
+  --gradient-primary: linear-gradient(100deg, #3b82f6, #2f6fe0);
+}
+
+:root[data-accent="verde"] {
+  --primary: #22b573;
+  --primary-strong: #1a9c62;
+  --primary-text: #7fe0b6;
+  --primary-soft: #9ce8c6;
+  --gradient-primary: linear-gradient(100deg, #22b573, #1a9c62);
+}
+
+:root[data-accent="rosa"] {
+  --primary: #e8639a;
+  --primary-strong: #d14884;
+  --primary-text: #f2a0c4;
+  --primary-soft: #f5b9d3;
+  --gradient-primary: linear-gradient(100deg, #e8639a, #d14884);
+}

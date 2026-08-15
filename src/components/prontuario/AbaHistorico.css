@@ -1,0 +1,29 @@
+.aba-historico__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.aba-historico__card {
+  padding: var(--space-12);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-row);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.aba-historico__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aba-historico__titulo {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--primary-text);
+}

@@ -1,0 +1,58 @@
+.pacientes-toolbar {
+  display: flex;
+  gap: var(--space-10);
+}
+
+.pacientes-busca {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-12);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.pacientes-busca:focus-within {
+  border-color: var(--primary);
+}
+
+.pacientes-busca input {
+  flex: 1;
+  padding: var(--space-10) 0;
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 0.85rem;
+}
+
+.pacientes-busca input::placeholder {
+  color: var(--text-4);
+}
+
+.pacientes-novo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.pacientes-vazio {
+  padding: var(--space-18) 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-3-aa);
+}
+
+.pacientes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}

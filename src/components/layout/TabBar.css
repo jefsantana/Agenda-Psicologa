@@ -1,0 +1,55 @@
+.tabbar {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-2);
+  background: color-mix(in srgb, var(--surface) 92%, transparent);
+  backdrop-filter: blur(16px) saturate(1.1);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  border-top: 1px solid var(--border);
+  padding: var(--space-7) var(--space-7) calc(var(--space-7) + var(--safe-bottom));
+}
+
+@media (min-width: 1024px) {
+  .tabbar {
+    display: none;
+  }
+}
+
+.tabbar__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-7) 0;
+  font-size: 0.66rem;
+  font-weight: 600;
+  color: var(--text-4);
+  min-height: 44px;
+  justify-content: center;
+}
+
+.tabbar__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 26px;
+  border-radius: var(--radius-pill);
+  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
+}
+
+.tabbar__item--ativo {
+  color: var(--primary-soft);
+}
+
+.tabbar__item--ativo .tabbar__icon {
+  background: rgba(124, 107, 245, 0.18);
+  color: var(--primary-text);
+}
+
+.tabbar__item[aria-disabled="true"] {
+  cursor: default;
+}

@@ -1,0 +1,8 @@
+.erro-aviso {
+  padding: var(--space-12) var(--space-16);
+  background: rgba(245, 162, 93, 0.12);
+  border: 1px solid rgba(245, 162, 93, 0.3);
+  color: var(--warning);
+  border-radius: var(--radius-row);
+  font-size: 0.85rem;
+}

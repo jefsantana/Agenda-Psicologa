@@ -1,0 +1,176 @@
+.proximos {
+  padding: var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+.proximos__cabecalho {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-10);
+  margin-bottom: var(--space-12);
+}
+
+.proximos__cabecalho h2 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.proximos__legenda {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.68rem;
+  color: var(--text-3-aa);
+}
+
+.proximos__adicionar {
+  flex-shrink: 0;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--primary-text);
+  background: rgba(124, 107, 245, 0.13);
+  border: 1px solid rgba(124, 107, 245, 0.28);
+  padding: var(--space-3) var(--space-10);
+  border-radius: var(--radius-pill);
+}
+
+.proximos__adicionar:hover {
+  background: rgba(124, 107, 245, 0.22);
+}
+
+.proximos__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  margin-bottom: var(--space-14);
+  padding: var(--space-10);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-row);
+}
+
+.proximos__form-titulo {
+  width: 100%;
+  padding: var(--space-7) var(--space-10);
+  border-radius: var(--radius-row);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.8rem;
+}
+
+.proximos__form-linha {
+  display: flex;
+  gap: var(--space-7);
+}
+
+.proximos__form-data,
+.proximos__form-hora {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-7) var(--space-10);
+  border-radius: var(--radius-row);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.78rem;
+}
+
+.proximos__form > button[type="submit"] {
+  padding: var(--space-7) var(--space-14);
+  border-radius: var(--radius-row);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.proximos__form > button[type="submit"]:disabled {
+  opacity: 0.6;
+}
+
+.proximos__form-erro {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--warning);
+}
+
+.proximos__vazio {
+  font-size: 0.78rem;
+  color: var(--text-3-aa);
+  padding: var(--space-10) 0;
+}
+
+.proximos__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+}
+
+.proximos__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding-bottom: var(--space-10);
+  border-bottom: 1px solid var(--border);
+}
+
+.proximos__item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.proximos__data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 42px;
+  font-variant-numeric: tabular-nums;
+}
+
+.proximos__data-dia {
+  font-size: 0.68rem;
+  color: var(--text-3-aa);
+}
+
+.proximos__data-hora {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.proximos__nome {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.proximos__concluir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: transparent;
+  border-radius: var(--radius-checkbox);
+  border: 1.5px solid var(--checkbox-vazio);
+  transition: background-color 0.15s var(--ease-out), border-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.proximos__concluir:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.proximos__concluir:disabled {
+  opacity: 0.6;
+}

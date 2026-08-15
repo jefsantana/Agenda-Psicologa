@@ -1,0 +1,195 @@
+/*
+  Base compartilhada para todo modal/folha inferior do sistema (Novo
+  atendimento, Novo paciente, Novo intervalo, Novo convênio, WhatsApp...).
+  Antes cada um tinha sua própria cópia quase idêntica deste CSS.
+*/
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .sheet {
+    align-items: center;
+  }
+}
+
+.sheet__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 5, 8, 0.6);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: none;
+  animation: sheet-backdrop-in 0.2s var(--ease-out);
+}
+
+@keyframes sheet-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.sheet__painel {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  max-height: 92dvh;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top-left-radius: var(--radius-panel);
+  border-top-right-radius: var(--radius-panel);
+  padding: var(--space-12) var(--space-18) calc(var(--space-18) + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.4);
+  animation: sheet-rise 0.28s var(--ease-out);
+  overflow-y: auto;
+}
+
+/* Enquanto a lista flutuante de pacientes está aberta, só ela rola —
+   evita duas barras de rolagem visíveis ao mesmo tempo. */
+.sheet__painel:has(.seletor-paciente__lista) {
+  overflow-y: hidden;
+}
+
+/* "Novo atendimento": mais alto que o padrão (mesma largura) para a lista
+   de pacientes ter espaço de sobra em vez de aparecer cortada. */
+.sheet--novo-atendimento .sheet__painel {
+  min-height: min(640px, 90dvh);
+}
+
+@media (min-width: 640px) {
+  .sheet__painel {
+    border-radius: var(--radius-panel);
+    padding: var(--space-18);
+  }
+  .sheet__grip {
+    display: none;
+  }
+}
+
+@keyframes sheet-rise {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.sheet__grip {
+  align-self: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: var(--border-strong);
+}
+
+.sheet__titulo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.sheet__campos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.sheet__linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+}
+
+.sheet__erro {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--warning);
+}
+
+.sheet__acoes {
+  display: flex;
+  gap: var(--space-12);
+  flex-shrink: 0;
+}
+
+.sheet__excluir {
+  flex: none;
+  margin-right: auto;
+  padding: var(--space-12) var(--space-14);
+  border-radius: var(--radius-row);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--warning);
+}
+
+.sheet__excluir:disabled {
+  opacity: 0.5;
+}
+
+.sheet__cancelar,
+.sheet__salvar {
+  flex: 1;
+  padding: var(--space-12);
+  border-radius: var(--radius-row);
+  font-weight: 600;
+  text-align: center;
+}
+
+.sheet__cancelar {
+  color: var(--text-2);
+  background: var(--surface-2);
+}
+
+.sheet__salvar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--on-primary);
+  background: var(--gradient-primary);
+}
+
+.sheet__salvar:disabled {
+  opacity: 0.5;
+}
+
+/* Alternador tipo pílula (ex.: Presencial/Online) usado dentro de uma folha */
+.sheet__toggle {
+  display: flex;
+  padding: var(--space-3);
+  gap: var(--space-3);
+  border: 1px solid var(--border);
+  background: var(--surface-inset);
+  border-radius: var(--radius-row);
+}
+
+.sheet__toggle button {
+  flex: 1;
+  padding: var(--space-10);
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-3-aa);
+  border-radius: calc(var(--radius-row) - 3px);
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.sheet__toggle button.is-active {
+  color: var(--on-primary);
+  background: var(--gradient-primary);
+}

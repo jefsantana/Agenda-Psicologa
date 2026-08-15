@@ -1,0 +1,152 @@
+.config-vazio {
+  padding: var(--space-18) 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-3-aa);
+}
+
+.config-secao {
+  padding: var(--space-18);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.config-secao h2 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.config-secao__ajuda {
+  margin-top: calc(-1 * var(--space-7));
+  font-size: 0.78rem;
+  color: var(--text-3-aa);
+  line-height: 1.5;
+}
+
+.config-perfil-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.config-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+}
+
+.config-acentos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+}
+
+.config-acento {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  padding: var(--space-7) var(--space-14) var(--space-7) var(--space-7);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.config-acento.is-active {
+  border-color: var(--primary);
+  color: var(--text);
+  background: rgba(124, 107, 245, 0.12);
+}
+
+.config-acento__cor {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.config-secao__acoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.config-salvar {
+  padding: var(--space-10) var(--space-18);
+  border-radius: var(--radius-pill);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.config-salvar:disabled {
+  opacity: 0.6;
+}
+
+.config-horarios {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.config-horario-dia {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-10) var(--space-12);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-row);
+}
+
+.config-horario-dia--inativo {
+  opacity: 0.6;
+}
+
+.config-horario-dia__toggle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  min-width: 110px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.config-horario-dia__toggle input {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+}
+
+.config-horario-dia__campos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--text-3-aa);
+}
+
+.config-horario-dia__campos .field__input {
+  width: auto;
+  padding: var(--space-7) var(--space-10);
+  font-size: 0.8rem;
+}
+
+.config-horario-dia__campos .field__input.config-horario-dia__duracao {
+  width: 64px;
+}
+
+.config-horario-dia__unidade {
+  color: var(--text-3-aa);
+}

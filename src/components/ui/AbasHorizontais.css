@@ -1,0 +1,25 @@
+.abas-horizontais {
+  display: inline-flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.abas-horizontais button {
+  padding: var(--space-7) var(--space-16);
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-3-aa);
+  white-space: nowrap;
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.abas-horizontais button.is-active {
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+}

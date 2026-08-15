@@ -1,0 +1,24 @@
+.paciente-form__secao {
+  margin: 0;
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-3);
+}
+
+.paciente-form__checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+
+.paciente-form__checkbox input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--primary);
+}

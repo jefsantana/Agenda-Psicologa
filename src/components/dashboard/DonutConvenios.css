@@ -1,0 +1,101 @@
+.donut-painel {
+  padding: var(--space-18);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.donut-painel__titulo {
+  align-self: flex-start;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: var(--space-16);
+}
+
+.donut-painel__titulo span {
+  font-weight: 400;
+  color: var(--text-3-aa);
+  font-size: 0.8rem;
+}
+
+.donut-painel__vazio {
+  padding: var(--space-18) 0;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-3-aa);
+}
+
+.donut {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: donut-in 0.6s var(--ease-out);
+}
+
+@keyframes donut-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) rotate(-8deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.donut__furo {
+  width: 122px;
+  height: 122px;
+  border-radius: 50%;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.donut__total-numero {
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.donut__total-rotulo {
+  font-size: 0.72rem;
+  color: var(--text-3-aa);
+}
+
+.donut-legenda {
+  margin-top: var(--space-16);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-10) var(--space-16);
+}
+
+.donut-legenda__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  font-size: 0.76rem;
+  color: var(--text-2);
+}
+
+.donut-legenda__item strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.donut-legenda__ponto {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}

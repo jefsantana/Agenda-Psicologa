@@ -1,0 +1,40 @@
+.mais-menu {
+  gap: var(--space-16);
+}
+
+.mais-menu__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.mais-menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-14);
+  border-radius: var(--radius-row);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-2);
+  min-height: 44px;
+}
+
+.mais-menu__item--ativo {
+  background: rgba(124, 107, 245, 0.14);
+  color: var(--primary-text);
+}
+
+.mais-menu__sair {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-12) var(--space-14);
+  border-radius: var(--radius-row);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--warning);
+  border-top: 1px solid var(--border);
+  padding-top: var(--space-16);
+  min-height: 44px;
+}

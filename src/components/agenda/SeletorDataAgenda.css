@@ -1,0 +1,128 @@
+.seletor-data-agenda {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  width: 100%;
+  min-width: 0;
+}
+
+.seletor-data-agenda__seta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-3-aa);
+  transition: color 0.15s var(--ease-out);
+}
+
+.seletor-data-agenda__seta:hover {
+  color: var(--text);
+}
+
+.seletor-data-agenda__botao {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  min-width: 0;
+  flex: 1;
+  padding: var(--space-10) var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.seletor-data-agenda__botao span {
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.seletor-data-agenda__botao svg {
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .seletor-data-agenda__botao {
+    flex: none;
+  }
+}
+
+.seletor-data-agenda__botao:hover {
+  border-color: var(--primary);
+  color: var(--primary-text);
+}
+
+.seletor-data-agenda__popover {
+  position: absolute;
+  top: calc(100% + var(--space-10));
+  left: 0;
+  z-index: 20;
+  width: min(320px, 90vw);
+  padding: var(--space-14);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-panel);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.seletor-data-agenda__popover .calendario {
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.seletor-data-agenda__modos {
+  display: flex;
+  padding: var(--space-3);
+  gap: var(--space-3);
+  margin-bottom: var(--space-10);
+  border: 1px solid var(--border);
+  background: var(--surface-inset);
+  border-radius: var(--radius-row);
+}
+
+.seletor-data-agenda__modos button {
+  flex: 1;
+  padding: var(--space-7);
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-3-aa);
+  border-radius: calc(var(--radius-row) - 3px);
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.seletor-data-agenda__modos button.is-active {
+  color: var(--on-primary);
+  background: var(--gradient-primary);
+}
+
+.seletor-data-agenda__dica {
+  margin-bottom: var(--space-10);
+  font-size: 0.74rem;
+  color: var(--text-3-aa);
+  text-align: center;
+}
+
+.seletor-data-agenda__hoje {
+  width: 100%;
+  margin-top: var(--space-10);
+  padding: var(--space-7) 0;
+  border-radius: var(--radius-row);
+  background: rgba(124, 107, 245, 0.13);
+  border: 1px solid rgba(124, 107, 245, 0.28);
+  color: var(--primary-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}

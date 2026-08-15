@@ -1,0 +1,159 @@
+.atd-filtros {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-12);
+  padding: var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  align-items: end;
+}
+
+@media (min-width: 900px) {
+  .atd-filtros {
+    grid-template-columns: repeat(5, 1fr) auto;
+  }
+}
+
+.atd-filtros__exportar-grupo {
+  display: flex;
+  gap: var(--space-10);
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 900px) {
+  .atd-filtros__exportar-grupo {
+    grid-column: auto;
+  }
+}
+
+.atd-filtros__exportar {
+  flex: 1;
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-row);
+  background: rgba(63, 207, 142, 0.14);
+  border: 1px solid rgba(63, 207, 142, 0.3);
+  color: var(--success-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.atd-filtros__exportar:disabled {
+  opacity: 0.5;
+}
+
+.atd-tabela {
+  padding: var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  overflow-x: auto;
+}
+
+.atd-tabela__cabecalho {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .atd-tabela__cabecalho {
+    display: grid;
+    grid-template-columns: 110px 1.4fr 1fr 0.9fr 110px 100px;
+    gap: var(--space-12);
+    padding: 0 var(--space-12) var(--space-10);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-3);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: var(--space-7);
+  }
+
+  .atd-tabela__cabecalho .atd-tabela__valor {
+    text-align: right;
+  }
+}
+
+.atd-tabela__vazio {
+  padding: var(--space-18) 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-3-aa);
+}
+
+.atd-tabela__linhas {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.atd-tabela__linha {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4) var(--space-12);
+  padding: var(--space-10) var(--space-12);
+  border-radius: var(--radius-row);
+  text-align: left;
+  transition: background-color 0.15s var(--ease-out);
+}
+
+@media (min-width: 900px) {
+  .atd-tabela__linha {
+    grid-template-columns: 110px 1.4fr 1fr 0.9fr 110px 100px;
+    align-items: center;
+  }
+}
+
+@media (hover: hover) {
+  .atd-tabela__linha:hover {
+    background: var(--surface-2);
+  }
+}
+
+.atd-tabela__data {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.78rem;
+  color: var(--text-3-aa);
+}
+
+.atd-tabela__paciente {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.atd-tabela__sub {
+  font-size: 0.78rem;
+  color: var(--text-2);
+}
+
+.atd-tabela__valor {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+@media (min-width: 900px) {
+  .atd-tabela__valor {
+    text-align: right;
+  }
+}
+
+.atd-tabela__total {
+  margin-top: var(--space-16);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--border);
+  text-align: right;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+
+.atd-tabela__total strong {
+  color: var(--text);
+}

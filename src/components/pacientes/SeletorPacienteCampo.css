@@ -1,0 +1,78 @@
+.seletor-paciente {
+  position: relative;
+}
+
+.seletor-paciente__lista {
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + var(--space-4));
+  left: 0;
+  right: 0;
+  max-height: min(360px, 55dvh);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-row);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.seletor-paciente__info {
+  padding: var(--space-12);
+  font-size: 0.78rem;
+  color: var(--text-3-aa);
+}
+
+.seletor-paciente__item {
+  width: 100%;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-10);
+  padding: var(--space-12);
+  border-radius: var(--radius-row);
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.seletor-paciente__item:hover {
+  background: var(--surface-2);
+}
+
+.seletor-paciente__sub {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-3-aa);
+  white-space: nowrap;
+}
+
+.seletor-paciente__criar {
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-12);
+  border-radius: var(--radius-row);
+  text-align: left;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.seletor-paciente__criar:hover {
+  background: rgba(124, 107, 245, 0.12);
+}
+
+.seletor-paciente__criar:disabled {
+  opacity: 0.6;
+}
+
+.seletor-paciente__aviso {
+  margin-top: var(--space-3);
+  font-size: 0.72rem;
+  color: var(--warning);
+}

@@ -1,0 +1,223 @@
+.prontuario-seletor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+}
+
+.prontuario-seletor__vazio {
+  padding: var(--space-18) 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-3-aa);
+}
+
+.prontuario-seletor__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.prontuario-seletor__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-12);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-row);
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  transition: background-color 0.15s var(--ease-out);
+}
+
+.prontuario-seletor__item:hover {
+  background: var(--surface-2);
+}
+
+.prontuario-seletor__sub {
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-3-aa);
+}
+
+.prontuario-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.prontuario-topo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  padding: var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+@media (min-width: 720px) {
+  .prontuario-topo {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.prontuario-topo__paciente {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  flex-wrap: wrap;
+}
+
+.prontuario-topo__paciente h2 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.prontuario-topo__trocar {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.prontuario-selo {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-10);
+  border-radius: var(--radius-chip);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--success-text);
+  background: rgba(63, 207, 142, 0.16);
+  border: 1px solid rgba(63, 207, 142, 0.3);
+}
+
+.prontuario-gerar-pdf {
+  flex-shrink: 0;
+  padding: var(--space-12) var(--space-18);
+  border-radius: var(--radius-pill);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.prontuario-secao {
+  padding: var(--space-18);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-14);
+}
+
+.prontuario-secao h3 {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.prontuario-secao__cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prontuario-secao__editar {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+
+.prontuario-secao__subtitulo {
+  margin: 0;
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-3);
+}
+
+.prontuario-secao__acoes {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.prontuario-dados-grade {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-12) var(--space-16);
+}
+
+@media (min-width: 720px) {
+  .prontuario-dados-grade {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.prontuario-dado {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.prontuario-dado__rotulo {
+  font-size: 0.66rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-3);
+}
+
+.prontuario-dado__valor {
+  font-size: 0.83rem;
+  color: var(--text-2);
+  overflow-wrap: break-word;
+}
+
+.prontuario-textarea {
+  resize: vertical;
+  min-height: 76px;
+  font-family: inherit;
+}
+
+.prontuario-textarea--curta {
+  min-height: 48px;
+}
+
+.prontuario-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+}
+
+.prontuario-salvar {
+  padding: var(--space-10) var(--space-18);
+  border-radius: var(--radius-pill);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.prontuario-salvar:disabled {
+  opacity: 0.6;
+}
+
+.prontuario-topo__sessoes {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--text-3-aa);
+}

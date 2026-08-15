@@ -1,0 +1,109 @@
+.atd-linha {
+  animation: atd-linha-in 0.3s var(--ease-out) backwards;
+}
+
+@keyframes atd-linha-in {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.atd-linha__envolvedor {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-7);
+}
+
+.atd-linha__envolvedor .atd-linha__botao {
+  width: auto;
+  flex: 1;
+  min-width: 0;
+}
+
+.atd-linha__botao {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  padding: var(--space-10) var(--space-12);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--linha-cor, var(--border));
+  border-radius: var(--radius-row);
+  text-align: left;
+  transition: background-color 0.15s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .atd-linha__botao:hover {
+    background: var(--surface-3);
+  }
+}
+
+.atd-linha--bloqueada {
+  padding: var(--space-10) var(--space-12);
+  background: var(--surface-inset);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-row);
+}
+
+.atd-linha__botao--bloqueio {
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.atd-linha__hora {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  min-width: 44px;
+  flex-shrink: 0;
+}
+
+.atd-linha--bloqueada .atd-linha__hora {
+  color: var(--text-3);
+  min-width: auto;
+}
+
+.atd-linha__corpo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.atd-linha__titulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.atd-linha--bloqueada .atd-linha__titulo {
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+.atd-linha__sub {
+  font-size: 0.72rem;
+  color: var(--text-3-aa);
+}
+
+.atd-linha--pendente .atd-linha__botao {
+  border-color: rgba(245, 166, 78, 0.4);
+}
+
+.atd-linha--pendente .atd-linha__sub {
+  color: var(--warning);
+  font-weight: 600;
+}
