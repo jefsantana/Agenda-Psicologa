@@ -28,6 +28,7 @@
 .seletor-data-agenda__botao {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-10);
   min-width: 0;
   flex: 1;

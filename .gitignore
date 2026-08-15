@@ -22,9 +22,10 @@ dist-ssr
 .idea
 .DS_Store
 
-# Ferramentas do Claude Code (skills, config local) — não fazem parte do app
+# Ferramentas de agente de IA (skills, config local) — não fazem parte do app
 .claude
 .agents
+.codex
 skills-lock.json
 *.suo
 *.ntvs*
