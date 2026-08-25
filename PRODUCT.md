@@ -12,7 +12,7 @@ React (Vite, SPA — não Next.js) + Supabase (Postgres, Auth por e-mail/senha s
 
 ## Users
 
-Usuária única: Psicóloga Raquel Frois, que administra sozinha toda a agenda, pacientes e prontuários. Não há login de paciente — pacientes não acessam o sistema; todo agendamento e cadastro é feito manualmente pela psicóloga, inclusive lembrar o paciente via WhatsApp (ação manual, não automática — ver Capabilities). Uso diário via navegador, majoritariamente pelo celular, também pelo notebook — a partir da v2 (documento de referência de agosto/2026) o desktop passou a ter um layout próprio (sidebar), não apenas uma versão esticada do mobile.
+Usuária única: Psicóloga Raquel Fróis, que administra sozinha toda a agenda, pacientes e prontuários. Não há login de paciente — pacientes não acessam o sistema; todo agendamento e cadastro é feito manualmente pela psicóloga, inclusive lembrar o paciente via WhatsApp (ação manual, não automática — ver Capabilities). Uso diário via navegador, majoritariamente pelo celular, também pelo notebook — a partir da v2 (documento de referência de agosto/2026) o desktop passou a ter um layout próprio (sidebar), não apenas uma versão esticada do mobile.
 
 ## Product Purpose
 
@@ -49,7 +49,7 @@ Não é um SaaS multi-tenant para clínicas com múltiplos profissionais — é 
 
 ## Brand Commitments
 
-**Nome do produto: "Espaço Raquel Frois"** — confirmado pela tela de login enviada em Figma pela usuária (setembro/2026), substitui o placemat "Consultório — Raquel Frois" da v1. Usado no título da tela de login e no título da aba do navegador. Identidade visual: a partir de agosto/2026, a usuária trouxe uma documentação de design completa (v5, tema escuro) com tokens de cor, tipografia (Inter Tight) e geometria exatos, que **substitui integralmente** a identidade quente/clara construída anteriormente — essa nova identidade está registrada em [DESIGN.md] a partir desta versão. O nome "Dra. Ana Silva" citado no texto do documento de referência original é um placeholder de modelo; o nome real da profissional é Raquel Frois, confirmado pelas telas de referência anexadas (a tela de login em Figma também mostra o avatar com a inicial "A", herdada do mesmo template — os avatares do sistema usam as iniciais reais "RF"/nome da usuária, não essa letra).
+**Nome do produto: "Espaço Raquel Fróis"** — confirmado pela tela de login enviada em Figma pela usuária (setembro/2026), substitui o placemat "Consultório — Raquel Fróis" da v1. Usado no título da tela de login e no título da aba do navegador. Identidade visual: a partir de agosto/2026, a usuária trouxe uma documentação de design completa (v5, tema escuro) com tokens de cor, tipografia (Inter Tight) e geometria exatos, que **substitui integralmente** a identidade quente/clara construída anteriormente — essa nova identidade está registrada em [DESIGN.md] a partir desta versão. O nome "Dra. Ana Silva" citado no texto do documento de referência original é um placeholder de modelo; o nome real da profissional é Raquel Fróis, confirmado pelas telas de referência anexadas (a tela de login em Figma também mostra o avatar com a inicial "A", herdada do mesmo template — os avatares do sistema usam as iniciais reais "RF"/nome da usuária, não essa letra).
 
 ## Evidence on Hand
 

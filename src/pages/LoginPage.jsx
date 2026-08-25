@@ -54,7 +54,7 @@ export default function LoginPage() {
           <h1 className="login__titulo">
             Espaço
             <br />
-            Raquel Frois
+            Raquel Fróis
           </h1>
           <p className="login__subtitulo">Agenda, prontuário e financeiro da sua prática clínica.</p>
         </div>

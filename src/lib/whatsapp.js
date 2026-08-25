@@ -25,7 +25,7 @@ export function modelosMensagem(nomePaciente, proximoAtendimento) {
     {
       id: "livre",
       rotulo: "Mensagem livre",
-      texto: `Olá, ${primeiroNome}! Aqui é a Dra. Raquel Frois.`,
+      texto: `Olá, ${primeiroNome}! Aqui é a Dra. Raquel Fróis.`,
     },
   ];
 
@@ -34,12 +34,12 @@ export function modelosMensagem(nomePaciente, proximoAtendimento) {
       {
         id: "lembrete",
         rotulo: "Lembrete de consulta",
-        texto: `Olá, ${primeiroNome}! Aqui é a Dra. Raquel Frois, passando para lembrar da sua consulta ${quandoTem}. Até lá!`,
+        texto: `Olá, ${primeiroNome}! Aqui é a Dra. Raquel Fróis, passando para lembrar da sua consulta ${quandoTem}. Até lá!`,
       },
       {
         id: "confirmar",
         rotulo: "Confirmar consulta",
-        texto: `Olá, ${primeiroNome}! Aqui é a Dra. Raquel Frois. Podemos confirmar sua consulta ${quandoTem}?`,
+        texto: `Olá, ${primeiroNome}! Aqui é a Dra. Raquel Fróis. Podemos confirmar sua consulta ${quandoTem}?`,
       }
     );
   }
