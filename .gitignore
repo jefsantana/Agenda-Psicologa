@@ -16,6 +16,10 @@ dist-ssr
 .env
 .env.local
 
+# PDFs gerados localmente ao testar a exportação de prontuário/atendimentos —
+# contêm dados de paciente (mesmo sintéticos) e não são código-fonte.
+*.pdf
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
