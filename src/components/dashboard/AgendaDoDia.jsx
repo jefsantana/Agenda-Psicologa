@@ -63,6 +63,7 @@ export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarH
                   key={item.id}
                   item={item}
                   index={index}
+                  ehHoje={ehHoje}
                   onAtualizado={onAtualizado}
                   onEditar={onEditarAtendimento}
                 />
@@ -79,9 +80,12 @@ export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarH
   );
 }
 
-function LinhaAtendimento({ item, index, onAtualizado, onEditar }) {
+function LinhaAtendimento({ item, index, ehHoje, onAtualizado, onEditar }) {
   const [confirmando, setConfirmando] = useState(false);
   const precisaConfirmar = item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status);
+  // No próprio dia é o lembrete de rotina de fim de expediente; num dia
+  // anterior é atraso de verdade — cada um recebe um tom diferente.
+  const atrasado = precisaConfirmar && !ehHoje;
 
   async function handleConfirmar(status) {
     setConfirmando(true);
@@ -105,7 +109,7 @@ function LinhaAtendimento({ item, index, onAtualizado, onEditar }) {
 
   return (
     <li
-      className={`agenda-linha ${precisaConfirmar ? "agenda-linha--pendente" : ""}`}
+      className={`agenda-linha ${atrasado ? "agenda-linha--atrasado" : precisaConfirmar ? "agenda-linha--pendente" : ""}`}
       style={{ "--linha-cor": corDoTipo(item.tipo), animationDelay: `${index * 40}ms` }}
     >
       <span className="agenda-linha__hora">{formatarHora(item.inicio)}</span>
@@ -117,7 +121,9 @@ function LinhaAtendimento({ item, index, onAtualizado, onEditar }) {
         </span>
         {precisaConfirmar && (
           <div className="agenda-linha__confirmacao">
-            <span className="agenda-linha__confirmacao-aviso">Confirme o que aconteceu:</span>
+            <span className={`agenda-linha__confirmacao-aviso ${atrasado ? "agenda-linha__confirmacao-aviso--atrasado" : ""}`}>
+              Confirme o que aconteceu:
+            </span>
             <div className="agenda-linha__confirmacao-botoes">
               {ACOES_CONFIRMACAO.map((acao) => (
                 <button

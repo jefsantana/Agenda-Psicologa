@@ -170,7 +170,7 @@ export default function DashboardPage() {
       )}
 
       {!carregando && pendentesConfirmacao > 0 && (
-        <p className="dashboard__lembrete" role="alert">
+        <p className="dashboard__lembrete dashboard__lembrete--info" role="status">
           Você tem {pendentesConfirmacao} atendimento{pendentesConfirmacao === 1 ? "" : "s"} de hoje aguardando
           confirmação — diga se foi realizado, faltou, remarcou ou cancelou na Agenda do dia, abaixo.
         </p>

@@ -129,7 +129,14 @@
   color: var(--text-3-aa);
 }
 
+/* Hoje, aguardando confirmação de rotina — informativo, não é um problema. */
 .agenda-linha--pendente {
+  border-color: rgba(78, 168, 245, 0.35);
+  background: rgba(78, 168, 245, 0.06);
+}
+
+/* De um dia anterior — atraso de verdade, precisa de atenção. */
+.agenda-linha--atrasado {
   border-color: rgba(245, 166, 78, 0.4);
   background: rgba(245, 166, 78, 0.08);
 }
@@ -146,6 +153,10 @@
 .agenda-linha__confirmacao-aviso {
   font-size: 0.68rem;
   font-weight: 600;
+  color: var(--info);
+}
+
+.agenda-linha__confirmacao-aviso--atrasado {
   color: var(--warning);
 }
 

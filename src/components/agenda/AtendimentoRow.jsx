@@ -1,7 +1,7 @@
 import StatusBadge from "../dashboard/StatusBadge.jsx";
 import MenuAcoesLinha from "./MenuAcoesLinha.jsx";
 import { apagarAtendimento } from "../../lib/agenda.js";
-import { formatarHora } from "../../lib/date.js";
+import { formatarHora, mesmaData } from "../../lib/date.js";
 import "./AtendimentoRow.css";
 
 const TIPO_LABEL = { online: "Online", presencial: "Presencial" };
@@ -25,6 +25,9 @@ export default function AtendimentoRow({ item, index = 0, onClick, onExcluido })
   }
 
   const precisaConfirmar = item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status);
+  // Sem confirmação num dia anterior é atraso de verdade; no próprio dia é só
+  // o lembrete de rotina de fim de expediente — cada um recebe um tom diferente.
+  const atrasado = precisaConfirmar && !mesmaData(item.inicio, new Date());
 
   async function handleExcluir() {
     if (!window.confirm(`Excluir este atendimento de ${item.paciente}? Essa ação não pode ser desfeita.`)) return;
@@ -38,7 +41,7 @@ export default function AtendimentoRow({ item, index = 0, onClick, onExcluido })
 
   return (
     <li
-      className={`atd-linha ${precisaConfirmar ? "atd-linha--pendente" : ""}`}
+      className={`atd-linha ${atrasado ? "atd-linha--atrasado" : precisaConfirmar ? "atd-linha--pendente" : ""}`}
       style={{ "--linha-cor": item.tipo === "online" ? "var(--info)" : "var(--primary)", animationDelay: `${index * 30}ms` }}
     >
       <div className="atd-linha__envolvedor">
@@ -49,7 +52,7 @@ export default function AtendimentoRow({ item, index = 0, onClick, onExcluido })
             <span className="atd-linha__sub">
               {TIPO_LABEL[item.tipo]}
               {item.convenio ? ` · ${item.convenio}` : ""}
-              {precisaConfirmar ? " · Sem confirmação" : ""}
+              {atrasado ? " · Sem confirmação (dia anterior)" : precisaConfirmar ? " · Sem confirmação" : ""}
             </span>
           </div>
           <StatusBadge status={item.status} />

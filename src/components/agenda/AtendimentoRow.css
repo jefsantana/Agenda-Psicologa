@@ -99,11 +99,22 @@
   color: var(--text-3-aa);
 }
 
+/* Hoje, aguardando confirmação de rotina — informativo, não é um problema. */
 .atd-linha--pendente .atd-linha__botao {
-  border-color: rgba(245, 166, 78, 0.4);
+  border-color: rgba(78, 168, 245, 0.35);
 }
 
 .atd-linha--pendente .atd-linha__sub {
+  color: var(--info);
+  font-weight: 600;
+}
+
+/* De um dia anterior — atraso de verdade, precisa de atenção. */
+.atd-linha--atrasado .atd-linha__botao {
+  border-color: rgba(245, 166, 78, 0.4);
+}
+
+.atd-linha--atrasado .atd-linha__sub {
   color: var(--warning);
   font-weight: 600;
 }
