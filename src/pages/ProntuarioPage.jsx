@@ -57,6 +57,7 @@ function SeletorDePaciente({ onEscolher }) {
   return (
     <section className="prontuario-seletor">
       <label className="pacientes-busca">
+        <span className="sr-only">Buscar paciente pelo nome</span>
         <input
           type="search"
           placeholder="Buscar paciente pelo nome…"

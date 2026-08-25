@@ -27,7 +27,7 @@
 }
 
 .pacientes-busca input::placeholder {
-  color: var(--text-4);
+  color: var(--text-3-aa);
 }
 
 .pacientes-novo {

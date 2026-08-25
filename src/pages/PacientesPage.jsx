@@ -61,6 +61,7 @@ export default function PacientesPage() {
     <AppShell perfil={perfil} title="Pacientes" subtitle={`${pacientes.length} cadastrados`}>
       <div className="pacientes-toolbar">
         <label className="pacientes-busca">
+          <span className="sr-only">Buscar paciente por nome</span>
           <input
             type="search"
             placeholder="Buscar por nome…"

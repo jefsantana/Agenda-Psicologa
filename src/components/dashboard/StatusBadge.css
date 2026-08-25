@@ -14,12 +14,11 @@
   background: var(--surface-2);
 }
 
-/* Cancelado: também neutro, mas visualmente "apagado" — não é a mesma coisa
-   que um agendamento normal em aberto. */
+/* Cancelado: mesmo tom neutro do "agendado" — a opacidade reduzida usada
+   antes deixava o contraste abaixo do mínimo AA (2,99:1). */
 .badge--cancelado {
-  color: var(--text-4);
+  color: var(--text-3-aa);
   background: var(--surface-2);
-  opacity: 0.75;
 }
 
 /* Aguardando confirmação do paciente. */

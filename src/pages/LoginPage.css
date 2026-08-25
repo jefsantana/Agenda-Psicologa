@@ -115,7 +115,7 @@
 }
 
 .login__input::placeholder {
-  color: var(--text-4);
+  color: var(--text-3-aa);
 }
 
 .login__input:focus-visible {

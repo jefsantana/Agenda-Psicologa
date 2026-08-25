@@ -93,7 +93,6 @@ export default function TarefasPainel({ tarefas: tarefasIniciais, aoCriada }) {
             value={titulo}
             onChange={(event) => setTitulo(event.target.value)}
             placeholder="O que precisa ser feito?"
-            autoFocus
           />
           <div className="tarefas__form-linha">
             <input

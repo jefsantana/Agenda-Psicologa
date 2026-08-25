@@ -76,6 +76,7 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
             type="search"
             className="field__input whatsapp-rapido__busca"
             placeholder="Buscar paciente pelo nome…"
+            aria-label="Buscar paciente pelo nome"
             value={busca}
             onChange={(event) => setBusca(event.target.value)}
           />

@@ -71,6 +71,7 @@ export default function LoginPage() {
                 className="login__input"
                 type="email"
                 autoComplete="username"
+                spellCheck={false}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
                 placeholder="E-mail profissional"
@@ -137,10 +138,10 @@ function RecuperarSenha({ aoVoltar }) {
         <input
           className="login__input"
           type="email"
+          spellCheck={false}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="E-mail profissional"
-          autoFocus
         />
       </label>
 
@@ -204,7 +205,6 @@ function NovaSenha({ aoConcluir }) {
           value={senha}
           onChange={(event) => setSenha(event.target.value)}
           placeholder="Nova senha"
-          autoFocus
         />
       </label>
 

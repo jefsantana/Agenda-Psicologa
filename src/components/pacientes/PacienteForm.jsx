@@ -168,7 +168,6 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
                   value={dados.nome}
                   onChange={(event) => alterar("nome", event.target.value)}
                   placeholder="Nome completo"
-                  autoFocus
                 />
               </label>
 
@@ -177,6 +176,8 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
                   <span className="field__label">Telefone/WhatsApp</span>
                   <input
                     className="field__input"
+                    type="tel"
+                    inputMode="tel"
                     value={dados.telefone}
                     onChange={(event) => alterar("telefone", event.target.value)}
                     placeholder="(00) 00000-0000"
@@ -198,6 +199,7 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
                 <input
                   className="field__input"
                   type="email"
+                  spellCheck={false}
                   value={dados.email}
                   onChange={(event) => alterar("email", event.target.value)}
                   placeholder="paciente@exemplo.com"

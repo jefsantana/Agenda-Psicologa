@@ -77,7 +77,7 @@ export default function ConvenioForm({ aberto, convenio, aoFechar, aoSalvar }) {
         <div className="sheet__campos">
           <label className="field">
             <span className="field__label">Nome</span>
-            <input className="field__input" value={nome} onChange={(e) => setNome(e.target.value)} autoFocus />
+            <input className="field__input" value={nome} onChange={(e) => setNome(e.target.value)} />
           </label>
 
           <div className="sheet__linha">

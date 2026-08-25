@@ -107,7 +107,6 @@ export default function ProximosCompromissos({ itens, aoAtualizar }) {
             value={titulo}
             onChange={(event) => setTitulo(event.target.value)}
             placeholder="Ex.: Dentista, buscar filho na escola…"
-            autoFocus
           />
           <div className="proximos__form-linha">
             <input

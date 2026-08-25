@@ -76,7 +76,6 @@ export default function NovoAtendimentoSheet({ aberto, aoFechar, aoSalvar }) {
             setNomePaciente(paciente.nome);
             setTipoPadrao(paciente.tipo_atendimento_padrao ?? "presencial");
           }}
-          autoFocus
         />
 
         <OutrasDatasPaciente pacienteId={pacienteId} />

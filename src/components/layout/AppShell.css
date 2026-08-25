@@ -4,6 +4,23 @@
   background: var(--bg-app-mobile);
 }
 
+.shell__skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-16);
+  z-index: 50;
+  padding: var(--space-10) var(--space-16);
+  border-radius: var(--radius-row);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.shell__skip-link:focus-visible {
+  top: var(--space-16);
+}
+
 @media (min-width: 1024px) {
   .shell {
     background: var(--bg-app);

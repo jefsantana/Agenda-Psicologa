@@ -130,7 +130,6 @@ export default function AtendimentoForm({ aberto, atendimento, dataPadrao, conve
               setNomePaciente(paciente.nome);
               if (!atendimento) setTipo(paciente.tipo_atendimento_padrao ?? "presencial");
             }}
-            autoFocus
           />
 
           <OutrasDatasPaciente pacienteId={pacienteId} excluirAtendimentoId={atendimento?.id} />

@@ -7,6 +7,10 @@ export default function AppShell({ perfil, title, subtitle, children }) {
 
   return (
     <div className="shell">
+      <a href="#conteudo-principal" className="shell__skip-link">
+        Pular para o conteúdo
+      </a>
+
       <Sidebar perfil={perfil} />
 
       <div className="shell__main">
@@ -20,7 +24,9 @@ export default function AppShell({ perfil, title, subtitle, children }) {
           </div>
         </header>
 
-        <main className="shell__content">{children}</main>
+        <main className="shell__content" id="conteudo-principal" tabIndex={-1}>
+          {children}
+        </main>
 
         <TabBar />
       </div>
