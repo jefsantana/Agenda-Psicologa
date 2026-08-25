@@ -1,23 +1,6 @@
 import { supabase } from "./supabaseClient.js";
 import { minutosEntreHoras, paraISO } from "./date.js";
-
-const SELECT_ATENDIMENTO =
-  "id, inicio, fim, tipo, status, valor, convenio_id, paciente_id, paciente:pacientes(nome), convenio:convenios(nome)";
-
-function mapearAtendimento(linha) {
-  return {
-    id: linha.id,
-    inicio: new Date(linha.inicio),
-    fim: new Date(linha.fim),
-    tipo: linha.tipo,
-    status: linha.status,
-    valor: linha.valor,
-    pacienteId: linha.paciente_id,
-    convenioId: linha.convenio_id,
-    paciente: linha.paciente?.nome ?? "Paciente removido",
-    convenio: linha.convenio?.nome ?? null,
-  };
-}
+import { SELECT_ATENDIMENTO, mapearAtendimento, mapearBloqueio, traduzirErroConflito } from "./atendimentosShared.js";
 
 export async function buscarConfiguracoesAgenda() {
   const { data, error } = await supabase.from("configuracoes_agenda").select("*");
@@ -50,7 +33,7 @@ export async function buscarBloqueiosPorPeriodo(inicioDate, fimDate) {
     .order("inicio", { ascending: true });
 
   if (error) throw error;
-  return data.map((linha) => ({ ...linha, inicio: new Date(linha.inicio), fim: new Date(linha.fim) }));
+  return data.map(mapearBloqueio);
 }
 
 /** Quantos atendimentos existem por dia (yyyy-mm-dd) num período — para pontinhos no calendário do mês. */
@@ -122,13 +105,6 @@ export async function buscarAtendimentosDoPaciente(pacienteId) {
     .order("inicio", { ascending: true });
   if (error) throw error;
   return data.map((linha) => ({ ...linha, inicio: new Date(linha.inicio) }));
-}
-
-function traduzirErroConflito(error) {
-  if (error.code === "23P01") {
-    return new Error("Já existe um atendimento marcado nesse horário.");
-  }
-  return error;
 }
 
 /** Lançamento rápido (dashboard): cria o atendimento para um paciente já selecionado no cadastro. */

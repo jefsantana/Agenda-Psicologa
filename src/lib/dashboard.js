@@ -1,22 +1,5 @@
 import { supabase } from "./supabaseClient.js";
-
-const SELECT_ATENDIMENTO =
-  "id, inicio, fim, tipo, status, valor, paciente_id, convenio_id, paciente:pacientes(nome), convenio:convenios(nome)";
-
-function mapearAtendimento(linha) {
-  return {
-    id: linha.id,
-    inicio: new Date(linha.inicio),
-    fim: new Date(linha.fim),
-    tipo: linha.tipo,
-    status: linha.status,
-    valor: linha.valor,
-    pacienteId: linha.paciente_id,
-    convenioId: linha.convenio_id,
-    paciente: linha.paciente?.nome ?? "Paciente removido",
-    convenio: linha.convenio?.nome ?? "Particular",
-  };
-}
+import { SELECT_ATENDIMENTO, mapearAtendimento, mapearBloqueio } from "./atendimentosShared.js";
 
 export async function buscarAtendimentosEntre(inicioDate, fimDate) {
   const { data, error } = await supabase
@@ -27,7 +10,7 @@ export async function buscarAtendimentosEntre(inicioDate, fimDate) {
     .order("inicio", { ascending: true });
 
   if (error) throw error;
-  return data.map(mapearAtendimento);
+  return data.map((linha) => mapearAtendimento(linha, { convenioFallback: "Particular" }));
 }
 
 export async function buscarBloqueiosEntre(inicioDate, fimDate) {
@@ -39,7 +22,7 @@ export async function buscarBloqueiosEntre(inicioDate, fimDate) {
     .order("inicio", { ascending: true });
 
   if (error) throw error;
-  return data.map((linha) => ({ ...linha, inicio: new Date(linha.inicio), fim: new Date(linha.fim) }));
+  return data.map(mapearBloqueio);
 }
 
 /** Atendimentos de um período, já com o telefone do paciente — usado no atalho de WhatsApp. */

@@ -1,6 +1,7 @@
 import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { supabase } from "./supabaseClient.js";
+import { SELECT_ATENDIMENTO, mapearAtendimento } from "./atendimentosShared.js";
 
 const STATUS_LABEL = {
   agendado: "Agendado",
@@ -12,11 +13,8 @@ const STATUS_LABEL = {
   cancelado: "Cancelado",
 };
 
-const SELECT =
-  "id, inicio, fim, tipo, status, valor, paciente_id, convenio_id, paciente:pacientes(nome), convenio:convenios(nome)";
-
 export async function buscarAtendimentosFiltrados({ inicio, fim, convenioId, status }) {
-  let query = supabase.from("atendimentos").select(SELECT).order("inicio", { ascending: false });
+  let query = supabase.from("atendimentos").select(SELECT_ATENDIMENTO).order("inicio", { ascending: false });
 
   if (inicio) query = query.gte("inicio", inicio);
   if (fim) query = query.lte("inicio", fim);
@@ -26,18 +24,7 @@ export async function buscarAtendimentosFiltrados({ inicio, fim, convenioId, sta
   const { data, error } = await query;
   if (error) throw error;
 
-  return data.map((linha) => ({
-    id: linha.id,
-    inicio: new Date(linha.inicio),
-    fim: new Date(linha.fim),
-    tipo: linha.tipo,
-    status: linha.status,
-    valor: linha.valor,
-    pacienteId: linha.paciente_id,
-    convenioId: linha.convenio_id,
-    paciente: linha.paciente?.nome ?? "Paciente removido",
-    convenio: linha.convenio?.nome ?? "Particular",
-  }));
+  return data.map((linha) => mapearAtendimento(linha, { convenioFallback: "Particular" }));
 }
 
 const CABECALHO = ["Data", "Hora", "Paciente", "Convênio", "Tipo", "Status", "Valor"];
