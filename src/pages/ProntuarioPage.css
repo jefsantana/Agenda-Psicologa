@@ -84,6 +84,10 @@
   font-size: 0.76rem;
   font-weight: 600;
   color: var(--primary-text);
+  /* Área de toque maior que o texto visível — no celular esse botão tinha
+     só ~15px de altura clicável, difícil de acertar com o dedo. */
+  padding: var(--space-10) var(--space-4);
+  margin: calc(var(--space-10) * -1) calc(var(--space-4) * -1);
 }
 
 .prontuario-selo {

@@ -47,6 +47,13 @@
 }
 
 .kpi__rotulo {
+  /* Sem min-width:0 o item flex não encolhe: em telas estreitas (grade de
+     4 colunas a partir de 640px) o texto "vazava" pra fora do card em vez
+     de quebrar linha, e o overflow:hidden do card cortava a palavra.
+     overflow-wrap é necessário à parte porque "Faltas/Remarcações" não
+     tem espaço em branco — sem ele o navegador não tem onde quebrar. */
+  min-width: 0;
+  overflow-wrap: break-word;
   font-size: 0.78rem;
   font-weight: 500;
   color: var(--text-2);
