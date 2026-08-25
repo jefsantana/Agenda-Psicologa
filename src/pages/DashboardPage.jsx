@@ -50,7 +50,8 @@ export default function DashboardPage() {
 
   const carregar = useCallback(async () => {
     setErro("");
-    try {
+
+    const buscarTudo = async () => {
       const agora = new Date();
       const inicioHoje = new Date(agora.getFullYear(), agora.getMonth(), agora.getDate());
       const fimHoje = new Date(inicioHoje.getTime() + 24 * 60 * 60 * 1000);
@@ -90,9 +91,22 @@ export default function DashboardPage() {
       setTarefas(tarefasCarregadas);
       setLancamentosDoMes(lancamentos.filter((l) => l.pagoEm?.slice(0, 7) === mesAtualISO()));
       setPendenciasAnteriores(pendencias);
-    } catch (erroCarregar) {
-      console.error(erroCarregar);
-      setErro("Não foi possível carregar o dashboard agora. Puxe para atualizar ou tente de novo.");
+    };
+
+    try {
+      await buscarTudo();
+    } catch (primeiroErro) {
+      // Logo após o login a sessão pode levar um instante para propagar para o
+      // cliente Supabase — em vez de assustar a usuária com um erro nesse
+      // momento normal, tenta mais uma vez em silêncio antes de avisar.
+      console.warn("Primeira tentativa de carregar o dashboard falhou, tentando novamente:", primeiroErro);
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 700));
+        await buscarTudo();
+      } catch (segundoErro) {
+        console.error(segundoErro);
+        setErro("Não foi possível carregar o dashboard agora. Puxe para atualizar ou tente de novo.");
+      }
     } finally {
       setCarregando(false);
     }
