@@ -4,14 +4,15 @@
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-kpi);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
-  animation: kpi-in 0.4s var(--ease-out) backwards;
+  animation: kpi-in 0.2s var(--ease-out) backwards;
 }
 
 @keyframes kpi-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;

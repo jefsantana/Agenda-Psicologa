@@ -40,6 +40,9 @@ body {
   font-size: 16px;
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
+  /* Dígitos de largura fixa em todo o app — horários, valores e KPIs não
+     "dançam" ao atualizar. Afeta só a forma dos números. */
+  font-variant-numeric: tabular-nums;
 }
 
 @media (min-width: 1024px) {

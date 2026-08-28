@@ -52,13 +52,13 @@
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
-  animation: login-in 0.5s var(--ease-out);
+  animation: login-in 0.3s var(--ease-out);
 }
 
 @keyframes login-in {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -89,10 +89,12 @@
 }
 
 .login__titulo {
+  max-width: 12ch;
   font-size: 1.9rem;
   line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.02em;
+  text-wrap: balance;
   color: var(--text);
 }
 
@@ -127,8 +129,10 @@
 .login__input {
   width: 100%;
   padding: var(--space-12) var(--space-16);
-  border-radius: var(--radius-pill);
-  /* Vidro sutil, um tom mais claro que o painel para se destacar dele. */
+  /* Mesmo raio dos campos do resto do app (--radius-row) — o login não deve
+     parecer um produto diferente. Só o fundo continua translúcido por estar
+     sobre o painel de vidro. */
+  border-radius: var(--radius-row);
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.18);
   backdrop-filter: blur(8px);
@@ -146,7 +150,7 @@
   outline: none;
   background: rgba(255, 255, 255, 0.12);
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(124, 107, 245, 0.28);
+  box-shadow: 0 0 0 3px rgba(124, 107, 245, 0.22); /* mesmo anel dos campos do app */
 }
 
 .login__erro {
@@ -173,7 +177,7 @@
 .login__entrar {
   margin-top: var(--space-7);
   padding: var(--space-12);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-row);
   background: var(--gradient-primary);
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: var(--on-primary);

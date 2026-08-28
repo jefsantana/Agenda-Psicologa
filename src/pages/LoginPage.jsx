@@ -51,11 +51,7 @@ export default function LoginPage() {
       <div className="login__conteudo">
         <div className="login__marca">
           <span className="login__avatar">RF</span>
-          <h1 className="login__titulo">
-            Espaço
-            <br />
-            Raquel Fróis
-          </h1>
+          <h1 className="login__titulo">Espaço Raquel Fróis</h1>
           <p className="login__subtitulo">Agenda, prontuário e financeiro da sua prática clínica.</p>
         </div>
 
