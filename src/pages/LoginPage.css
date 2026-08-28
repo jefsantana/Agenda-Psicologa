@@ -12,10 +12,10 @@
      Unsplash License. As camadas de gradiente por cima tingem a foto na
      mesma família de cor da marca (rosa → roxo do avatar/botão) e
      escurecem as bordas para o painel de vidro ficar legível. */
-  background-image: radial-gradient(ellipse 60% 50% at 18% 12%, rgba(232, 106, 166, 0.32), transparent 60%),
-    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(124, 107, 245, 0.26), transparent 62%),
-    radial-gradient(ellipse 90% 75% at 50% 45%, transparent 35%, rgba(10, 9, 14, 0.72) 100%),
-    linear-gradient(rgba(15, 12, 18, 0.55), rgba(15, 12, 18, 0.55)), url("/login-bg.jpg");
+  background-image: radial-gradient(ellipse 60% 50% at 18% 12%, rgba(232, 106, 166, 0.14), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(124, 107, 245, 0.22), transparent 62%),
+    radial-gradient(ellipse 90% 75% at 50% 45%, transparent 35%, rgba(10, 9, 14, 0.74) 100%),
+    linear-gradient(rgba(13, 15, 20, 0.6), rgba(13, 15, 20, 0.6)), url("/login-bg.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -29,8 +29,7 @@
 .login__glow {
   position: absolute;
   inset: -20%;
-  background: radial-gradient(circle at 50% 15%, rgba(124, 107, 245, 0.18) 0%, transparent 55%),
-    radial-gradient(circle at 82% 78%, rgba(232, 106, 166, 0.14) 0%, transparent 50%);
+  background: radial-gradient(circle at 50% 12%, rgba(124, 107, 245, 0.12) 0%, transparent 55%);
   pointer-events: none;
 }
 
@@ -47,11 +46,11 @@
   /* Vidro translúcido: só o fundo do painel é transparente — o conteúdo
      dentro dele (texto, inputs) continua com opacidade total. Nunca usar
      `opacity` aqui, senão o conteúdo também esmaece. */
-  background: linear-gradient(165deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(20px) saturate(125%);
+  -webkit-backdrop-filter: blur(20px) saturate(125%);
   animation: login-in 0.3s var(--ease-out);
 }
 
@@ -75,17 +74,21 @@
 }
 
 .login__avatar {
-  width: 76px;
-  height: 76px;
-  border-radius: 22px;
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-avatar-desktop);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
   color: var(--on-primary);
-  background: linear-gradient(135deg, var(--pink), var(--primary));
-  box-shadow: 0 16px 32px -12px rgba(124, 107, 245, 0.55);
+  /* Mesmo tratamento do avatar da sidebar e do header — um monograma só, sem
+     o degradê rosa que dava cara de app de consumidor. */
+  background: var(--gradient-primary);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 26px -14px rgba(124, 107, 245, 0.5);
 }
 
 .login__titulo {
@@ -115,15 +118,14 @@
 .login__campo {
   display: flex;
   flex-direction: column;
+  gap: var(--space-7);
 }
 
 .login__campo-rotulo {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
+  margin-left: var(--space-4);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-2);
 }
 
 .login__input {

@@ -42,6 +42,13 @@
   --info: #4ea8f5;
   --pink: #e86aa6;
   --amber: #f5c15d;
+  /*
+    --danger: rosa dessaturado para o único status realmente negativo ("falta").
+    O --pink saturado da doc de design continua para gráficos e decoração; para
+    um selo de status num contexto clínico ele lia como "app de consumidor".
+  */
+  --danger: #d98a9e;
+  --danger-text: #e29cad;
 
   --gradient-primary: linear-gradient(100deg, #7c6bf5, #6355e8);
   --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */

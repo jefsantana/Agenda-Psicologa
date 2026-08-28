@@ -48,8 +48,8 @@
 
 /* Falta: o paciente não compareceu — o único status realmente negativo. */
 .badge--falta {
-  color: var(--pink);
-  background: rgba(232, 106, 166, 0.16);
+  color: var(--danger-text);
+  background: rgba(217, 138, 158, 0.16);
 }
 
 /* Etiquetas de paciente (Ativo/Pendente/Novo/Inativo) reaproveitam a mesma base .badge */
@@ -64,8 +64,8 @@
 }
 
 .badge--novo {
-  color: var(--pink);
-  background: rgba(232, 106, 166, 0.16);
+  color: var(--primary-soft);
+  background: rgba(124, 107, 245, 0.16);
 }
 
 .badge--inativo {

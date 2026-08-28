@@ -140,6 +140,6 @@
 }
 
 .tarefas__prazo--atrasada {
-  color: var(--pink);
-  background: rgba(232, 106, 166, 0.16);
+  color: var(--danger-text);
+  background: rgba(217, 138, 158, 0.16);
 }
