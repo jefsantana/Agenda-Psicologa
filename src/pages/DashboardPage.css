@@ -1,4 +1,7 @@
 .dashboard__lembrete {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   padding: var(--space-12) var(--space-14);
   border-radius: var(--radius-row);
   font-size: var(--fs-sm);
@@ -9,15 +12,15 @@
   color: var(--warning);
 }
 
+.dashboard__lembrete p {
+  margin: 0;
+}
+
 /* Lembrete de rotina do próprio dia — informativo, não é um problema. */
 .dashboard__lembrete--info {
   background: rgba(78, 168, 245, 0.1);
   border: 1px solid rgba(78, 168, 245, 0.3);
   color: var(--info);
-}
-
-.dashboard__lembrete + .dashboard__lembrete {
-  margin-top: var(--space-10);
 }
 
 .dashboard__lembrete a {

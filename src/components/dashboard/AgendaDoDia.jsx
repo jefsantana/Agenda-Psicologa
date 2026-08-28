@@ -113,7 +113,10 @@ function LinhaAtendimento({ item, ehHoje, onAtualizado, onEditar }) {
     >
       <span className="agenda-linha__hora">{formatarHora(item.inicio)}</span>
       <div className="agenda-linha__corpo">
-        <p className="agenda-linha__titulo">{item.paciente}</p>
+        <div className="agenda-linha__cabecalho">
+          <p className="agenda-linha__titulo">{item.paciente}</p>
+          <StatusBadge status={item.status} />
+        </div>
         <span className="agenda-linha__sub">
           {TIPO_LABEL[item.tipo]}
           {item.convenio ? ` · ${item.convenio}` : ""}
@@ -138,7 +141,6 @@ function LinhaAtendimento({ item, ehHoje, onAtualizado, onEditar }) {
           </div>
         )}
       </div>
-      <StatusBadge status={item.status} />
       <MenuAcoesLinha onEditar={() => onEditar?.(item)} onExcluir={handleExcluir} />
     </li>
   );

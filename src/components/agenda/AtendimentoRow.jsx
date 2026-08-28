@@ -48,14 +48,16 @@ export default function AtendimentoRow({ item, onClick, onExcluido }) {
         <button type="button" className="atd-linha__botao" onClick={onClick}>
           <span className="atd-linha__hora">{formatarHora(item.inicio)}</span>
           <div className="atd-linha__corpo">
-            <p className="atd-linha__titulo">{item.paciente}</p>
+            <div className="atd-linha__cabecalho">
+              <p className="atd-linha__titulo">{item.paciente}</p>
+              <StatusBadge status={item.status} />
+            </div>
             <span className="atd-linha__sub">
               {TIPO_LABEL[item.tipo]}
               {item.convenio ? ` · ${item.convenio}` : ""}
-              {atrasado ? " · Sem confirmação (dia anterior)" : precisaConfirmar ? " · Sem confirmação" : ""}
+              {atrasado ? " · confirmação atrasada" : ""}
             </span>
           </div>
-          <StatusBadge status={item.status} />
         </button>
         <MenuAcoesLinha onEditar={onClick} onExcluir={handleExcluir} />
       </div>

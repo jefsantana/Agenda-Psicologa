@@ -86,3 +86,12 @@ export function formatarMinutos(minutos) {
 export function formatarMoeda(valor) {
   return (valor ?? 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
 }
+
+/** "R$ 1.560" — sem centavos, para números-resumo em KPIs e cabeçalhos. */
+export function formatarMoedaResumo(valor) {
+  return (valor ?? 0).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  });
+}

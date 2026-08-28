@@ -138,7 +138,7 @@ export default function AgendaPage() {
         </section>
       ) : !ehIntervalo ? (
         <section className="agenda-lista-painel">
-          <h2 className="agenda-lista-painel__titulo">{dataLonga(periodo.inicio)}</h2>
+          {/* Sem título aqui: a data já aparece no seletor logo acima. */}
           {itensDoPeriodo.length === 0 ? (
             <p className="agenda-lista-painel__vazio">Nada agendado neste dia.</p>
           ) : (

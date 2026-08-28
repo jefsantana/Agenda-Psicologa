@@ -98,7 +98,19 @@
   flex-direction: column;
 }
 
+.agenda-linha__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+.agenda-linha__cabecalho .badge {
+  flex-shrink: 0;
+}
+
 .agenda-linha__titulo {
+  flex: 1;
+  min-width: 0;
   font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
@@ -115,6 +127,9 @@
 .agenda-linha__sub {
   font-size: var(--fs-xs);
   color: var(--text-3-aa);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Hoje, aguardando confirmação de rotina — informativo, não é um problema. */

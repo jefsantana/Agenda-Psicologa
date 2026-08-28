@@ -19,7 +19,7 @@ import { buscarPerfil } from "../lib/perfil.js";
 import { buscarTarefas, buscarCompromissosPessoais } from "../lib/tarefas.js";
 import { buscarLancamentos } from "../lib/financeiro.js";
 import { buscarConvenios } from "../lib/pacientes.js";
-import { formatarMoeda, inicioDoMes, fimDoMes, paraISO } from "../lib/date.js";
+import { formatarMoedaResumo, inicioDoMes, fimDoMes, paraISO } from "../lib/date.js";
 import "./DashboardPage.css";
 
 const STATUS_RESOLVIDOS = ["realizado", "falta", "remarcar", "cancelado"];
@@ -169,22 +169,28 @@ export default function DashboardPage() {
         </p>
       )}
 
-      {!carregando && pendentesConfirmacao > 0 && (
-        <p className="dashboard__lembrete dashboard__lembrete--info" role="status">
-          Você tem {pendentesConfirmacao} atendimento{pendentesConfirmacao === 1 ? "" : "s"} de hoje aguardando
-          confirmação — diga se foi realizado, faltou, remarcou ou cancelou na Agenda do dia, abaixo.
-        </p>
-      )}
-
-      {!carregando && pendenciasAnteriores.total > 0 && (
-        <p className="dashboard__lembrete" role="alert">
-          Também ficaram {pendenciasAnteriores.total} atendimento{pendenciasAnteriores.total === 1 ? "" : "s"} de dias
-          anteriores sem confirmação
-          {pendenciasAnteriores.maisAntigo
-            ? ` (desde ${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(pendenciasAnteriores.maisAntigo)})`
-            : ""}{" "}
-          — <Link to="/agenda">resolva na Agenda</Link>.
-        </p>
+      {!carregando && (pendentesConfirmacao > 0 || pendenciasAnteriores.total > 0) && (
+        <div
+          className={`dashboard__lembrete ${pendenciasAnteriores.total > 0 ? "" : "dashboard__lembrete--info"}`}
+          role={pendenciasAnteriores.total > 0 ? "alert" : "status"}
+        >
+          {pendentesConfirmacao > 0 && (
+            <p>
+              {pendentesConfirmacao} atendimento{pendentesConfirmacao === 1 ? "" : "s"} de hoje aguardando confirmação —
+              resolva na Agenda do dia, abaixo.
+            </p>
+          )}
+          {pendenciasAnteriores.total > 0 && (
+            <p>
+              {pendenciasAnteriores.total} atendimento{pendenciasAnteriores.total === 1 ? "" : "s"} de dias anteriores sem
+              confirmação
+              {pendenciasAnteriores.maisAntigo
+                ? ` (desde ${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(pendenciasAnteriores.maisAntigo)})`
+                : ""}{" "}
+              — <Link to="/agenda">resolva na Agenda</Link>.
+            </p>
+          )}
+        </div>
       )}
 
       <div className="dashboard__kpis">
@@ -213,7 +219,7 @@ export default function DashboardPage() {
           cor="info"
           icone={<IconeCifrao />}
           rotulo="Recebimentos (mês)"
-          valor={carregando ? "…" : formatarMoeda(kpis.recebidoMes)}
+          valor={carregando ? "…" : formatarMoedaResumo(kpis.recebidoMes)}
           legenda="pago até agora"
         />
       </div>
