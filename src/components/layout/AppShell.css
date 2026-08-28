@@ -13,7 +13,7 @@
   border-radius: var(--radius-row);
   background: var(--primary);
   color: var(--on-primary);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
@@ -72,7 +72,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--on-primary);
   background: var(--gradient-primary);
@@ -85,7 +85,7 @@
 }
 
 .shell__title {
-  font-size: 1.35rem;
+  font-size: var(--fs-xl);
   font-weight: 600;
   letter-spacing: -0.02em;
   color: var(--text);
@@ -93,13 +93,13 @@
 
 @media (min-width: 1024px) {
   .shell__title {
-    font-size: 1.55rem;
+    font-size: var(--fs-2xl);
   }
 }
 
 .shell__subtitle {
   margin-top: var(--space-2);
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 

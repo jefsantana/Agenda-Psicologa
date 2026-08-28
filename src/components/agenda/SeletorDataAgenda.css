@@ -37,7 +37,7 @@
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   text-transform: capitalize;
 }
@@ -97,7 +97,7 @@
   flex: 1;
   padding: var(--space-7);
   text-align: center;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-3-aa);
   border-radius: calc(var(--radius-row) - 3px);
@@ -111,7 +111,7 @@
 
 .seletor-data-agenda__dica {
   margin-bottom: var(--space-10);
-  font-size: 0.74rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
   text-align: center;
 }
@@ -124,6 +124,6 @@
   background: rgba(124, 107, 245, 0.13);
   border: 1px solid rgba(124, 107, 245, 0.28);
   color: var(--primary-text);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }

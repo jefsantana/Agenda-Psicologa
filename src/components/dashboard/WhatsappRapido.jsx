@@ -91,8 +91,8 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
                 <p className="whatsapp-rapido__vazio">Nenhum paciente com telefone encontrado.</p>
               ) : (
                 <ul>
-                  {resultadosBusca.map((paciente, index) => (
-                    <li key={paciente.id} style={{ animationDelay: `${index * 30}ms` }}>
+                  {resultadosBusca.map((paciente) => (
+                    <li key={paciente.id}>
                       <button
                         type="button"
                         className="whatsapp-rapido__paciente"
@@ -114,8 +114,8 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
               <p className="whatsapp-rapido__vazio">Nenhum paciente com telefone agendado neste dia.</p>
             ) : (
               <ul>
-                {atendimentos.map((item, index) => (
-                  <li key={item.atendimentoId} style={{ animationDelay: `${index * 30}ms` }}>
+                {atendimentos.map((item) => (
+                  <li key={item.atendimentoId}>
                     <button type="button" className="whatsapp-rapido__paciente" onClick={() => setSelecionado(item)}>
                       <span className="whatsapp-rapido__hora">{formatarHora(item.inicio)}</span>
                       <span className="whatsapp-rapido__textos">

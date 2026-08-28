@@ -11,7 +11,7 @@
   background: rgba(245, 166, 78, 0.12);
   border: 1px solid rgba(245, 166, 78, 0.35);
   border-radius: var(--radius-row);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--warning);
 }
@@ -30,7 +30,7 @@
 }
 
 .agenda-lista-painel__titulo {
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
   margin-bottom: var(--space-16);
@@ -40,7 +40,7 @@
 .agenda-lista-painel__vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 

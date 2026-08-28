@@ -195,11 +195,10 @@ export default function AgendaPage() {
 function ListaAtendimentos({ itens, onClickAtendimento, onClickBloqueio, onExcluido }) {
   return (
     <ul className="agenda-lista-painel__lista">
-      {itens.map((item, index) => (
+      {itens.map((item) => (
         <AtendimentoRow
           key={item.id}
           item={item}
-          index={index}
           onClick={item.tipoLinha === "bloqueio" ? () => onClickBloqueio(item) : () => onClickAtendimento(item)}
           onExcluido={onExcluido}
         />

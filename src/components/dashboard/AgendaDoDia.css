@@ -14,25 +14,25 @@
 }
 
 .agenda-dia__cabecalho h2 {
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
 }
 
 .agenda-dia__data {
-  font-size: 0.75rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }
 
 .agenda-dia__ver-tudo {
   flex-shrink: 0;
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--primary-text);
   background: rgba(124, 107, 245, 0.13);
   border: 1px solid rgba(124, 107, 245, 0.28);
-  padding: var(--space-7) var(--space-12);
-  border-radius: var(--radius-pill);
+  padding: var(--space-4) var(--space-10);
+  border-radius: var(--radius-chip);
   white-space: nowrap;
 }
 
@@ -44,7 +44,7 @@
 .agenda-dia__vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -63,19 +63,7 @@
   border: 1px solid var(--border);
   border-left: 3px solid var(--linha-cor, var(--border));
   border-radius: var(--radius-row);
-  animation: linha-in 0.35s var(--ease-out) backwards;
   transition: background-color 0.15s var(--ease-out);
-}
-
-@keyframes linha-in {
-  from {
-    opacity: 0;
-    transform: translateX(-4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
 }
 
 @media (hover: hover) {
@@ -93,7 +81,7 @@
 
 .agenda-linha__hora {
   font-variant-numeric: tabular-nums;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
   min-width: 44px;
@@ -111,7 +99,7 @@
 }
 
 .agenda-linha__titulo {
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
@@ -125,7 +113,7 @@
 }
 
 .agenda-linha__sub {
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }
 
@@ -151,7 +139,7 @@
 }
 
 .agenda-linha__confirmacao-aviso {
-  font-size: 0.68rem;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   color: var(--info);
 }
@@ -167,9 +155,9 @@
 }
 
 .agenda-linha__confirmacao-botoes button {
-  padding: var(--space-3) var(--space-10);
-  border-radius: var(--radius-pill);
-  font-size: 0.7rem;
+  padding: var(--space-4) var(--space-10);
+  border-radius: var(--radius-chip);
+  font-size: var(--fs-xs);
   font-weight: 600;
   background: var(--surface);
   border: 1px solid var(--border);
@@ -191,7 +179,7 @@
 .agenda-dia__restantes {
   margin-top: var(--space-12);
   text-align: center;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--primary-text);
   font-weight: 500;
 }

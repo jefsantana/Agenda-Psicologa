@@ -7,10 +7,10 @@ import "./AtendimentoRow.css";
 const TIPO_LABEL = { online: "Online", presencial: "Presencial" };
 const STATUS_RESOLVIDOS = ["realizado", "falta", "remarcar", "cancelado"];
 
-export default function AtendimentoRow({ item, index = 0, onClick, onExcluido }) {
+export default function AtendimentoRow({ item, onClick, onExcluido }) {
   if (item.tipoLinha === "bloqueio") {
     return (
-      <li className="atd-linha atd-linha--bloqueada" style={{ animationDelay: `${index * 30}ms` }}>
+      <li className="atd-linha atd-linha--bloqueada">
         <button type="button" className="atd-linha__botao atd-linha__botao--bloqueio" onClick={onClick}>
           <span className="atd-linha__hora">
             {formatarHora(item.inicio)}–{formatarHora(item.fim)}
@@ -42,7 +42,7 @@ export default function AtendimentoRow({ item, index = 0, onClick, onExcluido })
   return (
     <li
       className={`atd-linha ${atrasado ? "atd-linha--atrasado" : precisaConfirmar ? "atd-linha--pendente" : ""}`}
-      style={{ "--linha-cor": item.tipo === "online" ? "var(--info)" : "var(--primary)", animationDelay: `${index * 30}ms` }}
+      style={{ "--linha-cor": item.tipo === "online" ? "var(--info)" : "var(--primary)" }}
     >
       <div className="atd-linha__envolvedor">
         <button type="button" className="atd-linha__botao" onClick={onClick}>

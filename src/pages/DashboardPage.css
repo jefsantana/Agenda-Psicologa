@@ -1,7 +1,7 @@
 .dashboard__lembrete {
   padding: var(--space-12) var(--space-14);
   border-radius: var(--radius-row);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   /* Padrão: atraso real (dias anteriores) — mantém o tom de atenção. */
   background: rgba(245, 166, 78, 0.12);

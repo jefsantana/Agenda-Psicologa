@@ -3,7 +3,7 @@
   align-items: center;
   padding: var(--space-4) var(--space-10);
   border-radius: var(--radius-chip);
-  font-size: 0.75rem; /* era 0.625rem (10px) — pequeno demais para carregar status clínico */
+  font-size: var(--fs-xs); /* era 0.625rem (10px) — pequeno demais para carregar status clínico */
   font-weight: 600;
   letter-spacing: 0.01em;
   white-space: nowrap;

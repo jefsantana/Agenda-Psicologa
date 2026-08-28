@@ -39,7 +39,7 @@
   padding: var(--space-10);
   text-align: left;
   border-radius: calc(var(--radius-row) - 3px);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-2);
 }

@@ -22,7 +22,7 @@
 
 .seletor-paciente__info {
   padding: var(--space-12);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -36,7 +36,7 @@
   padding: var(--space-12);
   border-radius: var(--radius-row);
   text-align: left;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
 }
@@ -46,7 +46,7 @@
 }
 
 .seletor-paciente__sub {
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-3-aa);
   white-space: nowrap;
@@ -58,7 +58,7 @@
   padding: var(--space-12);
   border-radius: var(--radius-row);
   text-align: left;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--primary-text);
 }
@@ -73,6 +73,6 @@
 
 .seletor-paciente__aviso {
   margin-top: var(--space-3);
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   color: var(--warning);
 }

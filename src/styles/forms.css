@@ -6,7 +6,7 @@
 }
 
 .field__label {
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-3-aa);
 }
@@ -18,7 +18,7 @@
   background: var(--surface);
   border-radius: var(--radius-row);
   padding: var(--space-12);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   color: var(--text);
   transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
 }

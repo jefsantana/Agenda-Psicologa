@@ -55,13 +55,13 @@
      tem espaço em branco — sem ele o navegador não tem onde quebrar. */
   min-width: 0;
   overflow-wrap: break-word;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-2);
 }
 
 .kpi__valor {
-  font-size: 1.6rem;
+  font-size: var(--fs-2xl);
   font-weight: 600;
   letter-spacing: -0.03em;
   color: var(--text);
@@ -69,6 +69,6 @@
 
 .kpi__legenda {
   margin-top: var(--space-2);
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }

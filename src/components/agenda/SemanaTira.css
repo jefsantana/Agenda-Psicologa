@@ -19,14 +19,14 @@
 }
 
 .semana-tira__letra {
-  font-size: 0.62rem;
+  font-size: var(--fs-2xs);
   font-weight: 600;
   text-transform: uppercase;
   color: var(--text-3);
 }
 
 .semana-tira__numero {
-  font-size: 0.9rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text-2);
   width: 26px;

@@ -11,14 +11,14 @@
   border-radius: var(--radius-pill);
   background: var(--gradient-primary);
   color: var(--on-primary);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
 .convenios-vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -58,13 +58,13 @@
 }
 
 .convenio-card__nome {
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
 }
 
 .convenio-card__situacao {
-  font-size: 0.66rem;
+  font-size: var(--fs-2xs);
   font-weight: 700;
   padding: var(--space-3) var(--space-10);
   border-radius: var(--radius-chip);
@@ -81,7 +81,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-12);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--text-2);
 }
 

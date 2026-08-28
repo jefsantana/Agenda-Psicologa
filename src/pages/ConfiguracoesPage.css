@@ -1,7 +1,7 @@
 .config-vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -16,14 +16,14 @@
 }
 
 .config-secao h2 {
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
 }
 
 .config-secao__ajuda {
   margin-top: calc(-1 * var(--space-7));
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
   line-height: 1.5;
 }
@@ -54,7 +54,7 @@
   border-radius: var(--radius-pill);
   background: var(--surface-2);
   border: 1px solid var(--border);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-2);
 }
@@ -83,7 +83,7 @@
   border-radius: var(--radius-pill);
   background: var(--gradient-primary);
   color: var(--on-primary);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
@@ -117,7 +117,7 @@
   align-items: center;
   gap: var(--space-7);
   min-width: 110px;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
 }
@@ -133,14 +133,14 @@
   align-items: center;
   gap: var(--space-7);
   flex-wrap: wrap;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
 .config-horario-dia__campos .field__input {
   width: auto;
   padding: var(--space-7) var(--space-10);
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
 }
 
 .config-horario-dia__campos .field__input.config-horario-dia__duracao {

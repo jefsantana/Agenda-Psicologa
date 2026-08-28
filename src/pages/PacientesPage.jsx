@@ -89,12 +89,11 @@ export default function PacientesPage() {
         </p>
       ) : (
         <ul className="pacientes-lista">
-          {pacientes.map((paciente, index) => (
+          {pacientes.map((paciente) => (
             <PacienteCard
               key={paciente.id}
               paciente={paciente}
               proximoAtendimento={proximos.get(paciente.id)}
-              index={index}
               onClick={() => abrirEdicao(paciente)}
               onWhatsapp={() => setPacienteWhatsapp(paciente)}
             />

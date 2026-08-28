@@ -5,12 +5,12 @@ import "./PacienteCard.css";
 
 const FAIXA_ETARIA_LABEL = { crianca: "Criança", adolescente: "Adolescente", adulto: "Adulto" };
 
-export default function PacienteCard({ paciente, proximoAtendimento, index = 0, onClick, onWhatsapp }) {
+export default function PacienteCard({ paciente, proximoAtendimento, onClick, onWhatsapp }) {
   const iniciais = iniciaisDoNome(paciente.nome);
   const faixaEtaria = FAIXA_ETARIA_LABEL[paciente.faixa_etaria];
 
   return (
-    <li className="paciente-card" style={{ animationDelay: `${Math.min(index, 8) * 35}ms` }}>
+    <li className="paciente-card">
       <button type="button" className="paciente-card__botao" onClick={onClick}>
         <span className="paciente-card__avatar">{iniciais}</span>
         <div className="paciente-card__texto">
