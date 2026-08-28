@@ -99,10 +99,12 @@
   flex-direction: column;
 }
 
+/* Nome e badge empilhados — ver a nota em AtendimentoRow.css. */
 .agenda-linha__cabecalho {
   display: flex;
-  align-items: center;
-  gap: var(--space-7);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
 }
 
 .agenda-linha__cabecalho .badge {
@@ -110,8 +112,7 @@
 }
 
 .agenda-linha__titulo {
-  flex: 1;
-  min-width: 0;
+  max-width: 100%;
   font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
@@ -164,9 +165,14 @@
   color: var(--warning);
 }
 
+/*
+  Grade em vez de flex-wrap: com wrap os quatro botões caíam 2 / 1 / 1 e
+  ficavam desalinhados. Agora empilham uniformes no celular (a coluna útil
+  da linha é estreita) e vão a 4 colunas quando há largura, no desktop.
+*/
 .agenda-linha__confirmacao-botoes {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
   gap: var(--space-7);
 }
 

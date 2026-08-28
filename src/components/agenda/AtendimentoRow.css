@@ -67,10 +67,17 @@
   gap: var(--space-2);
 }
 
+/*
+  Nome e badge empilhados: na mesma linha o badge de status ("Confirmado")
+  comia a largura e o nome truncava cedo ("Paciente Te...") mesmo curto —
+  ainda mais no celular, onde a coluna do horário e o menu "⋮" também ocupam
+  espaço. Empilhado, o nome usa a linha inteira.
+*/
 .atd-linha__cabecalho {
   display: flex;
-  align-items: center;
-  gap: var(--space-7);
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
 }
 
 .atd-linha__cabecalho .badge {
@@ -78,8 +85,7 @@
 }
 
 .atd-linha__titulo {
-  flex: 1;
-  min-width: 0;
+  max-width: 100%;
   font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
