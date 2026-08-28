@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AppShell from "../components/layout/AppShell.jsx";
 import { baixarPagamento, buscarLancamentos, estornarPagamento, statusLancamento } from "../lib/financeiro.js";
-import { gerarReciboPdf } from "../lib/reciboPdf.js";
 import { buscarPerfil } from "../lib/perfil.js";
 import { formatarMoeda, paraISO } from "../lib/date.js";
 import "../components/dashboard/StatusBadge.css";
@@ -74,7 +73,9 @@ export default function FinanceiroPage() {
     carregar();
   }
 
-  function handleRecibo(lancamento) {
+  async function handleRecibo(lancamento) {
+    // jsPDF só carrega ao clicar em "Recibo".
+    const { gerarReciboPdf } = await import("../lib/reciboPdf.js");
     gerarReciboPdf({
       paciente: lancamento.paciente,
       convenio: lancamento.convenio,

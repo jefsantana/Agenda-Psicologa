@@ -43,21 +43,27 @@ const ALTURA_LINHA = 4.6; // altura de uma linha de texto (fonte 9.5)
 const ESPACO_ENTRE_CAMPOS = 2.2; // respiro entre um campo e o próximo
 const ESPACO_ENTRE_SECOES = 5; // respiro entre blocos de campos distintos
 
-export function gerarPdfProntuario({ paciente, prontuario, historico }) {
+export function gerarPdfProntuario({ paciente, prontuario, historico, perfil }) {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
   let y = MARGEM;
 
   // Caixa superior com o nome da profissional (no lugar do logo da clínica).
+  // Puxa de perfis_profissional (Configurações → Perfil); só cai no valor
+  // fixo se o perfil ainda não tiver sido preenchido.
+  const nomeProfissional = perfil?.nome?.trim() || "Raquel Fróis";
+  const crp = perfil?.crp?.trim();
+  const linhaConselho = crp ? `Psicóloga Clínica · CRP ${crp}` : "Psicóloga Clínica · CRP 04/62962";
+
   const alturaCaixaTopo = 18;
   doc.setDrawColor(0);
   doc.rect(MARGEM, y, LARGURA_UTIL, alturaCaixaTopo);
 
   doc.setFont(undefined, "bold");
   doc.setFontSize(15);
-  doc.text("Raquel Fróis", LARGURA_PAGINA / 2, y + 9, { align: "center" });
+  doc.text(nomeProfissional, LARGURA_PAGINA / 2, y + 9, { align: "center" });
   doc.setFont(undefined, "normal");
   doc.setFontSize(9);
-  doc.text("Psicóloga Clínica · CRP 04/62962", LARGURA_PAGINA / 2, y + 14.5, { align: "center" });
+  doc.text(linhaConselho, LARGURA_PAGINA / 2, y + 14.5, { align: "center" });
 
   y += alturaCaixaTopo + ESPACO_ENTRE_SECOES;
 

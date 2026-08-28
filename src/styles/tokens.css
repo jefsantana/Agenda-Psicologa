@@ -15,9 +15,14 @@
   --border-strong: #262b36;
   --text: #e6e8ee;
   --text-2: #b4bac8;
-  --text-3: #7c8494;
-  --text-3-aa: #a0a7b8; /* variante AA para --text-3 abaixo de 12px */
-  --text-4: #616878;
+  /*
+    --text-3 foi de #7c8494 para #a0a7b8 nesta revisão: o valor antigo dava
+    ~3.9:1 sobre --surface, abaixo do mínimo AA de 4.5:1 exigido pelo próprio
+    documento de design. O novo valor dá ~7:1 e vale para qualquer tamanho.
+  */
+  --text-3: #a0a7b8;
+  --text-3-aa: var(--text-3); /* alias mantido por compatibilidade — use --text-3 */
+  --text-4: #616878; /* ~2.7:1 — SÓ elementos decorativos, nunca texto informativo */
 
   /* Acentos semânticos */
   --primary: #7c6bf5;

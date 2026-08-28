@@ -16,7 +16,7 @@ const ConfiguracoesPage = lazy(() => import("./pages/ConfiguracoesPage.jsx"));
 export default function App() {
   return (
     <HashRouter>
-      <Suspense fallback={null}>
+      <Suspense fallback={<TelaCarregando />}>
         <Routes>
           <Route path="/" element={<Navigate to="/entrar" replace />} />
           <Route path="/entrar" element={<LoginPage />} />
@@ -88,6 +88,25 @@ export default function App() {
         </Routes>
       </Suspense>
     </HashRouter>
+  );
+}
+
+function TelaCarregando() {
+  return (
+    <div
+      role="status"
+      aria-label="Carregando"
+      style={{
+        minHeight: "100dvh",
+        display: "grid",
+        placeItems: "center",
+        background: "var(--bg-app-mobile)",
+        color: "var(--text-3)",
+        font: "500 0.9rem var(--font-body)",
+      }}
+    >
+      Carregando…
+    </div>
   );
 }
 

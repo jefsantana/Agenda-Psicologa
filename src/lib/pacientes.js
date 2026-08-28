@@ -6,11 +6,16 @@ const SELECT_PACIENTE =
   "tipo_atendimento_padrao, faixa_etaria, " +
   "convenio:convenios(id, nome)";
 
+/** Escapa os curingas do LIKE para que %, _ e \ digitados sejam buscados literalmente. */
+function escaparLike(texto) {
+  return texto.replace(/[\\%_]/g, (c) => `\\${c}`);
+}
+
 export async function buscarPacientes(busca = "") {
   let query = supabase.from("pacientes").select(SELECT_PACIENTE).order("nome", { ascending: true });
 
   if (busca.trim()) {
-    query = query.ilike("nome", `%${busca.trim()}%`);
+    query = query.ilike("nome", `%${escaparLike(busca.trim())}%`);
   }
 
   const { data, error } = await query;

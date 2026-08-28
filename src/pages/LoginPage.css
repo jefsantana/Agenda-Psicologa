@@ -195,6 +195,8 @@
 
 .login__esqueci {
   align-self: center;
+  min-height: 44px; /* alvo de toque WCAG 2.5.8 */
+  padding: 0 var(--space-12);
   font-size: 0.8rem;
   font-weight: 500;
   color: var(--text-3-aa);

@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import Sidebar from "./Sidebar.jsx";
 import TabBar from "./TabBar.jsx";
 import "./AppShell.css";
 
 export default function AppShell({ perfil, title, subtitle, children }) {
   const iniciais = iniciaisDoNome(perfil?.nome);
+
+  useEffect(() => {
+    document.title = title ? `${title} · Espaço Raquel Fróis` : "Espaço Raquel Fróis";
+    return () => {
+      document.title = "Espaço Raquel Fróis";
+    };
+  }, [title]);
 
   return (
     <div className="shell">

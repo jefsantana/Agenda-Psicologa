@@ -119,72 +119,26 @@ export async function criarAtendimentoRapido({ pacienteId, inicio, fim, tipo }) 
   if (error) throw traduzirErroConflito(error);
 }
 
-/** Criação/edição completa (tela de Agenda): paciente já selecionado no cadastro, convênio, valor, status. */
+/**
+ * Criação/edição completa (tela de Agenda): paciente já selecionado no cadastro, convênio, valor, status.
+ * O atendimento e o lançamento financeiro são gravados numa única transação no banco
+ * (função `salvar_atendimento`, migração v10) — nunca fica um sem o outro.
+ */
 export async function salvarAtendimento({ id, pacienteId, inicio, fim, tipo, convenioId, valor, status }) {
   const valorFinal = valor === "" ? null : valor;
 
-  const payload = {
-    paciente_id: pacienteId,
-    inicio: inicio.toISOString(),
-    fim: fim.toISOString(),
-    tipo,
-    convenio_id: convenioId || null,
-    valor: valorFinal,
-    status,
-  };
+  const { error } = await supabase.rpc("salvar_atendimento", {
+    p_id: id ?? null,
+    p_paciente_id: pacienteId,
+    p_inicio: inicio.toISOString(),
+    p_fim: fim.toISOString(),
+    p_tipo: tipo,
+    p_convenio_id: convenioId || null,
+    p_valor: valorFinal,
+    p_status: status,
+  });
 
-  const query = id
-    ? supabase.from("atendimentos").update(payload).eq("id", id).select("id").single()
-    : supabase.from("atendimentos").insert(payload).select("id").single();
-
-  const { data: salvo, error } = await query;
   if (error) throw traduzirErroConflito(error);
-
-  await sincronizarLancamento(salvo.id, valorFinal, inicio, convenioId);
-}
-
-/**
- * Todo atendimento com valor ganha (ou atualiza) um lançamento financeiro
- * automaticamente — a psicóloga não precisa lançar tudo duas vezes.
- * Sem valor, qualquer lançamento antigo daquele atendimento é removido.
- */
-async function sincronizarLancamento(atendimentoId, valor, inicio, convenioId) {
-  if (!valor) {
-    await supabase.from("lancamentos").delete().eq("atendimento_id", atendimentoId);
-    return;
-  }
-
-  let prazoRepasseDias = 0;
-  if (convenioId) {
-    const { data: convenio } = await supabase
-      .from("convenios")
-      .select("prazo_repasse_dias")
-      .eq("id", convenioId)
-      .maybeSingle();
-    prazoRepasseDias = convenio?.prazo_repasse_dias ?? 0;
-  }
-
-  const vencimento = new Date(inicio);
-  vencimento.setDate(vencimento.getDate() + prazoRepasseDias);
-
-  const { data: existente } = await supabase
-    .from("lancamentos")
-    .select("id, pago_em")
-    .eq("atendimento_id", atendimentoId)
-    .maybeSingle();
-
-  if (existente) {
-    await supabase
-      .from("lancamentos")
-      .update({ valor, vencimento: paraISO(vencimento) })
-      .eq("id", existente.id);
-  } else {
-    await supabase.from("lancamentos").insert({
-      atendimento_id: atendimentoId,
-      valor,
-      vencimento: paraISO(vencimento),
-    });
-  }
 }
 
 /**
