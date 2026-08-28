@@ -1,36 +1,59 @@
+/*
+  Tira única de 3 colunas em vez de 3 cards empilhados: no celular os cards
+  ficavam altos e quase vazios, empurrando a lista pra baixo da dobra.
+*/
 .fin-kpis {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-}
-
-@media (min-width: 720px) {
-  .fin-kpis {
-    grid-template-columns: 1.4fr 1fr 1fr;
-  }
-}
-
-.fin-kpi {
-  padding: var(--space-16);
+  grid-template-columns: repeat(3, 1fr);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+.fin-kpi {
+  padding: var(--space-12) var(--space-14);
   display: flex;
   flex-direction: column;
-  gap: var(--space-7);
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.fin-kpi + .fin-kpi {
+  border-left: 1px solid var(--border);
 }
 
 .fin-kpi__rotulo {
-  font-size: var(--fs-sm);
-  color: var(--text-2);
+  font-size: var(--fs-xs);
+  color: var(--text-3-aa);
+  /* Reserva 2 linhas para os valores começarem na mesma altura quando um
+     rótulo quebra ("Recebido no mês") e os outros não. */
+  min-height: 2.4em;
 }
 
 .fin-kpi__valor {
   font-family: var(--font-mono);
-  font-size: var(--fs-2xl);
+  font-size: var(--fs-lg);
   font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--text);
+}
+
+@media (min-width: 720px) {
+  .fin-kpi {
+    padding: var(--space-16) var(--space-18);
+    gap: var(--space-7);
+  }
+
+  .fin-kpi__rotulo {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    min-height: 0;
+  }
+
+  .fin-kpi__valor {
+    font-size: var(--fs-2xl);
+  }
 }
 
 .fin-kpi--secundario .fin-kpi__valor {
