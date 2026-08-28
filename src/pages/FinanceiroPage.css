@@ -160,10 +160,15 @@
   color: var(--text-2);
 }
 
+/*
+  Hierarquia: "Dar baixa" é a ação principal da lista — botão cheio. "Confirmar"
+  (no fluxo de baixa) segue verde. "Emitir recibo" e "Estornar" são secundárias:
+  o contorno neutro do .fin-botao base, só com a cor do texto trocada.
+*/
 .fin-botao--baixar {
-  color: var(--primary-soft);
-  background: rgba(31, 147, 130, 0.14);
-  border-color: rgba(31, 147, 130, 0.3);
+  color: var(--on-primary);
+  background: var(--gradient-primary);
+  border-color: transparent;
 }
 
 .fin-botao--confirmar {
@@ -173,9 +178,7 @@
 }
 
 .fin-botao--recibo {
-  color: var(--info);
-  background: rgba(78, 168, 245, 0.14);
-  border-color: rgba(78, 168, 245, 0.3);
+  color: var(--text);
 }
 
 .fin-botao--estornar {

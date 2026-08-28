@@ -34,14 +34,14 @@
   gap: var(--space-10);
 }
 
-@media (min-width: 640px) {
-  .dashboard__kpis {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
+/*
+  4 colunas só quando há largura real para os rótulos ("Próximos atendimentos",
+  "Recebimentos (mês)"). Entre ~640 e 1024 os cards ficavam estreitos demais e
+  o rótulo quebrava no meio da palavra; abaixo de 640, 2 colunas já resolvem.
+*/
 @media (min-width: 1024px) {
   .dashboard__kpis {
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-16);
   }
 }
