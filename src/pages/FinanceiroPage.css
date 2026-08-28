@@ -148,7 +148,7 @@
 
 .fin-botao {
   padding: var(--space-7) var(--space-14);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-chip);
   font-size: var(--fs-xs);
   font-weight: 600;
   white-space: nowrap;

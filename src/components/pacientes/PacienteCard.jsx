@@ -26,29 +26,30 @@ export default function PacienteCard({ paciente, proximoAtendimento, onClick, on
         <PacienteStatusBadge status={paciente.status} />
       </button>
 
-      {paciente.telefone && (
-        <button
-          type="button"
-          className="paciente-card__whatsapp"
-          onClick={(event) => {
-            event.stopPropagation();
-            onWhatsapp?.();
-          }}
-          title="Enviar WhatsApp"
-          aria-label={`Enviar WhatsApp para ${paciente.nome}`}
-        >
-          <IconeWhatsapp />
-        </button>
-      )}
+      <div className="paciente-card__acoes">
+        {paciente.telefone && (
+          <button
+            type="button"
+            className="paciente-card__whatsapp"
+            onClick={(event) => {
+              event.stopPropagation();
+              onWhatsapp?.();
+            }}
+            aria-label={`Enviar WhatsApp para ${paciente.nome}`}
+          >
+            <IconeWhatsapp />
+            WhatsApp
+          </button>
+        )}
 
-      <Link
-        to={`/prontuarios?paciente=${paciente.id}`}
-        className="paciente-card__prontuario"
-        onClick={(event) => event.stopPropagation()}
-        title="Ver prontuário"
-      >
-        Prontuário
-      </Link>
+        <Link
+          to={`/prontuarios?paciente=${paciente.id}`}
+          className="paciente-card__prontuario"
+          onClick={(event) => event.stopPropagation()}
+        >
+          Prontuário
+        </Link>
+      </div>
     </li>
   );
 }

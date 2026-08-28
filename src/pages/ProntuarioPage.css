@@ -98,15 +98,17 @@
   font-size: var(--fs-2xs);
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--success-text);
-  background: rgba(63, 207, 142, 0.16);
-  border: 1px solid rgba(63, 207, 142, 0.3);
+  /* Violeta da marca, não verde: verde é "sucesso/pago/realizado" em todo o
+     app — um aviso de sigilo lendo como sucesso era ruído semântico. */
+  color: var(--primary-soft);
+  background: rgba(124, 107, 245, 0.16);
+  border: 1px solid rgba(124, 107, 245, 0.3);
 }
 
 .prontuario-gerar-pdf {
   flex-shrink: 0;
   padding: var(--space-12) var(--space-18);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-row);
   background: var(--gradient-primary);
   color: var(--on-primary);
   font-size: var(--fs-sm);
@@ -205,7 +207,7 @@
 
 .prontuario-salvar {
   padding: var(--space-10) var(--space-18);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-row);
   background: var(--gradient-primary);
   color: var(--on-primary);
   font-size: var(--fs-sm);
