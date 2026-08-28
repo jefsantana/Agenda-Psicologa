@@ -34,7 +34,6 @@
   font-weight: 600;
   color: var(--text);
   margin-bottom: var(--space-16);
-  text-transform: capitalize;
 }
 
 .agenda-lista-painel__vazio {

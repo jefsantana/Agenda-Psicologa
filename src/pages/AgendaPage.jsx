@@ -12,7 +12,7 @@ import {
 } from "../lib/agenda.js";
 import { buscarConvenios } from "../lib/pacientes.js";
 import { buscarPerfil } from "../lib/perfil.js";
-import { inicioDoMes, fimDoMes, paraISO } from "../lib/date.js";
+import { inicioDoMes, fimDoMes, paraISO, dataLonga } from "../lib/date.js";
 import "./AgendaPage.css";
 
 export default function AgendaPage() {
@@ -138,9 +138,7 @@ export default function AgendaPage() {
         </section>
       ) : !ehIntervalo ? (
         <section className="agenda-lista-painel">
-          <h2 className="agenda-lista-painel__titulo">
-            {new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long" }).format(periodo.inicio)}
-          </h2>
+          <h2 className="agenda-lista-painel__titulo">{dataLonga(periodo.inicio)}</h2>
           {itensDoPeriodo.length === 0 ? (
             <p className="agenda-lista-painel__vazio">Nada agendado neste dia.</p>
           ) : (
@@ -159,9 +157,7 @@ export default function AgendaPage() {
       ) : (
         grupos.map(({ diaISO, data, itens }) => (
           <section className="agenda-lista-painel" key={diaISO}>
-            <h2 className="agenda-lista-painel__titulo">
-              {new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long" }).format(data)}
-            </h2>
+            <h2 className="agenda-lista-painel__titulo">{dataLonga(data)}</h2>
             <ListaAtendimentos
               itens={itens}
               onClickAtendimento={abrirEdicao}

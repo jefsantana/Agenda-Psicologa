@@ -205,7 +205,7 @@ export default function DashboardPage() {
         <KpiCard
           cor="warning"
           icone={<IconeAlerta />}
-          rotulo="Faltas/Remarcações"
+          rotulo="Faltas e remarcações"
           valor={carregando ? "…" : kpis.faltasRemarcacoes}
           legenda="hoje"
         />

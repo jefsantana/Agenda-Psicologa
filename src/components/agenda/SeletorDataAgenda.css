@@ -39,7 +39,6 @@
   color: var(--text);
   font-size: var(--fs-sm);
   font-weight: 600;
-  text-transform: capitalize;
 }
 
 .seletor-data-agenda__botao span {
