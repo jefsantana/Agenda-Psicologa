@@ -62,7 +62,7 @@
 .config-acento.is-active {
   border-color: var(--primary);
   color: var(--text);
-  background: rgba(124, 107, 245, 0.12);
+  background: rgba(31, 147, 130, 0.12);
 }
 
 .config-acento__cor {

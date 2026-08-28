@@ -120,8 +120,8 @@
   margin-top: var(--space-10);
   padding: var(--space-7) 0;
   border-radius: var(--radius-row);
-  background: rgba(124, 107, 245, 0.13);
-  border: 1px solid rgba(124, 107, 245, 0.28);
+  background: rgba(31, 147, 130, 0.13);
+  border: 1px solid rgba(31, 147, 130, 0.28);
   color: var(--primary-text);
   font-size: var(--fs-sm);
   font-weight: 600;

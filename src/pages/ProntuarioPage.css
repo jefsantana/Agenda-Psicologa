@@ -98,11 +98,12 @@
   font-size: var(--fs-2xs);
   font-weight: 700;
   letter-spacing: 0.02em;
-  /* Violeta da marca, não verde: verde é "sucesso/pago/realizado" em todo o
-     app — um aviso de sigilo lendo como sucesso era ruído semântico. */
-  color: var(--primary-soft);
-  background: rgba(124, 107, 245, 0.16);
-  border: 1px solid rgba(124, 107, 245, 0.3);
+  /* Azul informativo, não verde: o acento passou a ser verde, e verde também é
+     "sucesso/pago/realizado" no app — um aviso de sigilo lendo como sucesso era
+     ruído semântico. Azul lê como "aviso legal". */
+  color: var(--info);
+  background: rgba(78, 168, 245, 0.14);
+  border: 1px solid rgba(78, 168, 245, 0.3);
 }
 
 .prontuario-gerar-pdf {
@@ -184,6 +185,7 @@
 }
 
 .prontuario-dado__valor {
+  font-family: var(--font-mono);
   font-size: var(--fs-sm);
   color: var(--text-2);
   overflow-wrap: break-word;

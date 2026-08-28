@@ -45,9 +45,10 @@
 }
 
 .atd-linha__hora {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: var(--fs-sm);
-  font-weight: 600;
+  font-weight: 500;
   color: var(--text);
   min-width: 44px;
   flex-shrink: 0;

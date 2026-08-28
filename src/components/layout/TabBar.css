@@ -46,7 +46,7 @@
 }
 
 .tabbar__item--ativo .tabbar__icon {
-  background: rgba(124, 107, 245, 0.18);
+  background: rgba(31, 147, 130, 0.18);
   color: var(--primary-text);
 }
 

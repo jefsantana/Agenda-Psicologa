@@ -25,7 +25,7 @@
 /* Aguardando confirmação do paciente. */
 .badge--aguardando {
   color: var(--primary-soft);
-  background: rgba(124, 107, 245, 0.16);
+  background: rgba(31, 147, 130, 0.16);
 }
 
 /* Confirmado: vai acontecer, já confirmado — informativo, ainda não é "sucesso". */
@@ -65,7 +65,7 @@
 
 .badge--novo {
   color: var(--primary-soft);
-  background: rgba(124, 107, 245, 0.16);
+  background: rgba(31, 147, 130, 0.16);
 }
 
 .badge--inativo {

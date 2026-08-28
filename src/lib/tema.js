@@ -1,14 +1,16 @@
 const CHAVE = "espaco-raquel-frois:acento";
 
 export const ACENTOS = [
-  { id: "roxo", nome: "Roxo", cor: "#7c6bf5" },
+  { id: "padrao", nome: "Verde consultório", cor: "#1f9382" },
   { id: "azul", nome: "Azul", cor: "#3b82f6" },
-  { id: "verde", nome: "Verde", cor: "#22b573" },
   { id: "rosa", nome: "Rosa", cor: "#e8639a" },
 ];
 
 export function obterAcento() {
-  return localStorage.getItem(CHAVE) || "roxo";
+  const salvo = localStorage.getItem(CHAVE);
+  // "roxo" e "verde" eram opções antigas; ambas caem no acento padrão atual.
+  if (!salvo || salvo === "roxo" || salvo === "verde") return "padrao";
+  return salvo;
 }
 
 export function definirAcento(id) {

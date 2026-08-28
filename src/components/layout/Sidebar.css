@@ -87,9 +87,9 @@
 }
 
 .sidebar__item--ativo {
-  background: rgba(124, 107, 245, 0.16);
+  background: rgba(31, 147, 130, 0.16);
   color: var(--primary-soft);
-  border-color: rgba(124, 107, 245, 0.3);
+  border-color: rgba(31, 147, 130, 0.3);
 }
 
 .sidebar__item[aria-disabled="true"] {

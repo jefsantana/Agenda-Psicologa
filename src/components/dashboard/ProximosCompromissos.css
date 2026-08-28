@@ -31,14 +31,14 @@
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--primary-text);
-  background: rgba(124, 107, 245, 0.13);
-  border: 1px solid rgba(124, 107, 245, 0.28);
+  background: rgba(31, 147, 130, 0.13);
+  border: 1px solid rgba(31, 147, 130, 0.28);
   padding: var(--space-4) var(--space-10);
   border-radius: var(--radius-chip);
 }
 
 .proximos__adicionar:hover {
-  background: rgba(124, 107, 245, 0.22);
+  background: rgba(31, 147, 130, 0.22);
 }
 
 .proximos__form {

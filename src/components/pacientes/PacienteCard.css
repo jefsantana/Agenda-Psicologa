@@ -49,6 +49,7 @@
 }
 
 .paciente-card__nome {
+  font-family: var(--font-display);
   font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);

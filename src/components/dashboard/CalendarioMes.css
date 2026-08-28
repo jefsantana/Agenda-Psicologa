@@ -97,11 +97,11 @@
   background: var(--primary);
   color: var(--on-primary);
   font-weight: 600;
-  box-shadow: 0 0 0 4px rgba(124, 107, 245, 0.22);
+  box-shadow: 0 0 0 4px rgba(31, 147, 130, 0.22);
 }
 
 .calendario__dia--intervalo {
-  background: rgba(124, 107, 245, 0.18);
+  background: rgba(31, 147, 130, 0.18);
   border-radius: var(--radius-chip);
   color: var(--primary-soft);
 }
