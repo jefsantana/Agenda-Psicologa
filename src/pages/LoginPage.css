@@ -1,4 +1,4 @@
-.login {
+﻿.login {
   position: relative;
   min-height: 100dvh;
   display: flex;
@@ -7,15 +7,15 @@
   padding: var(--space-18) var(--space-16);
   overflow: hidden;
   /* Cantinho de leitura aconchegante (poltrona, planta, janela com luz
-     natural) — foto em public/login-bg.jpg, por Clay Banks via Unsplash
+     natural) â€” foto em public/login-bg.jpg, por Clay Banks via Unsplash
      (unsplash.com/photos/CjmHORCoIfw), livre para uso comercial pela
      Unsplash License. As camadas de gradiente por cima tingem a foto na
-     mesma família de cor da marca (verde de consultório do avatar/botão) e
-     escurecem as bordas para o painel de vidro ficar legível. */
-  background-image: radial-gradient(ellipse 60% 50% at 18% 12%, rgba(31, 147, 130, 0.16), transparent 60%),
-    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(31, 147, 130, 0.20), transparent 62%),
-    radial-gradient(ellipse 90% 75% at 50% 45%, transparent 35%, rgba(9, 12, 12, 0.74) 100%),
-    linear-gradient(rgba(14, 17, 17, 0.6), rgba(14, 17, 17, 0.6)), url("/login-bg.jpg");
+     mesma famÃ­lia de cor da marca (verde de consultÃ³rio do avatar/botÃ£o) e
+     escurecem as bordas para o painel de vidro ficar legÃ­vel. */
+  background-image: radial-gradient(ellipse 60% 50% at 18% 12%, rgba(var(--primary-rgb), 0.18), transparent 60%),
+    radial-gradient(ellipse 55% 45% at 88% 18%, rgba(var(--primary-rgb), 0.24), transparent 62%),
+    radial-gradient(ellipse 90% 78% at 50% 45%, transparent 28%, rgba(20, 8, 16, 0.86) 100%),
+    linear-gradient(rgba(20, 8, 16, 0.68), rgba(20, 8, 16, 0.68)), url("/login-bg.jpg");
   background-size: cover;
   background-position: center;
 }
@@ -29,7 +29,7 @@
 .login__glow {
   position: absolute;
   inset: -20%;
-  background: radial-gradient(circle at 50% 12%, rgba(31, 147, 130, 0.12) 0%, transparent 55%);
+  background: radial-gradient(circle at 50% 12%, rgba(var(--primary-rgb), 0.12) 0%, transparent 55%);
   pointer-events: none;
 }
 
@@ -43,9 +43,9 @@
   gap: var(--space-18);
   padding: 36px 28px;
   border-radius: var(--radius-panel);
-  /* Vidro translúcido: só o fundo do painel é transparente — o conteúdo
+  /* Vidro translÃºcido: sÃ³ o fundo do painel Ã© transparente â€” o conteÃºdo
      dentro dele (texto, inputs) continua com opacidade total. Nunca usar
-     `opacity` aqui, senão o conteúdo também esmaece. */
+     `opacity` aqui, senÃ£o o conteÃºdo tambÃ©m esmaece. */
   background: linear-gradient(165deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.035));
   border: 1px solid rgba(255, 255, 255, 0.14);
   box-shadow: 0 24px 60px -20px rgba(0, 0, 0, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -74,21 +74,20 @@
 }
 
 .login__avatar {
-  width: 68px;
-  height: 68px;
-  border-radius: var(--radius-avatar-desktop);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: var(--fs-xl);
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--on-primary);
-  /* Mesmo tratamento do avatar da sidebar e do header — um monograma só, sem
-     o degradê rosa que dava cara de app de consumidor. */
-  background: var(--gradient-primary);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 12px 26px -14px rgba(31, 147, 130, 0.5);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  /* Orb de pérola do protótipo v6 (logo_raquel_frois_refinado.svg): esfera
+     lavanda com brilho no alto-esquerda, monograma em tom vinho escuro. */
+  color: rgba(44, 26, 71, 0.66);
+  background: radial-gradient(circle at 34% 28%, #fff 0%, #f0eafe 38%, #c3adf4 78%, #9e7bf0 100%);
+  box-shadow: 0 18px 34px -12px rgba(60, 20, 90, 0.5), inset 0 -8px 18px rgba(120, 80, 200, 0.35);
 }
 
 .login__titulo {
@@ -106,7 +105,9 @@
   max-width: 260px;
   font-size: var(--fs-md);
   line-height: 1.45;
-  color: var(--text-3-aa);
+  /* --text-2 (não --text-3): fica sobre o painel de vidro sobre a foto, onde
+     o fundo é variável — o tom mais claro garante AA. */
+  color: var(--text-2);
 }
 
 .login__form {
@@ -132,8 +133,8 @@
 .login__input {
   width: 100%;
   padding: var(--space-12) var(--space-16);
-  /* Mesmo raio dos campos do resto do app (--radius-row) — o login não deve
-     parecer um produto diferente. Só o fundo continua translúcido por estar
+  /* Mesmo raio dos campos do resto do app (--radius-row) â€” o login nÃ£o deve
+     parecer um produto diferente. SÃ³ o fundo continua translÃºcido por estar
      sobre o painel de vidro. */
   border-radius: var(--radius-row);
   background: rgba(255, 255, 255, 0.08);
@@ -153,7 +154,7 @@
   outline: none;
   background: rgba(255, 255, 255, 0.12);
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(31, 147, 130, 0.22); /* mesmo anel dos campos do app */
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.22); /* mesmo anel dos campos do app */
 }
 
 .login__erro {
@@ -187,7 +188,7 @@
   font-size: var(--fs-md);
   font-weight: 700;
   text-align: center;
-  box-shadow: 0 16px 34px -10px rgba(31, 147, 130, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  box-shadow: 0 16px 34px -10px rgba(var(--primary-rgb), 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.3);
   transition: filter 0.15s var(--ease-out), opacity 0.15s var(--ease-out);
 }
 

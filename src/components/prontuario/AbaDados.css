@@ -1,4 +1,4 @@
-.aba-evolucao {
+﻿.aba-evolucao {
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
@@ -64,8 +64,8 @@
 .aba-evolucao__novo-objetivo button {
   padding: 0 var(--space-16);
   border-radius: var(--radius-row);
-  background: rgba(31, 147, 130, 0.16);
-  border: 1px solid rgba(31, 147, 130, 0.3);
+  background: rgba(var(--primary-rgb), 0.16);
+  border: 1px solid rgba(var(--primary-rgb), 0.3);
   color: var(--primary-soft);
   font-size: var(--fs-sm);
   font-weight: 600;

@@ -1,4 +1,4 @@
-.mais-menu {
+﻿.mais-menu {
   gap: var(--space-16);
 }
 
@@ -21,7 +21,7 @@
 }
 
 .mais-menu__item--ativo {
-  background: rgba(31, 147, 130, 0.14);
+  background: rgba(var(--primary-rgb), 0.14);
   color: var(--primary-text);
 }
 

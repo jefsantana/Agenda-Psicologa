@@ -1,4 +1,4 @@
-.config-vazio {
+﻿.config-vazio {
   padding: var(--space-18) 0;
   text-align: center;
   font-size: var(--fs-sm);
@@ -62,7 +62,7 @@
 .config-acento.is-active {
   border-color: var(--primary);
   color: var(--text);
-  background: rgba(31, 147, 130, 0.12);
+  background: rgba(var(--primary-rgb), 0.12);
 }
 
 .config-acento__cor {

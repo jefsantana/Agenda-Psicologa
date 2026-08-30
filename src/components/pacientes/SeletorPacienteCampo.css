@@ -1,4 +1,4 @@
-.seletor-paciente {
+﻿.seletor-paciente {
   position: relative;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .seletor-paciente__criar:hover {
-  background: rgba(31, 147, 130, 0.12);
+  background: rgba(var(--primary-rgb), 0.12);
 }
 
 .seletor-paciente__criar:disabled {

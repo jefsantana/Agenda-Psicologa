@@ -1,4 +1,4 @@
-.tarefas {
+﻿.tarefas {
   padding: var(--space-16);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -22,8 +22,8 @@
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--primary-text);
-  background: rgba(31, 147, 130, 0.13);
-  border: 1px solid rgba(31, 147, 130, 0.28);
+  background: rgba(var(--primary-rgb), 0.13);
+  border: 1px solid rgba(var(--primary-rgb), 0.28);
   padding: var(--space-4) var(--space-10);
   border-radius: var(--radius-chip);
 }
