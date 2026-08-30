@@ -64,6 +64,14 @@ h4 {
   letter-spacing: -0.02em;
 }
 
+/* Títulos de tela (h1) ficam no peso leve do protótipo; títulos de painel
+   (h2–h4) sobem um degrau para não parecerem apagados em tamanho pequeno. */
+h2,
+h3,
+h4 {
+  font-weight: 500;
+}
+
 p {
   margin: 0;
 }
