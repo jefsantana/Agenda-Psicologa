@@ -40,6 +40,56 @@
   gap: var(--space-12);
 }
 
+.config-subtitulo {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.config-subtitulo:not(:first-of-type) {
+  margin-top: var(--space-10);
+}
+
+.config-paletas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
+  gap: var(--space-10);
+}
+
+.config-paleta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-7) var(--space-12) var(--space-7) var(--space-7);
+  border-radius: var(--radius-row);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+  text-align: left;
+}
+
+.config-paleta.is-active {
+  border-color: var(--primary);
+  color: var(--text);
+  background: rgba(var(--primary-rgb), 0.12);
+}
+
+.config-paleta__amostra {
+  display: flex;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.config-paleta__amostra span {
+  flex: 1;
+}
+
 .config-acentos {
   display: flex;
   flex-wrap: wrap;

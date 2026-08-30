@@ -163,3 +163,61 @@
   --gradient-primary: linear-gradient(150deg, #33b3a0, #17806f);
   --gradient-card: linear-gradient(158deg, #46c3b0 0%, #1f9382 58%, #17806f 100%);
 }
+
+/*
+  Paletas de fundo — Configurações → Aparência (src/lib/tema.js), atributo
+  data-theme. "ameixa" é o padrão e já está no :root acima. Cada bloco só
+  redefine fundo, superfícies, bordas e texto — nunca o acento, para as duas
+  escolhas ficarem independentes. Todos os cinzas de texto seguem o mesmo
+  padrão do v5 (sólidos, contraste AA sobre a própria --surface).
+*/
+:root[data-theme="carvao"] {
+  --bg-app: #0f1012;
+  --bg-app-mobile: #111214;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #1b1e24 0%, #131519 45%, #0f1012 100%);
+  --surface: #17191d;
+  --surface-2: #1e2126;
+  --surface-3: #262a31;
+  --surface-inset: #121316;
+  --border: #2a2e35;
+  --border-strong: #363c45;
+  --text: #e6e8ee;
+  --text-2: #b4bac8;
+  --text-3: #a0a7b8;
+  --text-4: #616878;
+  --checkbox-vazio: #2e3442;
+}
+
+:root[data-theme="ardosia"] {
+  --bg-app: #0e1420;
+  --bg-app-mobile: #101725;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #1c2740 0%, #131c2e 45%, #0e1420 100%);
+  --surface: #1b2334;
+  --surface-2: #222c40;
+  --surface-3: #2c3852;
+  --surface-inset: #0c1119;
+  --border: #2f3b52;
+  --border-strong: #43516d;
+  --text: #e7ecf5;
+  --text-2: #bcc6d8;
+  --text-3: #9aa6bd;
+  --text-4: #5d6880;
+  --checkbox-vazio: #2f3b52;
+}
+
+:root[data-theme="cafe"] {
+  --bg-app: #17110d;
+  --bg-app-mobile: #1b140f;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #3a2416 0%, #261812 45%, #17110d 100%);
+  --surface: #261c15;
+  --surface-2: #31251c;
+  --surface-3: #3e2f24;
+  --surface-inset: #140f0b;
+  --border: #3a2c22;
+  --border-strong: #55412f;
+  --text: #f3ece4;
+  --text-2: #d3c6b8;
+  --text-3: #b3a595;
+  --text-4: #7a6a5a;
+  --checkbox-vazio: #3a2c22;
+}
