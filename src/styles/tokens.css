@@ -1,115 +1,126 @@
 /*
-  Tokens — v5 (tema escuro), conforme documento de especificação de
-  agosto/2026. Valores exatos; não inventar cores fora desta lista.
+  Tokens — v6 (tema escuro plum/lavanda).
+
+  Substitui o v5 (charcoal + teal "verde consultório"). Direção confirmada pela
+  usuária em set/2026 a partir do protótipo `NovosAjustes/Raquel Frois App.dc.html`:
+  fundo vinho/plum, acento lavanda, tipografia Instrument Sans, cards grandes com
+  vidro (glassmorphism). O histórico do v5 que evitava roxo fica revogado.
+
+  Regra mantida do v5: todo texto informativo precisa passar em AA (4.5:1). Por
+  isso os cinzas de texto são cores sólidas com contraste verificado sobre
+  --surface, não branco com opacidade baixa (que varia com o que está atrás).
+
+  Os nomes das variáveis são os mesmos do v5 de propósito — o redesign vive
+  aqui, os componentes não mudam de API.
 */
 
 :root {
-  /* Superfícies e texto */
-  /*
-    Neutros: charcoal quase-neutro no lugar do azul-preto (#0d0f14). A cara de
-    "SaaS/cripto" vinha tanto do roxo quanto do fundo azulado.
-  */
-  --bg-app: #0f1012;
-  --bg-app-mobile: #111214;
-  --surface: #17191d;
-  --surface-2: #1e2126;
-  /* --surface-3 agora é um degrau de verdade acima do --surface-2 (antes
-     diferiam em 1 ponto de hex e o hover das linhas era invisível). */
-  --surface-3: #262a31;
-  --surface-inset: #121316;
-  /*
-    Bordas subiram um tom em revisão anterior (#212530 → #262b36) porque sobre
-    --surface o valor antigo dava ~1,1:1 e os cards pareciam flutuar.
-  */
-  --border: #2a2e35;
-  --border-strong: #363c45;
+  /* Superfícies e texto
+     Fundo plum em degraus; o gradiente radial da tela fica em --bg-gradient,
+     aplicado no body (src/index.css). */
+  --bg-app: #140810;
+  --bg-app-mobile: #1a0b14;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #4a1e3e 0%, #2e1324 42%, #1c0b15 72%, #140810 100%);
 
-  /* Elevação — sombra suave e única para cards e painéis. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28), 0 4px 12px -4px rgba(0, 0, 0, 0.32);
-  --text: #e6e8ee;
-  --text-2: #b4bac8;
-  /*
-    --text-3 foi de #7c8494 para #a0a7b8 nesta revisão: o valor antigo dava
-    ~3.9:1 sobre --surface, abaixo do mínimo AA de 4.5:1 exigido pelo próprio
-    documento de design. O novo valor dá ~7:1 e vale para qualquer tamanho.
-  */
-  --text-3: #a0a7b8;
+  --surface: #24121d;
+  --surface-2: #2e1727;
+  --surface-3: #3a2033;
+  --surface-inset: #180a12;
+
+  --border: #3d2438;
+  --border-strong: #573650;
+
+  /* Vidro — cards translúcidos do protótipo. Use com fallback @supports:
+     quando não houver backdrop-filter, cair em --surface sólido. */
+  --glass-bg: rgba(255, 255, 255, 0.055);
+  --glass-bg-strong: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: 14px;
+
+  /* Elevação — sombra suave + brilho lilás dos cards do protótipo. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 14px 34px -16px rgba(120, 80, 220, 0.45);
+  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 220, 0.6);
+
+  --text: #f5eef3;
+  --text-2: #cbbcd4; /* ~9:1 sobre --surface */
+  /* --text-3: mauve claro sólido. ~5.4:1 sobre --surface — passa AA em qualquer
+     tamanho. Não usar rgba(255,255,255,.5) para texto: o contraste real depende
+     do card atrás e quebra o AA de forma não determinística. */
+  --text-3: #a99bb4;
   --text-3-aa: var(--text-3); /* alias mantido por compatibilidade — use --text-3 */
-  --text-4: #616878; /* ~2.7:1 — SÓ elementos decorativos, nunca texto informativo */
+  --text-4: #6e5c76; /* ~2.9:1 — SÓ decoração, nunca texto informativo */
 
-  /* Acentos semânticos */
-  /*
-    Acento: verde-azulado dessaturado — a cor de uma sala de atendimento, não o
-    roxo saturado de app de consumidor. Distinto do --success (menta, mais
-    claro) e do --info (azul). Usado em ação primária, navegação ativa, foco e
-    o estado "aguardando".
-  */
-  --primary: #1f9382;
-  --primary-strong: #17806f;
-  --primary-text: #57c6b3;
-  --primary-soft: #7ad6c6;
-  --primary-rgb: 31, 147, 130; /* para rgba() de tints — mantido em sincronia com --primary */
+  /* Acentos semânticos
+     Acento: lavanda-violeta do protótipo. --primary é a cor de preenchimento
+     (botões, fills, navegação ativa); --primary-text é a variante clara para
+     texto/links/ícones sobre fundo escuro (AA). */
+  --primary: #8e6aea;
+  --primary-strong: #7b55de;
+  --primary-text: #c6b0f5; /* ~7:1 sobre --surface */
+  --primary-soft: #d8c9ff;
+  --primary-rgb: 142, 106, 234; /* para rgba() de tints — em sincronia com --primary */
+
   --success: #3fcf8e;
-  --success-text: #4fd79a;
-  --warning: #f5a25d;
-  --info: #4ea8f5;
+  --success-text: #63dca7;
+  --warning: #f2b07a;
+  --warning-text: #f6c8a1;
+  --info: #6ba8f5;
   --pink: #e86aa6;
-  --amber: #f5c15d;
-  /*
-    --danger: rosa dessaturado para o único status realmente negativo ("falta").
-    O --pink saturado da doc de design continua para gráficos e decoração; para
-    um selo de status num contexto clínico ele lia como "app de consumidor".
-  */
-  --danger: #d98a9e;
-  --danger-text: #e29cad;
+  --amber: #f2c08a; /* pêssego do protótipo — badges "agora"/pendências. Texto escuro por cima: --on-amber */
+  --on-amber: #4a2a10;
+  /* --danger: rosa dessaturado para o único status realmente negativo ("falta"). */
+  --danger: #e29cad;
+  --danger-text: #ecb3c0;
 
-  --gradient-primary: linear-gradient(100deg, #1f9382, #17806f);
+  --gradient-primary: linear-gradient(150deg, #bca6f9, #8e6aea);
+  --gradient-card: linear-gradient(158deg, #bca6f9 0%, #9873ee 58%, #8963e8 100%);
   --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */
   --whatsapp: #25d366;
-  --checkbox-vazio: #2e3442; /* especificado no documento de design (seção 6, estado "Vazio" do checkbox) */
+  --checkbox-vazio: #3a2b3f;
 
-  /* Tipografia */
-  --font-body: "Inter", system-ui, sans-serif;
-  /* Display: grotesco humanista com caráter — títulos de tela, de painel e nomes. */
-  --font-display: "Schibsted Grotesk", "Inter", system-ui, sans-serif;
-  /* Dados: mono técnica — horários, valores, CID, CPF. O número lê como medida. */
+  /* Tipografia — Instrument Sans em todos os papéis (o protótipo usa uma família
+     só, variando peso e itálico). Fallback para Inter e system-ui. */
+  --font-body: "Instrument Sans", "Inter", system-ui, sans-serif;
+  --font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
+  /* Dados: mono técnica — horários, valores, CID, CPF. */
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /*
-    Escala tipográfica — 7 degraus. Antes o app tinha ~25 tamanhos ajustados no
-    olho (0.66 / 0.68 / 0.70 / 0.72 …), muitos com 1px de diferença. Todo
-    font-size agora encaixa num destes.
-  */
-  --fs-2xs: 0.6875rem; /* 11px — legendas, eyebrows, rótulos de tab bar */
-  --fs-xs: 0.75rem; /* 12px — texto auxiliar, badges, botões pequenos */
-  --fs-sm: 0.8125rem; /* 13px — texto secundário, linhas de lista, rótulos de campo */
-  --fs-md: 0.9375rem; /* 15px — corpo em destaque, inputs, título de painel */
-  --fs-lg: 1.0625rem; /* 17px — título de seção / sheet */
-  --fs-xl: 1.375rem; /* 22px — título de tela (mobile) */
-  --fs-2xl: 1.75rem; /* 28px — título de tela (desktop), número-herói de KPI, login */
+  /* Peso dos títulos display: o protótipo usa 400 (leve) com uma linha em
+     itálico para ênfase. Componentes que queriam bold devem usar --weight-display. */
+  --weight-display: 400;
 
-  /* Espaçamento (grade oficial do documento) */
+  /* Escala tipográfica — 7 degraus (inalterada do v5). */
+  --fs-2xs: 0.6875rem; /* 11px */
+  --fs-xs: 0.75rem; /* 12px */
+  --fs-sm: 0.8125rem; /* 13px */
+  --fs-md: 0.9375rem; /* 15px */
+  --fs-lg: 1.0625rem; /* 17px */
+  --fs-xl: 1.375rem; /* 22px */
+  --fs-2xl: 1.75rem; /* 28px */
+
+  /* Espaçamento (inalterado do v5) */
   --space-2: 2px;
-  --space-3: 3px; /* microajuste: aba/pílula interna — não está na grade original, mas segue a mesma convenção de nome */
-  --space-4: 4px; /* microajuste: espaçamentos internos bem apertados (ex.: calendário) */
+  --space-3: 3px;
+  --space-4: 4px;
   --space-7: 7px;
   --space-10: 10px;
   --space-12: 12px;
-  --space-14: 14px; /* estava sendo referenciado em 7 lugares sem nunca ter sido definido — corrigido nesta revisão */
+  --space-14: 14px;
   --space-16: 16px;
   --space-18: 18px;
 
-  /* Raios */
-  --radius-panel: 20px;
-  --radius-kpi: 18px;
-  --radius-row: 14px;
-  --radius-chip: 7px;
+  /* Raios — mais arredondados, alinhados ao protótipo (cards 26px, painel 26px). */
+  --radius-panel: 26px;
+  --radius-kpi: 22px;
+  --radius-row: 18px;
+  --radius-chip: 12px;
   --radius-pill: 999px;
-  --radius-checkbox: 5px;
-  --radius-avatar-desktop: 14px;
-  --radius-avatar-mobile: 12px;
+  --radius-checkbox: 6px;
+  --radius-avatar-desktop: 16px;
+  --radius-avatar-mobile: 14px;
+  --radius-sheet: 32px;
 
-  /* Layout */
+  /* Layout (inalterado do v5) */
   --sidebar-width: 236px;
   --right-column-width: 322px;
   --content-padding: 18px;
@@ -119,25 +130,36 @@
 }
 
 /*
-  Variações de acento — escolhidas em Configurações → Aparência (src/lib/tema.js).
-  O verde de consultório do :root acima é o padrão ("padrao"); as demais são a
-  mesma identidade com a cor de destaque trocada. Cada bloco que redefine
-  --primary também precisa redefinir --primary-rgb para os tints de rgba().
+  Variações de acento — Configurações → Aparência (src/lib/tema.js).
+  O lavanda do :root acima é o padrão ("padrao"). As demais trocam só a cor de
+  destaque. Cada bloco que redefine --primary também redefine --primary-rgb.
 */
 :root[data-accent="azul"] {
   --primary: #3b82f6;
   --primary-strong: #2f6fe0;
-  --primary-text: #8fb8fb;
-  --primary-soft: #a9c9fc;
+  --primary-text: #9fc1fb;
+  --primary-soft: #c2d7fc;
   --primary-rgb: 59, 130, 246;
-  --gradient-primary: linear-gradient(100deg, #3b82f6, #2f6fe0);
+  --gradient-primary: linear-gradient(150deg, #6ba8f5, #2f6fe0);
+  --gradient-card: linear-gradient(158deg, #7db4f7 0%, #3b82f6 58%, #2f6fe0 100%);
 }
 
 :root[data-accent="rosa"] {
   --primary: #e8639a;
   --primary-strong: #d14884;
-  --primary-text: #f2a0c4;
-  --primary-soft: #f5b9d3;
+  --primary-text: #f4a8c9;
+  --primary-soft: #f7c6db;
   --primary-rgb: 232, 99, 154;
-  --gradient-primary: linear-gradient(100deg, #e8639a, #d14884);
+  --gradient-primary: linear-gradient(150deg, #f28fb8, #d14884);
+  --gradient-card: linear-gradient(158deg, #f4a0c4 0%, #e8639a 58%, #d14884 100%);
+}
+
+:root[data-accent="verde"] {
+  --primary: #1f9382;
+  --primary-strong: #17806f;
+  --primary-text: #57c6b3;
+  --primary-soft: #7ad6c6;
+  --primary-rgb: 31, 147, 130;
+  --gradient-primary: linear-gradient(150deg, #33b3a0, #17806f);
+  --gradient-card: linear-gradient(158deg, #46c3b0 0%, #1f9382 58%, #17806f 100%);
 }

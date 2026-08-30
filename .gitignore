@@ -31,6 +31,12 @@ dist-ssr
 .agents
 .codex
 skills-lock.json
+
+# Material de referência de design (protótipos, mockups, assets brutos) — fonte
+# para os ajustes, não código do app. Fica só no computador.
+NovosAjustes/
+IMG_*.jpeg
+IMG_*.jpg
 *.suo
 *.ntvs*
 *.njsproj
