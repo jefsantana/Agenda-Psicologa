@@ -51,11 +51,7 @@ export default function LoginPage() {
       <div className="login__conteudo">
         <div className="login__marca">
           <span className="login__avatar">RF</span>
-          <h1 className="login__titulo">
-            Espaço
-            <br />
-            Raquel Fróis
-          </h1>
+          <h1 className="login__titulo">Espaço Raquel Fróis</h1>
           <p className="login__subtitulo">Agenda, prontuário e financeiro da sua prática clínica.</p>
         </div>
 
@@ -74,7 +70,7 @@ export default function LoginPage() {
                 spellCheck={false}
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="E-mail profissional"
+                placeholder="voce@exemplo.com"
               />
             </label>
 
@@ -86,7 +82,7 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 value={senha}
                 onChange={(event) => setSenha(event.target.value)}
-                placeholder="Senha"
+                placeholder="••••••••"
               />
             </label>
 
@@ -141,7 +137,7 @@ function RecuperarSenha({ aoVoltar }) {
           spellCheck={false}
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          placeholder="E-mail profissional"
+          placeholder="voce@exemplo.com"
         />
       </label>
 
@@ -171,8 +167,8 @@ function NovaSenha({ aoConcluir }) {
     event.preventDefault();
     setErro("");
 
-    if (senha.length < 6) {
-      setErro("A senha precisa ter pelo menos 6 caracteres.");
+    if (senha.length < 10) {
+      setErro("A senha precisa ter pelo menos 10 caracteres — são dados de saúde de pacientes.");
       return;
     }
     if (senha !== confirmacao) {

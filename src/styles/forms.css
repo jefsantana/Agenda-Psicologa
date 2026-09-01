@@ -1,4 +1,4 @@
-.field {
+﻿.field {
   display: flex;
   flex-direction: column;
   gap: var(--space-7);
@@ -6,7 +6,7 @@
 }
 
 .field__label {
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-3-aa);
 }
@@ -18,7 +18,7 @@
   background: var(--surface);
   border-radius: var(--radius-row);
   padding: var(--space-12);
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   color: var(--text);
   transition: border-color 0.15s var(--ease-out), box-shadow 0.15s var(--ease-out);
 }
@@ -29,6 +29,6 @@
 
 .field__input:focus-visible {
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(124, 107, 245, 0.22);
+  box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.22);
   outline: none;
 }

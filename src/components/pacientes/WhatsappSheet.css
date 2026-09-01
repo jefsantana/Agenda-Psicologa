@@ -1,6 +1,6 @@
 .whatsapp-sheet__telefone {
   margin-top: calc(-1 * var(--space-7));
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-3-aa);
 }
@@ -17,7 +17,7 @@
   background: var(--surface-2);
   border: 1px solid var(--border);
   color: var(--text-2);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 

@@ -16,7 +16,7 @@ const FORMATADOR_DATA = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month
 const FORMATADOR_HORA = new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit" });
 
 export function modelosMensagem(nomePaciente, proximoAtendimento) {
-  const primeiroNome = nomePaciente.split(" ")[0];
+  const primeiroNome = (nomePaciente ?? "").trim().split(" ")[0] || "tudo bem";
   const quandoTem = proximoAtendimento
     ? `em ${FORMATADOR_DATA.format(proximoAtendimento)} às ${FORMATADOR_HORA.format(proximoAtendimento)}`
     : null;

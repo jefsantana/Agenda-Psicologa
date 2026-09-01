@@ -21,9 +21,7 @@
 }
 
 .aba-historico__titulo {
-  font-size: 0.68rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--primary-text);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
 }

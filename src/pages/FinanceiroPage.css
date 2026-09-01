@@ -1,35 +1,59 @@
+/*
+  Tira única de 3 colunas em vez de 3 cards empilhados: no celular os cards
+  ficavam altos e quase vazios, empurrando a lista pra baixo da dobra.
+*/
 .fin-kpis {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--space-12);
-}
-
-@media (min-width: 720px) {
-  .fin-kpis {
-    grid-template-columns: 1.4fr 1fr 1fr;
-  }
-}
-
-.fin-kpi {
-  padding: var(--space-16);
+  grid-template-columns: repeat(3, 1fr);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-panel);
+  overflow: hidden;
+}
+
+.fin-kpi {
+  padding: var(--space-12) var(--space-14);
   display: flex;
   flex-direction: column;
-  gap: var(--space-7);
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.fin-kpi + .fin-kpi {
+  border-left: 1px solid var(--border);
 }
 
 .fin-kpi__rotulo {
-  font-size: 0.78rem;
-  color: var(--text-2);
+  font-size: var(--fs-xs);
+  color: var(--text-3-aa);
+  /* Reserva 2 linhas para os valores começarem na mesma altura quando um
+     rótulo quebra ("Recebido no mês") e os outros não. */
+  min-height: 2.4em;
 }
 
 .fin-kpi__valor {
-  font-size: 1.5rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-lg);
+  font-weight: 500;
+  letter-spacing: -0.02em;
   color: var(--text);
+}
+
+@media (min-width: 720px) {
+  .fin-kpi {
+    padding: var(--space-16) var(--space-18);
+    gap: var(--space-7);
+  }
+
+  .fin-kpi__rotulo {
+    font-size: var(--fs-sm);
+    color: var(--text-2);
+    min-height: 0;
+  }
+
+  .fin-kpi__valor {
+    font-size: var(--fs-2xl);
+  }
 }
 
 .fin-kpi--secundario .fin-kpi__valor {
@@ -53,7 +77,7 @@
 .fin-filtros button {
   padding: var(--space-7) var(--space-14);
   border-radius: var(--radius-pill);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-3-aa);
 }
@@ -73,7 +97,7 @@
 .fin-lista__vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -101,13 +125,14 @@
 }
 
 .fin-linha__paciente {
-  font-size: 0.85rem;
+  font-family: var(--font-display);
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
 }
 
 .fin-linha__sub {
-  font-size: 0.74rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }
 
@@ -120,9 +145,10 @@
 }
 
 .fin-linha__valor {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: 500;
   color: var(--text);
 }
 
@@ -143,13 +169,18 @@
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text);
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
 }
 
 .fin-botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Alvo de toque confortável no celular — a lista é muito usada no telefone. */
+  min-height: 40px;
   padding: var(--space-7) var(--space-14);
-  border-radius: var(--radius-pill);
-  font-size: 0.76rem;
+  border-radius: var(--radius-chip);
+  font-size: var(--fs-sm);
   font-weight: 600;
   white-space: nowrap;
   background: var(--surface);
@@ -157,10 +188,15 @@
   color: var(--text-2);
 }
 
+/*
+  Hierarquia: "Dar baixa" é a ação principal da lista — botão cheio. "Confirmar"
+  (no fluxo de baixa) segue verde. "Emitir recibo" e "Estornar" são secundárias:
+  o contorno neutro do .fin-botao base, só com a cor do texto trocada.
+*/
 .fin-botao--baixar {
-  color: var(--primary-soft);
-  background: rgba(124, 107, 245, 0.14);
-  border-color: rgba(124, 107, 245, 0.3);
+  color: var(--on-primary);
+  background: var(--gradient-primary);
+  border-color: transparent;
 }
 
 .fin-botao--confirmar {
@@ -170,9 +206,7 @@
 }
 
 .fin-botao--recibo {
-  color: var(--info);
-  background: rgba(78, 168, 245, 0.14);
-  border-color: rgba(78, 168, 245, 0.3);
+  color: var(--text);
 }
 
 .fin-botao--estornar {

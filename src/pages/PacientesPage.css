@@ -8,7 +8,9 @@
   display: flex;
   align-items: center;
   padding: 0 var(--space-12);
-  border-radius: var(--radius-pill);
+  /* Mesmo raio dos demais campos do app (--radius-row) — pílula total
+     num campo de busca lê como "app de consumidor". */
+  border-radius: var(--radius-row);
   background: var(--surface);
   border: 1px solid var(--border);
 }
@@ -23,7 +25,7 @@
   background: none;
   border: none;
   color: var(--text);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
 }
 
 .pacientes-busca input::placeholder {
@@ -36,10 +38,10 @@
   align-items: center;
   gap: var(--space-7);
   padding: 0 var(--space-16);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-row);
   background: var(--gradient-primary);
   color: var(--on-primary);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -47,7 +49,7 @@
 .pacientes-vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 

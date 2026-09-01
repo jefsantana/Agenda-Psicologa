@@ -10,7 +10,7 @@
 
 .donut-painel__titulo {
   align-self: flex-start;
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
   margin-bottom: var(--space-16);
@@ -19,13 +19,13 @@
 .donut-painel__titulo span {
   font-weight: 400;
   color: var(--text-3-aa);
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
 }
 
 .donut-painel__vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -62,14 +62,14 @@
 }
 
 .donut__total-numero {
-  font-size: 1.55rem;
+  font-size: var(--fs-2xl);
   font-weight: 600;
   letter-spacing: -0.03em;
   color: var(--text);
 }
 
 .donut__total-rotulo {
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }
 
@@ -85,7 +85,7 @@
   display: flex;
   align-items: center;
   gap: var(--space-7);
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   color: var(--text-2);
 }
 

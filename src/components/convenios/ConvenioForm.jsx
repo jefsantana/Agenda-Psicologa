@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apagarConvenio, salvarConvenio } from "../../lib/convenios.js";
+import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import { paraNumero, paraTextoValor } from "../../lib/numero.js";
 
 export default function ConvenioForm({ aberto, convenio, aoFechar, aoSalvar }) {
@@ -65,12 +66,15 @@ export default function ConvenioForm({ aberto, convenio, aoFechar, aoSalvar }) {
     }
   }
 
+  const painelRef = useRef(null);
+  useModalDismiss(aberto, aoFechar, painelRef);
+
   if (!aberto) return null;
 
   return (
     <div className="sheet" role="dialog" aria-modal="true" aria-label="Convênio">
       <button type="button" className="sheet__backdrop" onClick={aoFechar} aria-label="Fechar" />
-      <form className="sheet__painel" onSubmit={handleSubmit}>
+      <form className="sheet__painel" ref={painelRef} onSubmit={handleSubmit}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">{convenio ? "Editar convênio" : "Novo convênio"}</h2>
 

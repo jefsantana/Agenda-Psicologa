@@ -7,7 +7,7 @@
 .prontuario-seletor__vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -27,7 +27,7 @@
   border: 1px solid var(--border);
   border-radius: var(--radius-row);
   text-align: left;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
   transition: background-color 0.15s var(--ease-out);
@@ -38,7 +38,7 @@
 }
 
 .prontuario-seletor__sub {
-  font-size: 0.74rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-3-aa);
 }
@@ -75,13 +75,13 @@
 }
 
 .prontuario-topo__paciente h2 {
-  font-size: 1.05rem;
+  font-size: var(--fs-lg);
   font-weight: 600;
   color: var(--text);
 }
 
 .prontuario-topo__trocar {
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--primary-text);
   /* Área de toque maior que o texto visível — no celular esse botão tinha
@@ -95,21 +95,24 @@
   align-items: center;
   padding: var(--space-3) var(--space-10);
   border-radius: var(--radius-chip);
-  font-size: 0.66rem;
+  font-size: var(--fs-2xs);
   font-weight: 700;
   letter-spacing: 0.02em;
-  color: var(--success-text);
-  background: rgba(63, 207, 142, 0.16);
-  border: 1px solid rgba(63, 207, 142, 0.3);
+  /* Azul informativo, não verde: o acento passou a ser verde, e verde também é
+     "sucesso/pago/realizado" no app — um aviso de sigilo lendo como sucesso era
+     ruído semântico. Azul lê como "aviso legal". */
+  color: var(--info);
+  background: rgba(78, 168, 245, 0.14);
+  border: 1px solid rgba(78, 168, 245, 0.3);
 }
 
 .prontuario-gerar-pdf {
   flex-shrink: 0;
   padding: var(--space-12) var(--space-18);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-row);
   background: var(--gradient-primary);
   color: var(--on-primary);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -125,7 +128,7 @@
 }
 
 .prontuario-secao h3 {
-  font-size: 0.92rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
 }
@@ -137,7 +140,7 @@
 }
 
 .prontuario-secao__editar {
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--primary-text);
 }
@@ -146,11 +149,9 @@
   margin: 0;
   padding-top: var(--space-7);
   border-top: 1px solid var(--border);
-  font-size: 0.72rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  color: var(--text-3);
+  color: var(--text-2);
 }
 
 .prontuario-secao__acoes {
@@ -178,15 +179,14 @@
 }
 
 .prontuario-dado__rotulo {
-  font-size: 0.66rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
+  font-size: var(--fs-xs);
+  font-weight: 500;
   color: var(--text-3);
 }
 
 .prontuario-dado__valor {
-  font-size: 0.83rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
   color: var(--text-2);
   overflow-wrap: break-word;
 }
@@ -209,10 +209,10 @@
 
 .prontuario-salvar {
   padding: var(--space-10) var(--space-18);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-row);
   background: var(--gradient-primary);
   color: var(--on-primary);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
 }
 
@@ -222,6 +222,6 @@
 
 .prontuario-topo__sessoes {
   font-weight: 400;
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }

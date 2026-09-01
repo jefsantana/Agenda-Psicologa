@@ -7,7 +7,7 @@
 
 .whatsapp-rapido__ajuda {
   margin-top: calc(-1 * var(--space-7));
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -23,7 +23,7 @@
 .whatsapp-rapido__vazio {
   padding: var(--space-16) 0;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -31,21 +31,6 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-7);
-}
-
-.whatsapp-rapido__lista li {
-  animation: whatsapp-rapido-in 0.3s var(--ease-out) backwards;
-}
-
-@keyframes whatsapp-rapido-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .whatsapp-rapido__paciente {
@@ -69,7 +54,7 @@
 
 .whatsapp-rapido__hora {
   font-variant-numeric: tabular-nums;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
   min-width: 44px;
@@ -85,7 +70,7 @@
 }
 
 .whatsapp-rapido__nome {
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
@@ -94,7 +79,7 @@
 }
 
 .whatsapp-rapido__telefone {
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }
 

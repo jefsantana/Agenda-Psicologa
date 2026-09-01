@@ -12,7 +12,7 @@ import {
 } from "../lib/agenda.js";
 import { buscarConvenios } from "../lib/pacientes.js";
 import { buscarPerfil } from "../lib/perfil.js";
-import { inicioDoMes, fimDoMes, paraISO } from "../lib/date.js";
+import { inicioDoMes, fimDoMes, paraISO, dataLonga } from "../lib/date.js";
 import "./AgendaPage.css";
 
 export default function AgendaPage() {
@@ -138,9 +138,7 @@ export default function AgendaPage() {
         </section>
       ) : !ehIntervalo ? (
         <section className="agenda-lista-painel">
-          <h2 className="agenda-lista-painel__titulo">
-            {new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long" }).format(periodo.inicio)}
-          </h2>
+          {/* Sem título aqui: a data já aparece no seletor logo acima. */}
           {itensDoPeriodo.length === 0 ? (
             <p className="agenda-lista-painel__vazio">Nada agendado neste dia.</p>
           ) : (
@@ -159,9 +157,7 @@ export default function AgendaPage() {
       ) : (
         grupos.map(({ diaISO, data, itens }) => (
           <section className="agenda-lista-painel" key={diaISO}>
-            <h2 className="agenda-lista-painel__titulo">
-              {new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long" }).format(data)}
-            </h2>
+            <h2 className="agenda-lista-painel__titulo">{dataLonga(data)}</h2>
             <ListaAtendimentos
               itens={itens}
               onClickAtendimento={abrirEdicao}
@@ -195,11 +191,10 @@ export default function AgendaPage() {
 function ListaAtendimentos({ itens, onClickAtendimento, onClickBloqueio, onExcluido }) {
   return (
     <ul className="agenda-lista-painel__lista">
-      {itens.map((item, index) => (
+      {itens.map((item) => (
         <AtendimentoRow
           key={item.id}
           item={item}
-          index={index}
           onClick={item.tipoLinha === "bloqueio" ? () => onClickBloqueio(item) : () => onClickAtendimento(item)}
           onExcluido={onExcluido}
         />

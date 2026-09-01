@@ -2,7 +2,17 @@ import { useEffect, useState } from "react";
 import AppShell from "../components/layout/AppShell.jsx";
 import { buscarPerfil, salvarPerfil } from "../lib/perfil.js";
 import { buscarHorariosSemana, salvarHorarioDia } from "../lib/configuracoes.js";
-import { ACENTOS, definirAcento, obterAcento } from "../lib/tema.js";
+import {
+  ACENTOS,
+  MODOS,
+  PALETAS,
+  definirAcento,
+  definirModo,
+  definirPaleta,
+  obterAcento,
+  obterModo,
+  obterPaleta,
+} from "../lib/tema.js";
 import { supabase } from "../lib/supabaseClient.js";
 import "./ConfiguracoesPage.css";
 
@@ -95,25 +105,82 @@ function SecaoPerfil({ perfil, onSalvo }) {
 }
 
 function SecaoAparencia() {
+  const [modo, setModo] = useState(obterModo());
   const [acento, setAcento] = useState(obterAcento());
+  const [paleta, setPaleta] = useState(obterPaleta());
 
-  function escolher(id) {
+  function escolherModo(id) {
+    definirModo(id);
+    setModo(id);
+  }
+
+  function escolherAcento(id) {
     definirAcento(id);
     setAcento(id);
+  }
+
+  function escolherPaleta(id) {
+    definirPaleta(id);
+    setPaleta(id);
   }
 
   return (
     <section className="config-secao">
       <h2>Aparência</h2>
-      <p className="config-secao__ajuda">Escolha a cor de destaque do sistema.</p>
 
+      <h3 className="config-subtitulo">Tema</h3>
+      <p className="config-secao__ajuda">
+        &quot;Automático&quot; acompanha o claro/escuro do seu computador ou celular.
+        Funciona com qualquer paleta.
+      </p>
+      <div className="config-acentos">
+        {MODOS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`config-acento config-acento--texto ${modo === item.id ? "is-active" : ""}`}
+            onClick={() => escolherModo(item.id)}
+            aria-pressed={modo === item.id}
+          >
+            {item.nome}
+          </button>
+        ))}
+      </div>
+
+      <h3 className="config-subtitulo">Paleta de cores</h3>
+      <p className="config-secao__ajuda">
+        Muda o fundo e as superfícies de todo o sistema — telas, cards e menus.
+      </p>
+      <div className="config-paletas">
+        {PALETAS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            className={`config-paleta ${paleta === item.id ? "is-active" : ""}`}
+            onClick={() => escolherPaleta(item.id)}
+            aria-pressed={paleta === item.id}
+          >
+            <span className="config-paleta__amostra" aria-hidden="true">
+              <span style={{ background: item.amostra[0] }} />
+              <span style={{ background: item.amostra[1] }} />
+              <span style={{ background: item.amostra[2] }} />
+            </span>
+            {item.nome}
+          </button>
+        ))}
+      </div>
+
+      <h3 className="config-subtitulo">Cor de destaque</h3>
+      <p className="config-secao__ajuda">
+        A cor de botões, links, foco e navegação ativa. Funciona com qualquer paleta.
+      </p>
       <div className="config-acentos">
         {ACENTOS.map((item) => (
           <button
             key={item.id}
             type="button"
             className={`config-acento ${acento === item.id ? "is-active" : ""}`}
-            onClick={() => escolher(item.id)}
+            onClick={() => escolherAcento(item.id)}
             aria-pressed={acento === item.id}
           >
             <span className="config-acento__cor" style={{ background: item.cor }} />
@@ -298,6 +365,7 @@ function SecaoHorarios() {
                     <input
                       type="time"
                       className="field__input"
+                      aria-label={`Início do atendimento — ${NOMES_DIA[dia.dia_semana]}`}
                       value={dia.hora_inicio?.slice(0, 5)}
                       onChange={(e) => alterarDia(dia.id, "hora_inicio", e.target.value)}
                     />
@@ -305,6 +373,7 @@ function SecaoHorarios() {
                     <input
                       type="time"
                       className="field__input"
+                      aria-label={`Fim do atendimento — ${NOMES_DIA[dia.dia_semana]}`}
                       value={dia.hora_fim?.slice(0, 5)}
                       onChange={(e) => alterarDia(dia.id, "hora_fim", e.target.value)}
                     />
@@ -315,6 +384,7 @@ function SecaoHorarios() {
                       className="field__input config-horario-dia__duracao"
                       value={dia.duracao_padrao_minutos}
                       onChange={(e) => alterarDia(dia.id, "duracao_padrao_minutos", e.target.value)}
+                      aria-label={`Duração padrão da consulta em minutos — ${NOMES_DIA[dia.dia_semana]}`}
                       title="Duração padrão da consulta (min)"
                     />
                     <span className="config-horario-dia__unidade">min</span>

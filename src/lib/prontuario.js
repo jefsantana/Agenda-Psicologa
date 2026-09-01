@@ -52,11 +52,13 @@ export async function buscarHistoricoAtendimentos(pacienteId) {
 /** Trilha de auditoria LGPD: quem acessou o quê e quando. Nunca bloqueia a ação em caso de falha. */
 export async function registrarAuditoria({ acao, entidade, entidadeId }) {
   try {
+    // getSession() lê do armazenamento local (sem ida à rede); getUser() faria
+    // um request extra a cada abertura de prontuário.
     const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
-    await supabase.from("audit_log").insert({ ator_id: user.id, acao, entidade, entidade_id: entidadeId });
+      data: { session },
+    } = await supabase.auth.getSession();
+    if (!session?.user) return;
+    await supabase.from("audit_log").insert({ ator_id: session.user.id, acao, entidade, entidade_id: entidadeId });
   } catch (erro) {
     console.error("Falha ao registrar auditoria (não bloqueante):", erro);
   }

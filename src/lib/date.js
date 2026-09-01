@@ -19,6 +19,18 @@ export function formatarHora(date) {
   return date.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 }
 
+const FORMATADOR_DATA_LONGA = new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long" });
+
+/**
+ * "Quinta-feira, 27 de agosto" — data por extenso com só a primeira letra
+ * maiúscula. Substitui o `text-transform: capitalize` do CSS, que deixava
+ * "Quinta-Feira, 27 De Agosto".
+ */
+export function dataLonga(date) {
+  const texto = FORMATADOR_DATA_LONGA.format(date);
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
 /** Segunda a domingo da semana que contém `baseDate`. */
 export function semanaAtual(baseDate = new Date()) {
   const diaSemana = baseDate.getDay(); // 0 = domingo
@@ -73,4 +85,13 @@ export function formatarMinutos(minutos) {
 
 export function formatarMoeda(valor) {
   return (valor ?? 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+}
+
+/** "R$ 1.560" — sem centavos, para números-resumo em KPIs e cabeçalhos. */
+export function formatarMoedaResumo(valor) {
+  return (valor ?? 0).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+    maximumFractionDigits: 0,
+  });
 }

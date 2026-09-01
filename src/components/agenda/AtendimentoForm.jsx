@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apagarAtendimento, salvarAtendimento } from "../../lib/agenda.js";
+import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import { combinarDataHora, formatarHora, paraISO } from "../../lib/date.js";
 import { paraNumero, paraTextoValor } from "../../lib/numero.js";
 import SeletorPacienteCampo from "../pacientes/SeletorPacienteCampo.jsx";
@@ -112,12 +113,15 @@ export default function AtendimentoForm({ aberto, atendimento, dataPadrao, conve
     }
   }
 
+  const painelRef = useRef(null);
+  useModalDismiss(aberto, aoFechar, painelRef);
+
   if (!aberto) return null;
 
   return (
     <div className="sheet" role="dialog" aria-modal="true" aria-label="Atendimento">
       <button type="button" className="sheet__backdrop" onClick={aoFechar} aria-label="Fechar" />
-      <form className="sheet__painel" onSubmit={handleSubmit}>
+      <form className="sheet__painel" ref={painelRef} onSubmit={handleSubmit}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">{atendimento ? "Editar atendimento" : "Novo atendimento"}</h2>
 

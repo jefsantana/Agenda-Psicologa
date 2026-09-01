@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Espaço Raquel Fróis">
+  <defs>
+    <radialGradient id="bg" cx="65%" cy="10%" r="95%">
+      <stop offset="0%" stop-color="#4a1e3e"/>
+      <stop offset="100%" stop-color="#140810"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="34%" cy="28%" r="75%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="42%" stop-color="#e4d9fc"/>
+      <stop offset="78%" stop-color="#bca6f9"/>
+      <stop offset="100%" stop-color="#8963e8"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)"/>
+  <circle cx="32" cy="32" r="18" fill="url(#orb)"/>
+  <ellipse cx="26" cy="25" rx="7" ry="4" fill="#ffffff" opacity="0.28"/>
+</svg>

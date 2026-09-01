@@ -12,11 +12,12 @@ const ProntuarioPage = lazy(() => import("./pages/ProntuarioPage.jsx"));
 const ConveniosPage = lazy(() => import("./pages/ConveniosPage.jsx"));
 const FinanceiroPage = lazy(() => import("./pages/FinanceiroPage.jsx"));
 const ConfiguracoesPage = lazy(() => import("./pages/ConfiguracoesPage.jsx"));
+const EmConstrucaoPage = lazy(() => import("./pages/EmConstrucaoPage.jsx"));
 
 export default function App() {
   return (
     <HashRouter>
-      <Suspense fallback={null}>
+      <Suspense fallback={<TelaCarregando />}>
         <Routes>
           <Route path="/" element={<Navigate to="/entrar" replace />} />
           <Route path="/entrar" element={<LoginPage />} />
@@ -84,10 +85,51 @@ export default function App() {
               </ProtegidaPorLogin>
             }
           />
+          <Route
+            path="/relatorios"
+            element={
+              <ProtegidaPorLogin>
+                <EmConstrucaoPage
+                  titulo="Relatórios"
+                  descricao="Aqui vão ficar os relatórios de atendimentos, faturamento e convênios para fechamento do mês e envio às operadoras."
+                />
+              </ProtegidaPorLogin>
+            }
+          />
+          <Route
+            path="/mensagens"
+            element={
+              <ProtegidaPorLogin>
+                <EmConstrucaoPage
+                  titulo="Mensagens"
+                  descricao="Aqui vai ficar a central de mensagens com pacientes — lembretes de sessão, confirmações e conversas por WhatsApp."
+                />
+              </ProtegidaPorLogin>
+            }
+          />
           <Route path="*" element={<Navigate to="/entrar" replace />} />
         </Routes>
       </Suspense>
     </HashRouter>
+  );
+}
+
+function TelaCarregando() {
+  return (
+    <div
+      role="status"
+      aria-label="Carregando"
+      style={{
+        minHeight: "100dvh",
+        display: "grid",
+        placeItems: "center",
+        background: "var(--bg-app-mobile)",
+        color: "var(--text-3)",
+        font: "500 0.9rem var(--font-body)",
+      }}
+    >
+      Carregando…
+    </div>
   );
 }
 

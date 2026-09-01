@@ -11,7 +11,6 @@ import {
   buscarPacienteParaProntuario,
   registrarAuditoria,
 } from "../lib/prontuario.js";
-import { gerarPdfProntuario } from "../lib/prontuarioPdf.js";
 import { buscarConvenios, buscarPacientes } from "../lib/pacientes.js";
 import { buscarPerfil } from "../lib/perfil.js";
 import "./PacientesPage.css";
@@ -30,7 +29,11 @@ export default function ProntuarioPage() {
   return (
     <AppShell perfil={perfil} title="Prontuário" subtitle="Evolução, registro de sessões e geração de PDF.">
       {pacienteId ? (
-        <ProntuarioDoPaciente pacienteId={pacienteId} onTrocarPaciente={() => setSearchParams({})} />
+        <ProntuarioDoPaciente
+          pacienteId={pacienteId}
+          perfil={perfil}
+          onTrocarPaciente={() => setSearchParams({})}
+        />
       ) : (
         <SeletorDePaciente onEscolher={(id) => setSearchParams({ paciente: id })} />
       )}
@@ -86,7 +89,7 @@ function SeletorDePaciente({ onEscolher }) {
   );
 }
 
-function ProntuarioDoPaciente({ pacienteId, onTrocarPaciente }) {
+function ProntuarioDoPaciente({ pacienteId, perfil, onTrocarPaciente }) {
   const [paciente, setPaciente] = useState(null);
   const [prontuario, setProntuario] = useState(null);
   const [historico, setHistorico] = useState([]);
@@ -125,7 +128,9 @@ function ProntuarioDoPaciente({ pacienteId, onTrocarPaciente }) {
   useEffect(() => setAba("historico"), [pacienteId]);
 
   async function handleGerarPdf() {
-    gerarPdfProntuario({ paciente, prontuario, historico });
+    // jsPDF só é carregado quando a psicóloga clica em gerar — mantém a tela leve.
+    const { gerarPdfProntuario } = await import("../lib/prontuarioPdf.js");
+    gerarPdfProntuario({ paciente, prontuario, historico, perfil });
     registrarAuditoria({ acao: "gerar_pdf", entidade: "prontuario", entidadeId: prontuario.id });
   }
 

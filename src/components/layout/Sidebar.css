@@ -1,4 +1,4 @@
-.sidebar {
+﻿.sidebar {
   display: none;
 }
 
@@ -34,7 +34,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.8rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--on-primary);
   background: var(--gradient-primary);
@@ -47,7 +47,7 @@
 }
 
 .sidebar__perfil-nome {
-  font-size: 0.88rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
@@ -56,7 +56,7 @@
 }
 
 .sidebar__perfil-crp {
-  font-size: 0.72rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }
 
@@ -74,27 +74,22 @@
   gap: var(--space-10);
   padding: var(--space-10);
   border-radius: var(--radius-row);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-3);
   border: 1px solid transparent;
   transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
 }
 
-.sidebar__item:hover:not([aria-disabled="true"]) {
+.sidebar__item:hover {
   background: var(--surface-3);
   color: var(--text);
 }
 
 .sidebar__item--ativo {
-  background: rgba(124, 107, 245, 0.16);
+  background: rgba(var(--primary-rgb), 0.16);
   color: var(--primary-soft);
-  border-color: rgba(124, 107, 245, 0.3);
-}
-
-.sidebar__item[aria-disabled="true"] {
-  cursor: default;
-  opacity: 0.55;
+  border-color: rgba(var(--primary-rgb), 0.3);
 }
 
 .sidebar__rodape {
@@ -110,7 +105,7 @@
   align-items: center;
   gap: var(--space-10);
   padding: var(--space-10);
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-3);
   border-radius: var(--radius-row);

@@ -1,7 +1,10 @@
 .dashboard__lembrete {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
   padding: var(--space-12) var(--space-14);
   border-radius: var(--radius-row);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   /* Padrão: atraso real (dias anteriores) — mantém o tom de atenção. */
   background: rgba(245, 166, 78, 0.12);
@@ -9,15 +12,15 @@
   color: var(--warning);
 }
 
+.dashboard__lembrete p {
+  margin: 0;
+}
+
 /* Lembrete de rotina do próprio dia — informativo, não é um problema. */
 .dashboard__lembrete--info {
   background: rgba(78, 168, 245, 0.1);
   border: 1px solid rgba(78, 168, 245, 0.3);
   color: var(--info);
-}
-
-.dashboard__lembrete + .dashboard__lembrete {
-  margin-top: var(--space-10);
 }
 
 .dashboard__lembrete a {
@@ -31,14 +34,14 @@
   gap: var(--space-10);
 }
 
-@media (min-width: 640px) {
-  .dashboard__kpis {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
+/*
+  4 colunas só quando há largura real para os rótulos ("Próximos atendimentos",
+  "Recebimentos (mês)"). Entre ~640 e 1024 os cards ficavam estreitos demais e
+  o rótulo quebrava no meio da palavra; abaixo de 640, 2 colunas já resolvem.
+*/
 @media (min-width: 1024px) {
   .dashboard__kpis {
+    grid-template-columns: repeat(4, 1fr);
     gap: var(--space-16);
   }
 }

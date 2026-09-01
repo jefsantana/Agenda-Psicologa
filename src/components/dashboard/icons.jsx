@@ -80,6 +80,14 @@ export function IconeSeta(props) {
   );
 }
 
+export function IconeSetaCima(props) {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" {...common} {...props}>
+      <path d="M12 19V6M6 12l6-6 6 6" />
+    </svg>
+  );
+}
+
 export function IconeCalendario(props) {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" {...common} {...props}>

@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SemanaTira from "../agenda/SemanaTira.jsx";
 import WhatsappSheet from "../pacientes/WhatsappSheet.jsx";
 import { IconeWhatsapp } from "./icons.jsx";
 import { buscarAtendimentosParaWhatsapp } from "../../lib/dashboard.js";
 import { buscarPacientes } from "../../lib/pacientes.js";
 import { formatarHora } from "../../lib/date.js";
+import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import "./WhatsappRapido.css";
 
 export default function WhatsappRapido({ aberto, aoFechar }) {
@@ -54,6 +55,9 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
     aoFechar();
   }
 
+  const painelRef = useRef(null);
+  useModalDismiss(aberto && !selecionado, fechar, painelRef);
+
   if (!aberto) return null;
 
   const buscaAtiva = busca.trim().length > 0;
@@ -62,7 +66,7 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
     <>
       <div className="sheet" role="dialog" aria-modal="true" aria-label="Enviar WhatsApp">
         <button type="button" className="sheet__backdrop" onClick={fechar} aria-label="Fechar" />
-        <div className="sheet__painel">
+        <div className="sheet__painel" ref={painelRef}>
           <span className="sheet__grip" aria-hidden="true" />
           <h2 className="sheet__titulo">
             <span className="whatsapp-rapido__icone">
@@ -91,8 +95,8 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
                 <p className="whatsapp-rapido__vazio">Nenhum paciente com telefone encontrado.</p>
               ) : (
                 <ul>
-                  {resultadosBusca.map((paciente, index) => (
-                    <li key={paciente.id} style={{ animationDelay: `${index * 30}ms` }}>
+                  {resultadosBusca.map((paciente) => (
+                    <li key={paciente.id}>
                       <button
                         type="button"
                         className="whatsapp-rapido__paciente"
@@ -114,8 +118,8 @@ export default function WhatsappRapido({ aberto, aoFechar }) {
               <p className="whatsapp-rapido__vazio">Nenhum paciente com telefone agendado neste dia.</p>
             ) : (
               <ul>
-                {atendimentos.map((item, index) => (
-                  <li key={item.atendimentoId} style={{ animationDelay: `${index * 30}ms` }}>
+                {atendimentos.map((item) => (
+                  <li key={item.atendimentoId}>
                     <button type="button" className="whatsapp-rapido__paciente" onClick={() => setSelecionado(item)}>
                       <span className="whatsapp-rapido__hora">{formatarHora(item.inicio)}</span>
                       <span className="whatsapp-rapido__textos">

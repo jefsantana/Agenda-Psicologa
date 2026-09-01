@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AppShell from "../components/layout/AppShell.jsx";
 import { baixarPagamento, buscarLancamentos, estornarPagamento, statusLancamento } from "../lib/financeiro.js";
-import { gerarReciboPdf } from "../lib/reciboPdf.js";
 import { buscarPerfil } from "../lib/perfil.js";
-import { formatarMoeda, paraISO } from "../lib/date.js";
+import { formatarMoeda, formatarMoedaResumo, paraISO } from "../lib/date.js";
 import "../components/dashboard/StatusBadge.css";
 import "./FinanceiroPage.css";
 
@@ -18,6 +17,7 @@ export default function FinanceiroPage() {
   const [erro, setErro] = useState("");
   const [filtroStatus, setFiltroStatus] = useState("");
   const [baixando, setBaixando] = useState(null);
+  const [estornando, setEstornando] = useState(null);
   const [formaEscolhida, setFormaEscolhida] = useState(FORMAS_PAGAMENTO[0]);
 
   const carregar = useCallback(async () => {
@@ -68,13 +68,15 @@ export default function FinanceiroPage() {
     carregar();
   }
 
-  async function handleEstornar(id) {
-    if (!window.confirm("Estornar este pagamento? Ele volta para pendente/atrasado.")) return;
+  async function confirmarEstorno(id) {
     await estornarPagamento(id);
+    setEstornando(null);
     carregar();
   }
 
-  function handleRecibo(lancamento) {
+  async function handleRecibo(lancamento) {
+    // jsPDF só carrega ao clicar em "Recibo".
+    const { gerarReciboPdf } = await import("../lib/reciboPdf.js");
     gerarReciboPdf({
       paciente: lancamento.paciente,
       convenio: lancamento.convenio,
@@ -91,17 +93,17 @@ export default function FinanceiroPage() {
       <div className="fin-kpis">
         <div className="fin-kpi">
           <span className="fin-kpi__rotulo">Recebido no mês</span>
-          <p className="fin-kpi__valor">{formatarMoeda(kpis.recebidoMes)}</p>
+          <p className="fin-kpi__valor">{formatarMoedaResumo(kpis.recebidoMes)}</p>
         </div>
 
         <div className="fin-kpi fin-kpi--secundario">
           <span className="fin-kpi__rotulo">A receber</span>
-          <p className="fin-kpi__valor">{formatarMoeda(kpis.aReceber)}</p>
+          <p className="fin-kpi__valor">{formatarMoedaResumo(kpis.aReceber)}</p>
         </div>
 
         <div className="fin-kpi fin-kpi--alerta">
           <span className="fin-kpi__rotulo">Em atraso</span>
-          <p className="fin-kpi__valor">{formatarMoeda(kpis.emAtraso)}</p>
+          <p className="fin-kpi__valor">{formatarMoedaResumo(kpis.emAtraso)}</p>
         </div>
       </div>
 
@@ -147,14 +149,25 @@ export default function FinanceiroPage() {
                     <span className="fin-linha__valor">{formatarMoeda(lancamento.valor)}</span>
 
                     {status === "pago" ? (
-                      <div className="fin-linha__botoes">
-                        <button type="button" className="fin-botao fin-botao--recibo" onClick={() => handleRecibo(lancamento)}>
-                          Emitir recibo
-                        </button>
-                        <button type="button" className="fin-botao fin-botao--estornar" onClick={() => handleEstornar(lancamento.id)}>
-                          Estornar
-                        </button>
-                      </div>
+                      estornando === lancamento.id ? (
+                        <div className="fin-linha__botoes">
+                          <button type="button" className="fin-botao fin-botao--estornar" onClick={() => confirmarEstorno(lancamento.id)}>
+                            Confirmar estorno
+                          </button>
+                          <button type="button" className="fin-botao" onClick={() => setEstornando(null)}>
+                            Cancelar
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="fin-linha__botoes">
+                          <button type="button" className="fin-botao fin-botao--recibo" onClick={() => handleRecibo(lancamento)}>
+                            Emitir recibo
+                          </button>
+                          <button type="button" className="fin-botao fin-botao--estornar" onClick={() => setEstornando(lancamento.id)}>
+                            Estornar
+                          </button>
+                        </div>
+                      )
                     ) : baixando === lancamento.id ? (
                       <div className="fin-linha__baixa">
                         <select value={formaEscolhida} onChange={(e) => setFormaEscolhida(e.target.value)}>

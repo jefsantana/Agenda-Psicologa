@@ -49,9 +49,9 @@ export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarH
       ) : (
         <>
           <ul className="agenda-dia__lista">
-            {visiveis.map((item, index) =>
+            {visiveis.map((item) =>
               item.tipoLinha === "bloqueio" ? (
-                <li key={item.id} className="agenda-linha agenda-linha--bloqueada" style={{ animationDelay: `${index * 40}ms` }}>
+                <li key={item.id} className="agenda-linha agenda-linha--bloqueada">
                   <span className="agenda-linha__hora">{formatarHora(item.inicio)}</span>
                   <div className="agenda-linha__corpo">
                     <p className="agenda-linha__titulo">Intervalo</p>
@@ -62,7 +62,6 @@ export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarH
                 <LinhaAtendimento
                   key={item.id}
                   item={item}
-                  index={index}
                   ehHoje={ehHoje}
                   onAtualizado={onAtualizado}
                   onEditar={onEditarAtendimento}
@@ -80,7 +79,7 @@ export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarH
   );
 }
 
-function LinhaAtendimento({ item, index, ehHoje, onAtualizado, onEditar }) {
+function LinhaAtendimento({ item, ehHoje, onAtualizado, onEditar }) {
   const [confirmando, setConfirmando] = useState(false);
   const precisaConfirmar = item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status);
   // No próprio dia é o lembrete de rotina de fim de expediente; num dia
@@ -110,11 +109,14 @@ function LinhaAtendimento({ item, index, ehHoje, onAtualizado, onEditar }) {
   return (
     <li
       className={`agenda-linha ${atrasado ? "agenda-linha--atrasado" : precisaConfirmar ? "agenda-linha--pendente" : ""}`}
-      style={{ "--linha-cor": corDoTipo(item.tipo), animationDelay: `${index * 40}ms` }}
+      style={{ "--linha-cor": corDoTipo(item.tipo) }}
     >
       <span className="agenda-linha__hora">{formatarHora(item.inicio)}</span>
       <div className="agenda-linha__corpo">
-        <p className="agenda-linha__titulo">{item.paciente}</p>
+        <div className="agenda-linha__cabecalho">
+          <p className="agenda-linha__titulo">{item.paciente}</p>
+          <StatusBadge status={item.status} />
+        </div>
         <span className="agenda-linha__sub">
           {TIPO_LABEL[item.tipo]}
           {item.convenio ? ` · ${item.convenio}` : ""}
@@ -139,7 +141,6 @@ function LinhaAtendimento({ item, index, ehHoje, onAtualizado, onEditar }) {
           </div>
         )}
       </div>
-      <StatusBadge status={item.status} />
       <MenuAcoesLinha onEditar={() => onEditar?.(item)} onExcluir={handleExcluir} />
     </li>
   );

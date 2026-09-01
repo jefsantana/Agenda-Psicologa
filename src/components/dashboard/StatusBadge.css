@@ -1,54 +1,58 @@
-.badge {
+﻿.badge {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-3) var(--space-10);
+  padding: var(--space-4) var(--space-10);
+  border: 1px solid transparent;
   border-radius: var(--radius-chip);
-  font-size: 0.625rem;
+  font-size: var(--fs-xs); /* era 0.625rem (10px) â€” pequeno demais para carregar status clÃ­nico */
   font-weight: 600;
+  letter-spacing: 0.01em;
   white-space: nowrap;
 }
 
-/* Agendado: ainda vai acontecer, sem confirmação — neutro. */
+/* Agendado: ainda vai acontecer, sem confirmaÃ§Ã£o â€” neutro. */
 .badge--agendado {
   color: var(--text-3-aa);
   background: var(--surface-2);
+  border-color: var(--border-strong);
 }
 
-/* Cancelado: mesmo tom neutro do "agendado" — a opacidade reduzida usada
-   antes deixava o contraste abaixo do mínimo AA (2,99:1). */
+/* Cancelado: mesmo tom neutro do "agendado" â€” a opacidade reduzida usada
+   antes deixava o contraste abaixo do mÃ­nimo AA (2,99:1). */
 .badge--cancelado {
   color: var(--text-3-aa);
   background: var(--surface-2);
+  border-color: var(--border-strong);
 }
 
-/* Aguardando confirmação do paciente. */
+/* Aguardando confirmaÃ§Ã£o do paciente. */
 .badge--aguardando {
   color: var(--primary-soft);
-  background: rgba(124, 107, 245, 0.16);
+  background: rgba(var(--primary-rgb), 0.16);
 }
 
-/* Confirmado: vai acontecer, já confirmado — informativo, ainda não é "sucesso". */
+/* Confirmado: vai acontecer, jÃ¡ confirmado â€” informativo, ainda nÃ£o Ã© "sucesso". */
 .badge--confirmado {
   color: var(--info);
   background: rgba(78, 168, 245, 0.16);
 }
 
-/* Realizado: aconteceu como esperado — sucesso. */
+/* Realizado: aconteceu como esperado â€” sucesso. */
 .badge--realizado {
   color: var(--success-text);
   background: rgba(63, 207, 142, 0.16);
 }
 
-/* Remarcar: precisa de ação, mas não é uma falha do paciente. */
+/* Remarcar: precisa de aÃ§Ã£o, mas nÃ£o Ã© uma falha do paciente. */
 .badge--remarcar {
   color: var(--warning);
   background: rgba(245, 162, 93, 0.16);
 }
 
-/* Falta: o paciente não compareceu — o único status realmente negativo. */
+/* Falta: o paciente nÃ£o compareceu â€” o Ãºnico status realmente negativo. */
 .badge--falta {
-  color: var(--pink);
-  background: rgba(232, 106, 166, 0.16);
+  color: var(--danger-text);
+  background: rgba(217, 138, 158, 0.16);
 }
 
 /* Etiquetas de paciente (Ativo/Pendente/Novo/Inativo) reaproveitam a mesma base .badge */
@@ -63,11 +67,12 @@
 }
 
 .badge--novo {
-  color: var(--pink);
-  background: rgba(232, 106, 166, 0.16);
+  color: var(--primary-soft);
+  background: rgba(var(--primary-rgb), 0.16);
 }
 
 .badge--inativo {
   color: var(--text-3-aa);
   background: var(--surface-2);
+  border-color: var(--border-strong);
 }

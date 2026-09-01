@@ -1,67 +1,126 @@
 /*
-  Tokens — v5 (tema escuro), conforme documento de especificação de
-  agosto/2026. Valores exatos; não inventar cores fora desta lista.
+  Tokens — v6 (tema escuro plum/lavanda).
+
+  Substitui o v5 (charcoal + teal "verde consultório"). Direção confirmada pela
+  usuária em set/2026 a partir do protótipo `NovosAjustes/Raquel Frois App.dc.html`:
+  fundo vinho/plum, acento lavanda, tipografia Instrument Sans, cards grandes com
+  vidro (glassmorphism). O histórico do v5 que evitava roxo fica revogado.
+
+  Regra mantida do v5: todo texto informativo precisa passar em AA (4.5:1). Por
+  isso os cinzas de texto são cores sólidas com contraste verificado sobre
+  --surface, não branco com opacidade baixa (que varia com o que está atrás).
+
+  Os nomes das variáveis são os mesmos do v5 de propósito — o redesign vive
+  aqui, os componentes não mudam de API.
 */
 
 :root {
-  /* Superfícies e texto */
-  --bg-app: #0d0f14;
-  --bg-app-mobile: #0f1117;
-  --surface: #14171e;
-  --surface-2: #1a1e27;
-  --surface-3: #1b1f28;
-  --surface-inset: #101319;
-  --border: #212530;
-  --border-strong: #262b36;
-  --text: #e6e8ee;
-  --text-2: #b4bac8;
-  --text-3: #7c8494;
-  --text-3-aa: #a0a7b8; /* variante AA para --text-3 abaixo de 12px */
-  --text-4: #616878;
+  /* Superfícies e texto
+     Fundo plum em degraus; o gradiente radial da tela fica em --bg-gradient,
+     aplicado no body (src/index.css). */
+  --bg-app: #140810;
+  --bg-app-mobile: #1a0b14;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #4a1e3e 0%, #2e1324 42%, #1c0b15 72%, #140810 100%);
 
-  /* Acentos semânticos */
-  --primary: #7c6bf5;
-  --primary-strong: #6355e8;
-  --primary-text: #a797fa;
-  --primary-soft: #b6abfb;
+  --surface: #24121d;
+  --surface-2: #2e1727;
+  --surface-3: #3a2033;
+  --surface-inset: #180a12;
+
+  --border: #3d2438;
+  --border-strong: #573650;
+
+  /* Vidro — cards translúcidos do protótipo. Use com fallback @supports:
+     quando não houver backdrop-filter, cair em --surface sólido. */
+  --glass-bg: rgba(255, 255, 255, 0.055);
+  --glass-bg-strong: rgba(255, 255, 255, 0.09);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --glass-blur: 14px;
+
+  /* Elevação — sombra suave + brilho lilás dos cards do protótipo. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 14px 34px -16px rgba(120, 80, 220, 0.45);
+  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 220, 0.6);
+
+  --text: #f5eef3;
+  --text-2: #cbbcd4; /* ~9:1 sobre --surface */
+  /* --text-3: mauve claro sólido. ~5.4:1 sobre --surface — passa AA em qualquer
+     tamanho. Não usar rgba(255,255,255,.5) para texto: o contraste real depende
+     do card atrás e quebra o AA de forma não determinística. */
+  --text-3: #a99bb4;
+  --text-3-aa: var(--text-3); /* alias mantido por compatibilidade — use --text-3 */
+  --text-4: #6e5c76; /* ~2.9:1 — SÓ decoração, nunca texto informativo */
+
+  /* Acentos semânticos
+     Acento: lavanda-violeta do protótipo. --primary é a cor de preenchimento
+     (botões, fills, navegação ativa); --primary-text é a variante clara para
+     texto/links/ícones sobre fundo escuro (AA). */
+  --primary: #8e6aea;
+  --primary-strong: #7b55de;
+  --primary-text: #c6b0f5; /* ~7:1 sobre --surface */
+  --primary-soft: #d8c9ff;
+  --primary-rgb: 142, 106, 234; /* para rgba() de tints — em sincronia com --primary */
+
   --success: #3fcf8e;
-  --success-text: #4fd79a;
-  --warning: #f5a25d;
-  --info: #4ea8f5;
+  --success-text: #63dca7;
+  --warning: #f2b07a;
+  --warning-text: #f6c8a1;
+  --info: #6ba8f5;
   --pink: #e86aa6;
-  --amber: #f5c15d;
+  --amber: #f2c08a; /* pêssego do protótipo — badges "agora"/pendências. Texto escuro por cima: --on-amber */
+  --on-amber: #4a2a10;
+  /* --danger: rosa dessaturado para o único status realmente negativo ("falta"). */
+  --danger: #e29cad;
+  --danger-text: #ecb3c0;
 
-  --gradient-primary: linear-gradient(100deg, #7c6bf5, #6355e8);
+  --gradient-primary: linear-gradient(150deg, #bca6f9, #8e6aea);
+  --gradient-card: linear-gradient(158deg, #bca6f9 0%, #9873ee 58%, #8963e8 100%);
   --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */
   --whatsapp: #25d366;
-  --checkbox-vazio: #2e3442; /* especificado no documento de design (seção 6, estado "Vazio" do checkbox) */
+  --checkbox-vazio: #3a2b3f;
 
-  /* Tipografia */
-  --font-body: "Inter Tight", system-ui, sans-serif;
-  --font-mono: "Inter Tight", system-ui, sans-serif; /* números tabulares na mesma família, conforme doc */
+  /* Tipografia — Instrument Sans em todos os papéis (o protótipo usa uma família
+     só, variando peso e itálico). Fallback para Inter e system-ui. */
+  --font-body: "Instrument Sans", "Inter", system-ui, sans-serif;
+  --font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
+  /* Dados: mono técnica — horários, valores, CID, CPF. */
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Espaçamento (grade oficial do documento) */
+  /* Peso dos títulos display: o protótipo usa 400 (leve) com uma linha em
+     itálico para ênfase. Componentes que queriam bold devem usar --weight-display. */
+  --weight-display: 400;
+
+  /* Escala tipográfica — 7 degraus (inalterada do v5). */
+  --fs-2xs: 0.6875rem; /* 11px */
+  --fs-xs: 0.75rem; /* 12px */
+  --fs-sm: 0.8125rem; /* 13px */
+  --fs-md: 0.9375rem; /* 15px */
+  --fs-lg: 1.0625rem; /* 17px */
+  --fs-xl: 1.375rem; /* 22px */
+  --fs-2xl: 1.75rem; /* 28px */
+
+  /* Espaçamento (inalterado do v5) */
   --space-2: 2px;
-  --space-3: 3px; /* microajuste: aba/pílula interna — não está na grade original, mas segue a mesma convenção de nome */
-  --space-4: 4px; /* microajuste: espaçamentos internos bem apertados (ex.: calendário) */
+  --space-3: 3px;
+  --space-4: 4px;
   --space-7: 7px;
   --space-10: 10px;
   --space-12: 12px;
-  --space-14: 14px; /* estava sendo referenciado em 7 lugares sem nunca ter sido definido — corrigido nesta revisão */
+  --space-14: 14px;
   --space-16: 16px;
   --space-18: 18px;
 
-  /* Raios */
-  --radius-panel: 20px;
-  --radius-kpi: 18px;
-  --radius-row: 14px;
-  --radius-chip: 7px;
+  /* Raios — mais arredondados, alinhados ao protótipo (cards 26px, painel 26px). */
+  --radius-panel: 26px;
+  --radius-kpi: 22px;
+  --radius-row: 18px;
+  --radius-chip: 12px;
   --radius-pill: 999px;
-  --radius-checkbox: 5px;
-  --radius-avatar-desktop: 14px;
-  --radius-avatar-mobile: 12px;
+  --radius-checkbox: 6px;
+  --radius-avatar-desktop: 16px;
+  --radius-avatar-mobile: 14px;
+  --radius-sheet: 32px;
 
-  /* Layout */
+  /* Layout (inalterado do v5) */
   --sidebar-width: 236px;
   --right-column-width: 322px;
   --content-padding: 18px;
@@ -71,30 +130,231 @@
 }
 
 /*
-  Variações de acento — escolhidas em Configurações → Aparência (src/lib/tema.js).
-  "Roxo" é o acento oficial do documento de design e é o padrão do :root acima;
-  as demais são a mesma identidade com a cor de destaque trocada.
+  Variações de acento — Configurações → Aparência (src/lib/tema.js).
+  O lavanda do :root acima é o padrão ("padrao"). As demais trocam só a cor de
+  destaque. Cada bloco que redefine --primary também redefine --primary-rgb.
 */
 :root[data-accent="azul"] {
   --primary: #3b82f6;
   --primary-strong: #2f6fe0;
-  --primary-text: #8fb8fb;
-  --primary-soft: #a9c9fc;
-  --gradient-primary: linear-gradient(100deg, #3b82f6, #2f6fe0);
-}
-
-:root[data-accent="verde"] {
-  --primary: #22b573;
-  --primary-strong: #1a9c62;
-  --primary-text: #7fe0b6;
-  --primary-soft: #9ce8c6;
-  --gradient-primary: linear-gradient(100deg, #22b573, #1a9c62);
+  --primary-text: #9fc1fb;
+  --primary-soft: #c2d7fc;
+  --primary-rgb: 59, 130, 246;
+  --gradient-primary: linear-gradient(150deg, #6ba8f5, #2f6fe0);
+  --gradient-card: linear-gradient(158deg, #7db4f7 0%, #3b82f6 58%, #2f6fe0 100%);
 }
 
 :root[data-accent="rosa"] {
   --primary: #e8639a;
   --primary-strong: #d14884;
-  --primary-text: #f2a0c4;
-  --primary-soft: #f5b9d3;
-  --gradient-primary: linear-gradient(100deg, #e8639a, #d14884);
+  --primary-text: #f4a8c9;
+  --primary-soft: #f7c6db;
+  --primary-rgb: 232, 99, 154;
+  --gradient-primary: linear-gradient(150deg, #f28fb8, #d14884);
+  --gradient-card: linear-gradient(158deg, #f4a0c4 0%, #e8639a 58%, #d14884 100%);
+}
+
+:root[data-accent="verde"] {
+  --primary: #1f9382;
+  --primary-strong: #17806f;
+  --primary-text: #57c6b3;
+  --primary-soft: #7ad6c6;
+  --primary-rgb: 31, 147, 130;
+  --gradient-primary: linear-gradient(150deg, #33b3a0, #17806f);
+  --gradient-card: linear-gradient(158deg, #46c3b0 0%, #1f9382 58%, #17806f 100%);
+}
+
+/*
+  Paletas de fundo — Configurações → Aparência (src/lib/tema.js), atributo
+  data-theme. "ameixa" é o padrão e já está no :root acima. Cada bloco só
+  redefine fundo, superfícies, bordas e texto — nunca o acento, para as duas
+  escolhas ficarem independentes. Todos os cinzas de texto seguem o mesmo
+  padrão do v5 (sólidos, contraste AA sobre a própria --surface).
+*/
+:root[data-theme="carvao"] {
+  --bg-app: #0f1012;
+  --bg-app-mobile: #111214;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #1b1e24 0%, #131519 45%, #0f1012 100%);
+  --surface: #17191d;
+  --surface-2: #1e2126;
+  --surface-3: #262a31;
+  --surface-inset: #121316;
+  --border: #2a2e35;
+  --border-strong: #363c45;
+  --text: #e6e8ee;
+  --text-2: #b4bac8;
+  --text-3: #a0a7b8;
+  --text-4: #616878;
+  --checkbox-vazio: #2e3442;
+}
+
+:root[data-theme="ardosia"] {
+  --bg-app: #0e1420;
+  --bg-app-mobile: #101725;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #1c2740 0%, #131c2e 45%, #0e1420 100%);
+  --surface: #1b2334;
+  --surface-2: #222c40;
+  --surface-3: #2c3852;
+  --surface-inset: #0c1119;
+  --border: #2f3b52;
+  --border-strong: #43516d;
+  --text: #e7ecf5;
+  --text-2: #bcc6d8;
+  --text-3: #9aa6bd;
+  --text-4: #5d6880;
+  --checkbox-vazio: #2f3b52;
+}
+
+:root[data-theme="cafe"] {
+  --bg-app: #17110d;
+  --bg-app-mobile: #1b140f;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #3a2416 0%, #261812 45%, #17110d 100%);
+  --surface: #261c15;
+  --surface-2: #31251c;
+  --surface-3: #3e2f24;
+  --surface-inset: #140f0b;
+  --border: #3a2c22;
+  --border-strong: #55412f;
+  --text: #f3ece4;
+  --text-2: #d3c6b8;
+  --text-3: #b3a595;
+  --text-4: #7a6a5a;
+  --checkbox-vazio: #3a2c22;
+}
+
+/*
+  ── Modo claro ───────────────────────────────────────────────────────────────
+  O <html> sempre carrega data-mode="claro" ou data-mode="escuro" (nunca "auto"):
+  src/lib/tema.js resolve "Automático" lendo prefers-color-scheme e reescreve o
+  atributo quando o sistema muda.
+
+  Estrutura igual à do tema escuro:
+  - o bloco [data-mode="claro"] abaixo define o ACENTO + as cores semânticas
+    (compartilhadas por todas as paletas) e serve de base "Ameixa";
+  - os blocos [data-mode="claro"][data-theme="…"] trocam só o "clima" (fundo,
+    superfícies, bordas, texto) — a mesma divisão dos blocos escuros.
+
+  Regra do projeto mantida: todo texto informativo passa em AA (4.5:1) sobre a
+  sua própria --surface.
+*/
+:root[data-mode="claro"] {
+  color-scheme: light;
+
+  /* Clima base = Ameixa clara */
+  --bg-app: #f3ecf1;
+  --bg-app-mobile: #f7f2f5;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #efe0ec 0%, #f4eaf1 45%, #f7f2f5 100%);
+
+  --surface: #ffffff;
+  --surface-2: #f6eff4;
+  --surface-3: #efe5ed;
+  --surface-inset: #f2ebf0;
+
+  --border: #e5d9e2;
+  --border-strong: #d0bccc;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(74, 30, 62, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(51, 20, 43, 0.08), 0 14px 34px -16px rgba(120, 80, 220, 0.22);
+  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 220, 0.28);
+
+  --text: #23191f;
+  --text-2: #4c3f49;
+  --text-3: #675a65;
+  --text-3-aa: var(--text-3);
+  --text-4: #9b8d97;
+
+  /* Acento + semânticas — comuns a todas as paletas claras. */
+  --primary: #7a4fd6;
+  --primary-strong: #6a3fc6;
+  --primary-text: #6134c0;
+  --primary-soft: #5a30ad;
+  --primary-rgb: 122, 79, 214;
+
+  --success: #1c9a6a;
+  --success-text: #0b6b45;
+  --warning: #8f4e00;
+  --warning-text: #7a4100;
+  --info: #2664c4;
+  --pink: #c33d84;
+  --amber: #e7a24c;
+  --on-amber: #3c2409;
+  --danger: #c23f5e;
+  --danger-text: #a83350;
+
+  --gradient-primary: linear-gradient(150deg, #8a63e0, #7145cf);
+  --gradient-card: linear-gradient(158deg, #9a7ce8 0%, #8460e0 58%, #7548d2 100%);
+  --on-primary: #ffffff;
+  --whatsapp: #0f7a39;
+  --checkbox-vazio: #cdbfca;
+}
+
+/* Carvão claro — cinza neutro sobre branco. */
+:root[data-mode="claro"][data-theme="carvao"] {
+  --bg-app: #eef0f2;
+  --bg-app-mobile: #f3f4f6;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #e6e9ee 0%, #eef0f3 45%, #f3f4f6 100%);
+  --surface: #ffffff;
+  --surface-2: #f2f3f5;
+  --surface-3: #e9ebee;
+  --surface-inset: #eef0f2;
+  --border: #dfe1e5;
+  --border-strong: #c6c9d0;
+  --glass-border: rgba(30, 34, 44, 0.1);
+  --shadow-sm: 0 1px 2px rgba(20, 24, 33, 0.07), 0 14px 34px -16px rgba(40, 50, 80, 0.16);
+  --shadow-raised: 0 22px 44px -18px rgba(40, 50, 80, 0.22);
+  --text: #1c1e22;
+  --text-2: #45484f;
+  --text-3: #5f636c;
+  --text-4: #949aa4;
+  --checkbox-vazio: #c8ccd3;
+}
+
+/* Ardósia clara — azul-cinza frio. */
+:root[data-mode="claro"][data-theme="ardosia"] {
+  --bg-app: #eaeef4;
+  --bg-app-mobile: #eff2f7;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #dfe7f2 0%, #e9eef5 45%, #eff2f7 100%);
+  --surface: #ffffff;
+  --surface-2: #eef2f8;
+  --surface-3: #e4eaf3;
+  --surface-inset: #eef2f7;
+  --border: #d9e0ea;
+  --border-strong: #bcc7d6;
+  --glass-border: rgba(20, 30, 55, 0.1);
+  --shadow-sm: 0 1px 2px rgba(15, 25, 45, 0.08), 0 14px 34px -16px rgba(30, 55, 110, 0.16);
+  --shadow-raised: 0 22px 44px -18px rgba(30, 55, 110, 0.22);
+  --text: #1a212e;
+  --text-2: #414b5c;
+  --text-3: #596579;
+  --text-4: #8e97a8;
+  --checkbox-vazio: #c4cdda;
+}
+
+/* Café claro — creme quente. */
+:root[data-mode="claro"][data-theme="cafe"] {
+  --bg-app: #f3ede4;
+  --bg-app-mobile: #f7f2ea;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #efe3d2 0%, #f4ebdd 45%, #f7f2ea 100%);
+  --surface: #ffffff;
+  --surface-2: #f6efe4;
+  --surface-3: #efe5d6;
+  --surface-inset: #f3ece0;
+  --border: #e7dccb;
+  --border-strong: #d2c2ab;
+  --glass-border: rgba(60, 40, 15, 0.1);
+  --shadow-sm: 0 1px 2px rgba(45, 30, 10, 0.08), 0 14px 34px -16px rgba(120, 80, 30, 0.16);
+  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 30, 0.22);
+  --text: #241c12;
+  --text-2: #4c4030;
+  --text-3: #6b5d48;
+  --text-4: #9a8c76;
+  --checkbox-vazio: #d0c3ac;
+}
+
+/* "Escuro" forçado: garante o color-scheme mesmo com o SO no claro. */
+:root[data-mode="escuro"] {
+  color-scheme: dark;
 }

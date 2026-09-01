@@ -16,16 +16,16 @@ import {
 import "./Sidebar.css";
 
 const ITENS = [
-  { rotulo: "Dashboard", icone: IconeDashboard, path: "/hoje", implementado: true },
-  { rotulo: "Agenda", icone: IconeAgenda, path: "/agenda", implementado: true },
-  { rotulo: "Atendimentos", icone: IconeAtendimentos, path: "/atendimentos", implementado: true },
-  { rotulo: "Prontuários", icone: IconeProntuarios, path: "/prontuarios", implementado: true },
-  { rotulo: "Pacientes", icone: IconePacientes, path: "/pacientes", implementado: true },
-  { rotulo: "Convênios", icone: IconeConvenios, path: "/convenios", implementado: true },
-  { rotulo: "Financeiro", icone: IconeFinanceiro, path: "/financeiro", implementado: true },
-  { rotulo: "Relatórios", icone: IconeRelatorios, path: "/relatorios", implementado: false },
-  { rotulo: "Mensagens", icone: IconeMensagens, path: "/mensagens", implementado: false },
-  { rotulo: "Configurações", icone: IconeConfiguracoes, path: "/configuracoes", implementado: true },
+  { rotulo: "Dashboard", icone: IconeDashboard, path: "/hoje" },
+  { rotulo: "Agenda", icone: IconeAgenda, path: "/agenda" },
+  { rotulo: "Atendimentos", icone: IconeAtendimentos, path: "/atendimentos" },
+  { rotulo: "Prontuários", icone: IconeProntuarios, path: "/prontuarios" },
+  { rotulo: "Pacientes", icone: IconePacientes, path: "/pacientes" },
+  { rotulo: "Convênios", icone: IconeConvenios, path: "/convenios" },
+  { rotulo: "Financeiro", icone: IconeFinanceiro, path: "/financeiro" },
+  { rotulo: "Relatórios", icone: IconeRelatorios, path: "/relatorios" },
+  { rotulo: "Mensagens", icone: IconeMensagens, path: "/mensagens" },
+  { rotulo: "Configurações", icone: IconeConfiguracoes, path: "/configuracoes" },
 ];
 
 export default function Sidebar({ perfil }) {
@@ -44,29 +44,16 @@ export default function Sidebar({ perfil }) {
       </div>
 
       <nav className="sidebar__nav" aria-label="Navegação principal">
-        {ITENS.map((item) =>
-          item.implementado ? (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              className={({ isActive }) => `sidebar__item ${isActive ? "sidebar__item--ativo" : ""}`}
-            >
-              <item.icone />
-              <span>{item.rotulo}</span>
-            </NavLink>
-          ) : (
-            <button
-              key={item.path}
-              type="button"
-              className="sidebar__item"
-              aria-disabled="true"
-              title={`${item.rotulo} — em breve`}
-            >
-              <item.icone />
-              <span>{item.rotulo}</span>
-            </button>
-          )
-        )}
+        {ITENS.map((item) => (
+          <NavLink
+            key={item.path}
+            to={item.path}
+            className={({ isActive }) => `sidebar__item ${isActive ? "sidebar__item--ativo" : ""}`}
+          >
+            <item.icone />
+            <span>{item.rotulo}</span>
+          </NavLink>
+        ))}
       </nav>
 
       <div className="sidebar__rodape">

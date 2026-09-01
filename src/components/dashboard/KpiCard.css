@@ -1,17 +1,19 @@
 .kpi {
-  position: relative;
-  padding: var(--space-16) var(--space-16) var(--space-16) var(--space-18);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-16) var(--space-16);
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-kpi);
+  box-shadow: var(--shadow-sm);
   overflow: hidden;
-  animation: kpi-in 0.4s var(--ease-out) backwards;
+  animation: kpi-in 0.2s var(--ease-out) backwards;
 }
 
 @keyframes kpi-in {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -19,55 +21,131 @@
   }
 }
 
-.kpi::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: var(--kpi-cor);
-}
-
 .kpi__topo {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--space-10);
   margin-bottom: var(--space-12);
 }
 
-.kpi__icone {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--kpi-cor) 13%, transparent);
-  color: var(--kpi-cor);
-  flex-shrink: 0;
-}
-
 .kpi__rotulo {
-  /* Sem min-width:0 o item flex não encolhe: em telas estreitas (grade de
-     4 colunas a partir de 640px) o texto "vazava" pra fora do card em vez
-     de quebrar linha, e o overflow:hidden do card cortava a palavra.
-     overflow-wrap é necessário à parte porque "Faltas/Remarcações" não
-     tem espaço em branco — sem ele o navegador não tem onde quebrar. */
+  /* min-width:0 + overflow-wrap: sem espaço em "Faltas e remarcações" o texto
+     vazava do card em telas estreitas antes de ter onde quebrar. */
   min-width: 0;
   overflow-wrap: break-word;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
   color: var(--text-2);
 }
 
+.kpi__icone {
+  display: flex;
+  flex-shrink: 0;
+  color: var(--text-4);
+}
+
 .kpi__valor {
-  font-size: 1.6rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  font-size: var(--fs-2xl);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--text);
 }
 
-.kpi__legenda {
-  margin-top: var(--space-2);
-  font-size: 0.72rem;
-  color: var(--text-3-aa);
+.kpi__valor--mono {
+  font-family: var(--font-mono);
+}
+
+.kpi__valor--vazio {
+  color: var(--text-4);
+}
+
+.kpi[data-tom="atencao"] .kpi__valor {
+  color: var(--warning-text);
+}
+
+.kpi__prefixo {
+  align-self: flex-start;
+  font-size: var(--fs-md);
+  font-weight: 500;
+  color: var(--text-3);
+}
+
+.kpi__valor-sec {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  /* Informa o total ("3 / 8") — precisa passar em AA, então --text-3 (sólido,
+     ~5.4:1) e nunca --text-4, que é só decorativo. */
+  color: var(--text-3);
+}
+
+.kpi__tag {
+  align-self: center;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--warning-text);
+  background: rgba(242, 176, 122, 0.14);
+  border-radius: var(--radius-chip);
+  padding: 2px var(--space-7);
+}
+
+.kpi__progresso {
+  height: 4px;
+  margin-top: var(--space-12);
+  border-radius: var(--radius-pill);
+  background: var(--surface-3);
+  overflow: hidden;
+}
+
+.kpi__progresso-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width 0.3s var(--ease-out);
+}
+
+.kpi__apoio {
+  margin-top: var(--space-7);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+.kpi__apoio-forte {
+  margin-top: var(--space-12);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.kpi__apoio-forte + .kpi__apoio {
+  margin-top: var(--space-3);
+}
+
+.kpi__delta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-12);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--success-text);
+}
+
+.kpi__delta--baixa {
+  color: var(--danger-text);
+}
+
+.kpi__delta svg {
+  flex-shrink: 0;
+}
+
+.kpi__delta-ref {
+  margin-left: var(--space-3);
+  font-weight: 500;
+  color: var(--text-3);
 }

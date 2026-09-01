@@ -34,7 +34,7 @@
   background: rgba(63, 207, 142, 0.14);
   border: 1px solid rgba(63, 207, 142, 0.3);
   color: var(--success-text);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -61,7 +61,7 @@
     grid-template-columns: 110px 1.4fr 1fr 0.9fr 110px 100px;
     gap: var(--space-12);
     padding: 0 var(--space-12) var(--space-10);
-    font-size: 0.68rem;
+    font-size: var(--fs-2xs);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -78,7 +78,7 @@
 .atd-tabela__vazio {
   padding: var(--space-18) 0;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
@@ -114,12 +114,12 @@
 
 .atd-tabela__data {
   font-variant-numeric: tabular-nums;
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--text-3-aa);
 }
 
 .atd-tabela__paciente {
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text);
   white-space: nowrap;
@@ -128,14 +128,15 @@
 }
 
 .atd-tabela__sub {
-  font-size: 0.78rem;
+  font-size: var(--fs-sm);
   color: var(--text-2);
 }
 
 .atd-tabela__valor {
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: var(--fs-sm);
+  font-weight: 500;
   color: var(--text);
 }
 
@@ -150,7 +151,7 @@
   padding-top: var(--space-12);
   border-top: 1px solid var(--border);
   text-align: right;
-  font-size: 0.85rem;
+  font-size: var(--fs-sm);
   color: var(--text-2);
 }
 

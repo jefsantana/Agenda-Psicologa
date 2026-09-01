@@ -5,12 +5,12 @@ import "./PacienteCard.css";
 
 const FAIXA_ETARIA_LABEL = { crianca: "Criança", adolescente: "Adolescente", adulto: "Adulto" };
 
-export default function PacienteCard({ paciente, proximoAtendimento, index = 0, onClick, onWhatsapp }) {
+export default function PacienteCard({ paciente, proximoAtendimento, onClick, onWhatsapp }) {
   const iniciais = iniciaisDoNome(paciente.nome);
   const faixaEtaria = FAIXA_ETARIA_LABEL[paciente.faixa_etaria];
 
   return (
-    <li className="paciente-card" style={{ animationDelay: `${Math.min(index, 8) * 35}ms` }}>
+    <li className="paciente-card">
       <button type="button" className="paciente-card__botao" onClick={onClick}>
         <span className="paciente-card__avatar">{iniciais}</span>
         <div className="paciente-card__texto">
@@ -26,29 +26,30 @@ export default function PacienteCard({ paciente, proximoAtendimento, index = 0, 
         <PacienteStatusBadge status={paciente.status} />
       </button>
 
-      {paciente.telefone && (
-        <button
-          type="button"
-          className="paciente-card__whatsapp"
-          onClick={(event) => {
-            event.stopPropagation();
-            onWhatsapp?.();
-          }}
-          title="Enviar WhatsApp"
-          aria-label={`Enviar WhatsApp para ${paciente.nome}`}
-        >
-          <IconeWhatsapp />
-        </button>
-      )}
+      <div className="paciente-card__acoes">
+        {paciente.telefone && (
+          <button
+            type="button"
+            className="paciente-card__whatsapp"
+            onClick={(event) => {
+              event.stopPropagation();
+              onWhatsapp?.();
+            }}
+            aria-label={`Enviar WhatsApp para ${paciente.nome}`}
+          >
+            <IconeWhatsapp />
+            WhatsApp
+          </button>
+        )}
 
-      <Link
-        to={`/prontuarios?paciente=${paciente.id}`}
-        className="paciente-card__prontuario"
-        onClick={(event) => event.stopPropagation()}
-        title="Ver prontuário"
-      >
-        Prontuário
-      </Link>
+        <Link
+          to={`/prontuarios?paciente=${paciente.id}`}
+          className="paciente-card__prontuario"
+          onClick={(event) => event.stopPropagation()}
+        >
+          Prontuário
+        </Link>
+      </div>
     </li>
   );
 }

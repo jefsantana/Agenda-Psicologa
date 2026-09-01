@@ -9,10 +9,8 @@
 }
 
 .outras-datas__titulo {
-  font-size: 0.7rem;
+  font-size: var(--fs-xs);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
   color: var(--text-3-aa);
 }
 
@@ -27,11 +25,11 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-10);
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   color: var(--text-2);
 }
 
 .outras-datas__restantes {
-  font-size: 0.7rem;
+  font-size: var(--fs-xs);
   color: var(--text-3-aa);
 }

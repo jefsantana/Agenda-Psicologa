@@ -1,14 +1,23 @@
 import "./KpiCard.css";
 
-export default function KpiCard({ cor, icone, rotulo, valor, legenda }) {
+/**
+ * Casca comum dos KPIs do dashboard (seção 3 do redesign): topo com rótulo à
+ * esquerda e um ícone discreto à direita, sem barra colorida lateral. O corpo
+ * de cada card é livre — cada KPI tem um conteúdo próprio (barra de progresso,
+ * horário, tag de atenção, variação percentual).
+ */
+export default function KpiCard({ rotulo, icone, tom, children }) {
   return (
-    <article className="kpi" style={{ "--kpi-cor": `var(--${cor})` }}>
+    <article className="kpi" data-tom={tom || undefined}>
       <div className="kpi__topo">
-        <span className="kpi__icone">{icone}</span>
         <span className="kpi__rotulo">{rotulo}</span>
+        {icone && (
+          <span className="kpi__icone" aria-hidden="true">
+            {icone}
+          </span>
+        )}
       </div>
-      <p className="kpi__valor">{valor}</p>
-      {legenda && <p className="kpi__legenda">{legenda}</p>}
+      {children}
     </article>
   );
 }

@@ -6,7 +6,7 @@
 }
 
 .acoes-rapidas__titulo {
-  font-size: 0.95rem;
+  font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text);
   margin-bottom: var(--space-16);
@@ -33,7 +33,7 @@
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: var(--radius-row);
-  font-size: 0.76rem;
+  font-size: var(--fs-xs);
   font-weight: 500;
   color: var(--text-2);
   text-align: center;

@@ -7,8 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  /* Alvo de toque de 44px (WCAG 2.5.8); o ícone visual continua ~20px. */
+  min-width: 44px;
+  min-height: 44px;
   border-radius: var(--radius-pill);
   color: var(--text-3-aa);
   transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
@@ -38,7 +39,7 @@
   padding: var(--space-10);
   text-align: left;
   border-radius: calc(var(--radius-row) - 3px);
-  font-size: 0.82rem;
+  font-size: var(--fs-sm);
   font-weight: 600;
   color: var(--text-2);
 }
