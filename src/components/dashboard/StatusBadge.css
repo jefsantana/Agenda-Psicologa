@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: center;
   padding: var(--space-4) var(--space-10);
+  border: 1px solid transparent;
   border-radius: var(--radius-chip);
   font-size: var(--fs-xs); /* era 0.625rem (10px) â€” pequeno demais para carregar status clÃ­nico */
   font-weight: 600;
@@ -13,6 +14,7 @@
 .badge--agendado {
   color: var(--text-3-aa);
   background: var(--surface-2);
+  border-color: var(--border-strong);
 }
 
 /* Cancelado: mesmo tom neutro do "agendado" â€” a opacidade reduzida usada
@@ -20,6 +22,7 @@
 .badge--cancelado {
   color: var(--text-3-aa);
   background: var(--surface-2);
+  border-color: var(--border-strong);
 }
 
 /* Aguardando confirmaÃ§Ã£o do paciente. */
@@ -71,4 +74,5 @@
 .badge--inativo {
   color: var(--text-3-aa);
   background: var(--surface-2);
+  border-color: var(--border-strong);
 }

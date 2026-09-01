@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { linkWhatsapp, modelosMensagem, numeroWhatsapp } from "../../lib/whatsapp.js";
+import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import "./WhatsappSheet.css";
 
 export default function WhatsappSheet({ aberto, paciente, proximoAtendimento, aoFechar }) {
@@ -20,6 +21,9 @@ export default function WhatsappSheet({ aberto, paciente, proximoAtendimento, ao
     setMensagem(modelo.texto);
   }
 
+  const painelRef = useRef(null);
+  useModalDismiss(aberto && Boolean(paciente), aoFechar, painelRef);
+
   if (!aberto || !paciente) return null;
 
   function formatarTelefoneExibicao(digitos) {
@@ -36,7 +40,7 @@ export default function WhatsappSheet({ aberto, paciente, proximoAtendimento, ao
   return (
     <div className="sheet" role="dialog" aria-modal="true" aria-label="Enviar WhatsApp">
       <button type="button" className="sheet__backdrop" onClick={aoFechar} aria-label="Fechar" />
-      <div className="sheet__painel">
+      <div className="sheet__painel" ref={painelRef}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">WhatsApp — {paciente.nome}</h2>
         {numero && <p className="whatsapp-sheet__telefone">{formatarTelefoneExibicao(numero)}</p>}

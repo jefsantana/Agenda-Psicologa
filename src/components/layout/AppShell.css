@@ -50,10 +50,10 @@
 
 @media (min-width: 1024px) {
   .shell__header {
+    /* Fundo de vidro também no desktop: o header é sticky e, sem fundo, os
+       cards de KPI passavam por baixo dele e "engoliam" o título ao rolar. */
     padding: var(--space-18) var(--content-padding);
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    background: color-mix(in srgb, var(--bg-app) 80%, transparent);
   }
 }
 

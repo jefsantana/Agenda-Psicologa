@@ -221,3 +221,140 @@
   --text-4: #7a6a5a;
   --checkbox-vazio: #3a2c22;
 }
+
+/*
+  ── Modo claro ───────────────────────────────────────────────────────────────
+  O <html> sempre carrega data-mode="claro" ou data-mode="escuro" (nunca "auto"):
+  src/lib/tema.js resolve "Automático" lendo prefers-color-scheme e reescreve o
+  atributo quando o sistema muda.
+
+  Estrutura igual à do tema escuro:
+  - o bloco [data-mode="claro"] abaixo define o ACENTO + as cores semânticas
+    (compartilhadas por todas as paletas) e serve de base "Ameixa";
+  - os blocos [data-mode="claro"][data-theme="…"] trocam só o "clima" (fundo,
+    superfícies, bordas, texto) — a mesma divisão dos blocos escuros.
+
+  Regra do projeto mantida: todo texto informativo passa em AA (4.5:1) sobre a
+  sua própria --surface.
+*/
+:root[data-mode="claro"] {
+  color-scheme: light;
+
+  /* Clima base = Ameixa clara */
+  --bg-app: #f3ecf1;
+  --bg-app-mobile: #f7f2f5;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #efe0ec 0%, #f4eaf1 45%, #f7f2f5 100%);
+
+  --surface: #ffffff;
+  --surface-2: #f6eff4;
+  --surface-3: #efe5ed;
+  --surface-inset: #f2ebf0;
+
+  --border: #e5d9e2;
+  --border-strong: #d0bccc;
+
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(74, 30, 62, 0.1);
+
+  --shadow-sm: 0 1px 2px rgba(51, 20, 43, 0.08), 0 14px 34px -16px rgba(120, 80, 220, 0.22);
+  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 220, 0.28);
+
+  --text: #23191f;
+  --text-2: #4c3f49;
+  --text-3: #675a65;
+  --text-3-aa: var(--text-3);
+  --text-4: #9b8d97;
+
+  /* Acento + semânticas — comuns a todas as paletas claras. */
+  --primary: #7a4fd6;
+  --primary-strong: #6a3fc6;
+  --primary-text: #6134c0;
+  --primary-soft: #5a30ad;
+  --primary-rgb: 122, 79, 214;
+
+  --success: #1c9a6a;
+  --success-text: #0b6b45;
+  --warning: #8f4e00;
+  --warning-text: #7a4100;
+  --info: #2664c4;
+  --pink: #c33d84;
+  --amber: #e7a24c;
+  --on-amber: #3c2409;
+  --danger: #c23f5e;
+  --danger-text: #a83350;
+
+  --gradient-primary: linear-gradient(150deg, #8a63e0, #7145cf);
+  --gradient-card: linear-gradient(158deg, #9a7ce8 0%, #8460e0 58%, #7548d2 100%);
+  --on-primary: #ffffff;
+  --whatsapp: #0f7a39;
+  --checkbox-vazio: #cdbfca;
+}
+
+/* Carvão claro — cinza neutro sobre branco. */
+:root[data-mode="claro"][data-theme="carvao"] {
+  --bg-app: #eef0f2;
+  --bg-app-mobile: #f3f4f6;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #e6e9ee 0%, #eef0f3 45%, #f3f4f6 100%);
+  --surface: #ffffff;
+  --surface-2: #f2f3f5;
+  --surface-3: #e9ebee;
+  --surface-inset: #eef0f2;
+  --border: #dfe1e5;
+  --border-strong: #c6c9d0;
+  --glass-border: rgba(30, 34, 44, 0.1);
+  --shadow-sm: 0 1px 2px rgba(20, 24, 33, 0.07), 0 14px 34px -16px rgba(40, 50, 80, 0.16);
+  --shadow-raised: 0 22px 44px -18px rgba(40, 50, 80, 0.22);
+  --text: #1c1e22;
+  --text-2: #45484f;
+  --text-3: #5f636c;
+  --text-4: #949aa4;
+  --checkbox-vazio: #c8ccd3;
+}
+
+/* Ardósia clara — azul-cinza frio. */
+:root[data-mode="claro"][data-theme="ardosia"] {
+  --bg-app: #eaeef4;
+  --bg-app-mobile: #eff2f7;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #dfe7f2 0%, #e9eef5 45%, #eff2f7 100%);
+  --surface: #ffffff;
+  --surface-2: #eef2f8;
+  --surface-3: #e4eaf3;
+  --surface-inset: #eef2f7;
+  --border: #d9e0ea;
+  --border-strong: #bcc7d6;
+  --glass-border: rgba(20, 30, 55, 0.1);
+  --shadow-sm: 0 1px 2px rgba(15, 25, 45, 0.08), 0 14px 34px -16px rgba(30, 55, 110, 0.16);
+  --shadow-raised: 0 22px 44px -18px rgba(30, 55, 110, 0.22);
+  --text: #1a212e;
+  --text-2: #414b5c;
+  --text-3: #596579;
+  --text-4: #8e97a8;
+  --checkbox-vazio: #c4cdda;
+}
+
+/* Café claro — creme quente. */
+:root[data-mode="claro"][data-theme="cafe"] {
+  --bg-app: #f3ede4;
+  --bg-app-mobile: #f7f2ea;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #efe3d2 0%, #f4ebdd 45%, #f7f2ea 100%);
+  --surface: #ffffff;
+  --surface-2: #f6efe4;
+  --surface-3: #efe5d6;
+  --surface-inset: #f3ece0;
+  --border: #e7dccb;
+  --border-strong: #d2c2ab;
+  --glass-border: rgba(60, 40, 15, 0.1);
+  --shadow-sm: 0 1px 2px rgba(45, 30, 10, 0.08), 0 14px 34px -16px rgba(120, 80, 30, 0.16);
+  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 30, 0.22);
+  --text: #241c12;
+  --text-2: #4c4030;
+  --text-3: #6b5d48;
+  --text-4: #9a8c76;
+  --checkbox-vazio: #d0c3ac;
+}
+
+/* "Escuro" forçado: garante o color-scheme mesmo com o SO no claro. */
+:root[data-mode="escuro"] {
+  color-scheme: dark;
+}

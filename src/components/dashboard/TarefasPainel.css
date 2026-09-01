@@ -98,6 +98,7 @@
 }
 
 .tarefas__checkbox {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -108,6 +109,13 @@
   border-radius: var(--radius-checkbox);
   border: 1.5px solid var(--checkbox-vazio);
   transition: background-color 0.15s var(--ease-out), border-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+/* Expande a área de toque para 32px sem mexer no tamanho visual (WCAG 2.5.8). */
+.tarefas__checkbox::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
 }
 
 .tarefas__checkbox:hover {

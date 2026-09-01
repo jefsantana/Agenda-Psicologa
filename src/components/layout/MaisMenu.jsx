@@ -1,21 +1,35 @@
+import { useRef } from "react";
 import { NavLink } from "react-router-dom";
 import { supabase } from "../../lib/supabaseClient.js";
-import { IconeAtendimentos, IconeConfiguracoes, IconeConvenios, IconeSair } from "./icons.jsx";
+import { useModalDismiss } from "../../lib/useModalDismiss.js";
+import {
+  IconeAtendimentos,
+  IconeConfiguracoes,
+  IconeConvenios,
+  IconeMensagens,
+  IconeRelatorios,
+  IconeSair,
+} from "./icons.jsx";
 import "./MaisMenu.css";
 
 const ITENS = [
   { rotulo: "Atendimentos", icone: IconeAtendimentos, path: "/atendimentos" },
   { rotulo: "Convênios", icone: IconeConvenios, path: "/convenios" },
+  { rotulo: "Relatórios", icone: IconeRelatorios, path: "/relatorios" },
+  { rotulo: "Mensagens", icone: IconeMensagens, path: "/mensagens" },
   { rotulo: "Configurações", icone: IconeConfiguracoes, path: "/configuracoes" },
 ];
 
 export default function MaisMenu({ aberto, aoFechar }) {
+  const painelRef = useRef(null);
+  useModalDismiss(aberto, aoFechar, painelRef);
+
   if (!aberto) return null;
 
   return (
     <div className="sheet" role="dialog" aria-modal="true" aria-label="Mais opções">
       <button type="button" className="sheet__backdrop" onClick={aoFechar} aria-label="Fechar" />
-      <div className="sheet__painel mais-menu">
+      <div className="sheet__painel mais-menu" ref={painelRef}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">Mais opções</h2>
 

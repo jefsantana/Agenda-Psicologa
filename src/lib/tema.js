@@ -1,17 +1,29 @@
 /*
-  Aparência do sistema — duas escolhas independentes, cada uma um atributo no
+  Aparência do sistema — três escolhas independentes, cada uma um atributo no
   <html> e uma chave no localStorage:
 
+  - data-mode    → claro / escuro / automático (segue o sistema operacional).
   - data-accent  → cor de destaque (botões, foco, navegação ativa, badges).
   - data-theme   → paleta de fundo e superfícies (o "clima" da tela).
 
   Os valores de cada uma estão em src/styles/tokens.css (blocos
-  :root[data-accent="…"] e :root[data-theme="…"]). As duas se combinam:
-  qualquer acento funciona sobre qualquer paleta.
+  :root[data-accent="…"], :root[data-theme="…"] e o bloco claro). As três se
+  combinam.
+
+  Modo claro e escuro valem para as quatro paletas.
 */
 
+const CHAVE_MODO = "espaco-raquel-frois:modo";
 const CHAVE_ACENTO = "espaco-raquel-frois:acento";
 const CHAVE_PALETA = "espaco-raquel-frois:paleta";
+
+export const MODOS = [
+  { id: "auto", nome: "Automático" },
+  { id: "claro", nome: "Claro" },
+  { id: "escuro", nome: "Escuro" },
+];
+
+const MODOS_VALIDOS = new Set(MODOS.map((m) => m.id));
 
 export const ACENTOS = [
   { id: "padrao", nome: "Lavanda", cor: "#8e6aea" },
@@ -33,6 +45,34 @@ export const PALETAS = [
 
 const ACENTOS_VALIDOS = new Set(ACENTOS.map((a) => a.id));
 const PALETAS_VALIDAS = new Set(PALETAS.map((p) => p.id));
+
+export function obterModo() {
+  const salvo = localStorage.getItem(CHAVE_MODO);
+  if (!salvo || !MODOS_VALIDOS.has(salvo)) return "auto";
+  return salvo;
+}
+
+export function definirModo(id) {
+  aplicarModo(id);
+  localStorage.setItem(CHAVE_MODO, id);
+}
+
+const prefereEscuro = window.matchMedia("(prefers-color-scheme: dark)");
+
+/*
+  O <html> sempre fica com data-mode="claro" ou "escuro" — nunca "auto". Quando
+  o usuário escolhe "Automático", resolvemos aqui pelo prefers-color-scheme e
+  reaplicamos sempre que o sistema alternar (o listener abaixo). O CSS
+  (tokens.css) só precisa olhar para "claro" / "escuro".
+*/
+function aplicarModo(id) {
+  const efetivo = id === "auto" ? (prefereEscuro.matches ? "escuro" : "claro") : id;
+  document.documentElement.setAttribute("data-mode", efetivo);
+}
+
+prefereEscuro.addEventListener("change", () => {
+  if (obterModo() === "auto") aplicarModo("auto");
+});
 
 export function obterAcento() {
   const salvo = localStorage.getItem(CHAVE_ACENTO);
@@ -58,5 +98,6 @@ export function definirPaleta(id) {
   localStorage.setItem(CHAVE_PALETA, id);
 }
 
+aplicarModo(obterModo());
 document.documentElement.setAttribute("data-accent", obterAcento());
 document.documentElement.setAttribute("data-theme", obterPaleta());

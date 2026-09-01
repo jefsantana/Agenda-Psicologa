@@ -12,6 +12,7 @@ const ProntuarioPage = lazy(() => import("./pages/ProntuarioPage.jsx"));
 const ConveniosPage = lazy(() => import("./pages/ConveniosPage.jsx"));
 const FinanceiroPage = lazy(() => import("./pages/FinanceiroPage.jsx"));
 const ConfiguracoesPage = lazy(() => import("./pages/ConfiguracoesPage.jsx"));
+const EmConstrucaoPage = lazy(() => import("./pages/EmConstrucaoPage.jsx"));
 
 export default function App() {
   return (
@@ -81,6 +82,28 @@ export default function App() {
             element={
               <ProtegidaPorLogin>
                 <ConfiguracoesPage />
+              </ProtegidaPorLogin>
+            }
+          />
+          <Route
+            path="/relatorios"
+            element={
+              <ProtegidaPorLogin>
+                <EmConstrucaoPage
+                  titulo="Relatórios"
+                  descricao="Aqui vão ficar os relatórios de atendimentos, faturamento e convênios para fechamento do mês e envio às operadoras."
+                />
+              </ProtegidaPorLogin>
+            }
+          />
+          <Route
+            path="/mensagens"
+            element={
+              <ProtegidaPorLogin>
+                <EmConstrucaoPage
+                  titulo="Mensagens"
+                  descricao="Aqui vai ficar a central de mensagens com pacientes — lembretes de sessão, confirmações e conversas por WhatsApp."
+                />
               </ProtegidaPorLogin>
             }
           />

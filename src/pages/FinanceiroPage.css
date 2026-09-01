@@ -173,9 +173,14 @@
 }
 
 .fin-botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  /* Alvo de toque confortável no celular — a lista é muito usada no telefone. */
+  min-height: 40px;
   padding: var(--space-7) var(--space-14);
   border-radius: var(--radius-chip);
-  font-size: var(--fs-xs);
+  font-size: var(--fs-sm);
   font-weight: 600;
   white-space: nowrap;
   background: var(--surface);

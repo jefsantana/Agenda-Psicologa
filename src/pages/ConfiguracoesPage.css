@@ -115,6 +115,11 @@
   background: rgba(var(--primary-rgb), 0.12);
 }
 
+/* Variante sem bolinha de cor (seletor de Tema): padding simétrico. */
+.config-acento--texto {
+  padding: var(--space-7) var(--space-16);
+}
+
 .config-acento__cor {
   width: 22px;
   height: 22px;
@@ -159,7 +164,9 @@
 }
 
 .config-horario-dia--inativo {
-  opacity: 0.6;
+  /* Dia desligado — apagado, mas o nome ainda precisa passar em AA (0.6 deixava
+     o rótulo em ~4.2:1 no tema claro). */
+  opacity: 0.72;
 }
 
 .config-horario-dia__toggle {

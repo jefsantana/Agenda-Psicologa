@@ -42,3 +42,6 @@ IMG_*.jpg
 *.njsproj
 *.sln
 *.sw?
+
+# unlazy — ledger de conclusão (local, não faz parte do app)
+.unlazy/

@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { apagarPaciente, atualizarPaciente, criarPaciente } from "../../lib/pacientes.js";
+import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import AbasHorizontais from "../ui/AbasHorizontais.jsx";
 import "./PacienteForm.css";
 
@@ -147,12 +148,15 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
     }
   }
 
+  const painelRef = useRef(null);
+  useModalDismiss(aberto, aoFechar, painelRef);
+
   if (!aberto) return null;
 
   return (
     <div className="sheet" role="dialog" aria-modal="true" aria-label="Cadastro de paciente">
       <button type="button" className="sheet__backdrop" onClick={aoFechar} aria-label="Fechar" />
-      <form className="sheet__painel" onSubmit={handleSubmit}>
+      <form className="sheet__painel" ref={painelRef} onSubmit={handleSubmit}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">{paciente ? "Editar paciente" : "Novo paciente"}</h2>
 

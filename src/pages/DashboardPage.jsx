@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import AppShell from "../components/layout/AppShell.jsx";
-import KpiCard from "../components/dashboard/KpiCard.jsx";
+import DashboardKpis from "../components/dashboard/DashboardKpis.jsx";
 import AgendaDoDia from "../components/dashboard/AgendaDoDia.jsx";
 import DonutConvenios from "../components/dashboard/DonutConvenios.jsx";
 import AcoesRapidas from "../components/dashboard/AcoesRapidas.jsx";
@@ -12,14 +12,13 @@ import CalendarioMes from "../components/dashboard/CalendarioMes.jsx";
 import ProximosCompromissos from "../components/dashboard/ProximosCompromissos.jsx";
 import TarefasPainel from "../components/dashboard/TarefasPainel.jsx";
 import PacienteForm from "../components/pacientes/PacienteForm.jsx";
-import { IconeAlerta, IconeChecklist, IconeCifrao, IconeRelogio } from "../components/dashboard/icons.jsx";
 import { buscarAtendimentosEntre, buscarBloqueiosEntre } from "../lib/dashboard.js";
 import { contarPendenciasAnteriores } from "../lib/agenda.js";
 import { buscarPerfil } from "../lib/perfil.js";
 import { buscarTarefas, buscarCompromissosPessoais } from "../lib/tarefas.js";
 import { buscarLancamentos } from "../lib/financeiro.js";
 import { buscarConvenios } from "../lib/pacientes.js";
-import { formatarMoedaResumo, inicioDoMes, fimDoMes, paraISO } from "../lib/date.js";
+import { formatarHora, inicioDoMes, fimDoMes, minutosAte, paraISO } from "../lib/date.js";
 import "./DashboardPage.css";
 
 const STATUS_RESOLVIDOS = ["realizado", "falta", "remarcar", "cancelado"];
@@ -33,7 +32,7 @@ export default function DashboardPage() {
   const [atendimentosDoMes, setAtendimentosDoMes] = useState([]);
   const [proximosCompromissos, setProximosCompromissos] = useState([]);
   const [tarefas, setTarefas] = useState([]);
-  const [lancamentosDoMes, setLancamentosDoMes] = useState([]);
+  const [lancamentos, setLancamentos] = useState([]);
   const [pendenciasAnteriores, setPendenciasAnteriores] = useState({ total: 0, maisAntigo: null });
   const [sheetAberta, setSheetAberta] = useState(false);
   const [whatsappAberto, setWhatsappAberto] = useState(false);
@@ -64,7 +63,7 @@ export default function DashboardPage() {
         atendimentosMes,
         compromissos,
         tarefasCarregadas,
-        lancamentos,
+        lancamentosCarregados,
         pendencias,
       ] = await Promise.all([
         buscarPerfil(),
@@ -89,7 +88,7 @@ export default function DashboardPage() {
       setAtendimentosDoMes(atendimentosMes);
       setProximosCompromissos(compromissos);
       setTarefas(tarefasCarregadas);
-      setLancamentosDoMes(lancamentos.filter((l) => l.pagoEm?.slice(0, 7) === mesAtualISO()));
+      setLancamentos(lancamentosCarregados);
       setPendenciasAnteriores(pendencias);
     };
 
@@ -152,7 +151,7 @@ export default function DashboardPage() {
     setFormEdicaoAberto(true);
   }
 
-  const kpis = calcularKpis(itensHoje, lancamentosDoMes);
+  const kpis = calcularKpis(itensHoje, lancamentos);
   const pendentesConfirmacao = itensHoje.filter(
     (item) => item.tipoLinha !== "bloqueio" && item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status)
   ).length;
@@ -193,36 +192,7 @@ export default function DashboardPage() {
         </div>
       )}
 
-      <div className="dashboard__kpis">
-        <KpiCard
-          cor="primary"
-          icone={<IconeChecklist />}
-          rotulo="Atendimentos hoje"
-          valor={carregando ? "…" : kpis.confirmadosHoje}
-          legenda={carregando ? "" : `de ${kpis.totalHoje} agendados`}
-        />
-        <KpiCard
-          cor="success"
-          icone={<IconeRelogio />}
-          rotulo="Próximos atendimentos"
-          valor={carregando ? "…" : kpis.proximasDuasHoras}
-          legenda="nas próximas 2 horas"
-        />
-        <KpiCard
-          cor="warning"
-          icone={<IconeAlerta />}
-          rotulo="Faltas e remarcações"
-          valor={carregando ? "…" : kpis.faltasRemarcacoes}
-          legenda="hoje"
-        />
-        <KpiCard
-          cor="info"
-          icone={<IconeCifrao />}
-          rotulo="Recebimentos (mês)"
-          valor={carregando ? "…" : formatarMoedaResumo(kpis.recebidoMes)}
-          legenda="pago até agora"
-        />
-      </div>
+      <DashboardKpis kpis={kpis} carregando={carregando} />
 
       <div className="dashboard__grade">
         <div className="dashboard__coluna-principal">
@@ -278,30 +248,50 @@ export default function DashboardPage() {
   );
 }
 
-function mesAtualISO() {
-  return paraISO(new Date()).slice(0, 7);
+function calcularKpis(agendaDoDia, lancamentos) {
+  const atendimentosHoje = agendaDoDia.filter((item) => item.tipoLinha !== "bloqueio");
+  const naoCancelados = atendimentosHoje.filter((a) => a.status !== "cancelado");
+  const total = naoCancelados.length;
+  const concluidos = atendimentosHoje.filter((a) => a.status === "realizado").length;
+
+  const faltasRemarcacoes = atendimentosHoje.filter((a) => ["falta", "remarcar"].includes(a.status)).length;
+  const remarcacoesAConfirmar = atendimentosHoje.filter((a) => a.status === "remarcar").length;
+
+  const agora = new Date();
+  const proximoAtendimento = naoCancelados
+    .filter((a) => a.inicio > agora && !["falta", "realizado"].includes(a.status))
+    .sort((a, b) => a.inicio - b.inicio)[0];
+  const proximo = proximoAtendimento
+    ? {
+        hora: formatarHora(proximoAtendimento.inicio),
+        paciente: proximoAtendimento.paciente,
+        tipo: proximoAtendimento.tipo,
+        emMinutos: minutosAte(proximoAtendimento.inicio),
+      }
+    : null;
+
+  const mesAtual = paraISO(agora).slice(0, 7);
+  const mesAnterior = paraISO(new Date(agora.getFullYear(), agora.getMonth() - 1, 1)).slice(0, 7);
+  const recebidoMes = somarPagosNoMes(lancamentos, mesAtual);
+  const recebidoMesAnterior = somarPagosNoMes(lancamentos, mesAnterior);
+  const deltaPct =
+    recebidoMesAnterior > 0 ? Math.round(((recebidoMes - recebidoMesAnterior) / recebidoMesAnterior) * 100) : null;
+  const aReceber = lancamentos
+    .filter((l) => !l.pagoEm && (l.vencimento ?? "").slice(0, 7) <= mesAtual)
+    .reduce((soma, l) => soma + l.valor, 0);
+
+  return {
+    hoje: { concluidos, total },
+    proximo,
+    faltas: { total: faltasRemarcacoes, remarcacoesAConfirmar },
+    financeiro: { recebidoMes, deltaPct, aReceber },
+  };
 }
 
-function calcularKpis(agendaDoDia, lancamentosDoMes) {
-  const atendimentosHoje = agendaDoDia.filter((item) => item.tipoLinha !== "bloqueio");
-  const totalHoje = atendimentosHoje.filter((a) => a.status !== "cancelado").length;
-  const confirmadosHoje = atendimentosHoje.filter((a) =>
-    ["confirmado", "realizado"].includes(a.status)
-  ).length;
-  const faltasRemarcacoes = atendimentosHoje.filter((a) =>
-    ["falta", "remarcar"].includes(a.status)
-  ).length;
-
-  const agora = Date.now();
-  const daquiA2h = agora + 2 * 60 * 60 * 1000;
-  const proximasDuasHoras = atendimentosHoje.filter((a) => {
-    const t = a.inicio.getTime();
-    return t >= agora && t <= daquiA2h && !["cancelado", "falta"].includes(a.status);
-  }).length;
-
-  const recebidoMes = lancamentosDoMes.reduce((soma, l) => soma + l.valor, 0);
-
-  return { totalHoje, confirmadosHoje, faltasRemarcacoes, proximasDuasHoras, recebidoMes };
+function somarPagosNoMes(lancamentos, mesISO) {
+  return lancamentos
+    .filter((l) => l.pagoEm?.slice(0, 7) === mesISO)
+    .reduce((soma, l) => soma + l.valor, 0);
 }
 
 function primeiroNome(nomeCompleto) {
