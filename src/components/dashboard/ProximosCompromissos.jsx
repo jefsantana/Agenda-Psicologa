@@ -5,7 +5,9 @@ import { combinarDataHora, paraISO } from "../../lib/date.js";
 import MenuAcoesLinha from "../agenda/MenuAcoesLinha.jsx";
 import "./ProximosCompromissos.css";
 
-export default function ProximosCompromissos({ itens, aoAtualizar }) {
+const MESES_ABREV = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
+
+export default function ProximosCompromissos({ itens, aoAtualizar, carregando }) {
   const [formAberto, setFormAberto] = useState(false);
   const [editandoId, setEditandoId] = useState(null);
   const [titulo, setTitulo] = useState("");
@@ -91,14 +93,12 @@ export default function ProximosCompromissos({ itens, aoAtualizar }) {
   return (
     <section className="proximos">
       <div className="proximos__cabecalho">
-        <div>
-          <h2>Agenda pessoal</h2>
-          <span className="proximos__legenda">Lembretes pessoais — não são atendimentos</span>
-        </div>
+        <h2>Agenda pessoal</h2>
         <button type="button" className="proximos__adicionar" onClick={formAberto ? fecharForm : abrirNovo}>
-          {formAberto ? "Cancelar" : "+ Novo"}
+          {formAberto ? "Cancelar" : "＋ Novo"}
         </button>
       </div>
+      <span className="proximos__legenda">Lembretes que não são atendimentos</span>
 
       {formAberto && (
         <form className="proximos__form" onSubmit={handleSalvar}>
@@ -134,36 +134,49 @@ export default function ProximosCompromissos({ itens, aoAtualizar }) {
         </form>
       )}
 
-      {itens.length === 0 ? (
+      {carregando ? (
+        <ul className="proximos__lista" aria-hidden="true">
+          {[0, 1].map((i) => (
+            <li key={i} className="proximos__item">
+              <span className="skeleton" style={{ "--skeleton-w": "34px", "--skeleton-h": "34px" }} />
+              <span className="skeleton" style={{ "--skeleton-w": "60%", "--skeleton-h": "13px" }} />
+            </li>
+          ))}
+        </ul>
+      ) : itens.length === 0 ? (
         <p className="proximos__vazio">Nada pessoal marcado para os próximos dias.</p>
       ) : (
         <ul className="proximos__lista">
-          {itens.map((item) => (
-            <li key={item.id} className="proximos__item">
-              <div className="proximos__data">
-                <span className="proximos__data-dia">
-                  {new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(
-                    new Date(`${item.vence_em}T00:00:00`)
-                  )}
-                </span>
-                <span className="proximos__data-hora">{item.hora?.slice(0, 5)}</span>
-              </div>
-              <button
-                type="button"
-                className="proximos__concluir"
-                disabled={concluindo === item.id}
-                onClick={() => handleConcluir(item.id)}
-                aria-label={`Concluir: ${item.titulo}`}
-                title="Marcar como feito"
-              >
-                <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true">
-                  <path d="M1 4l2.8 2.8L9 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </button>
-              <p className="proximos__nome">{item.titulo}</p>
-              <MenuAcoesLinha onEditar={() => abrirEdicao(item)} onExcluir={() => handleExcluir(item)} />
-            </li>
-          ))}
+          {itens.map((item) => {
+            const dataEvento = new Date(`${item.vence_em}T00:00:00`);
+            return (
+              <li key={item.id} className="proximos__item">
+                <div className="proximos__data">
+                  <span className="proximos__data-mes">
+                    {MESES_ABREV[dataEvento.getMonth()]}
+                  </span>
+                  <span className="proximos__data-dia">{String(dataEvento.getDate()).padStart(2, "0")}</span>
+                </div>
+                <div className="proximos__corpo">
+                  <p className="proximos__nome">{item.titulo}</p>
+                  <span className="proximos__hora">{item.hora?.slice(0, 5)}</span>
+                </div>
+                <button
+                  type="button"
+                  className="proximos__concluir"
+                  disabled={concluindo === item.id}
+                  onClick={() => handleConcluir(item.id)}
+                  aria-label={`Concluir: ${item.titulo}`}
+                  title="Marcar como feito"
+                >
+                  <svg width="10" height="8" viewBox="0 0 10 8" fill="none" aria-hidden="true">
+                    <path d="M1 4l2.8 2.8L9 1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
+                <MenuAcoesLinha onEditar={() => abrirEdicao(item)} onExcluir={() => handleExcluir(item)} />
+              </li>
+            );
+          })}
         </ul>
       )}
     </section>

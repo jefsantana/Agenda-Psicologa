@@ -1,93 +1,123 @@
 /*
-  Tokens — v6 (tema escuro plum/lavanda).
+  Tokens — v7 (tema escuro carvão/azul).
 
-  Substitui o v5 (charcoal + teal "verde consultório"). Direção confirmada pela
-  usuária em set/2026 a partir do protótipo `NovosAjustes/Raquel Frois App.dc.html`:
-  fundo vinho/plum, acento lavanda, tipografia Instrument Sans, cards grandes com
-  vidro (glassmorphism). O histórico do v5 que evitava roxo fica revogado.
+  Substitui o v6 (vinho/lavanda + glassmorphism). Direção definida em set/2026 a
+  partir do handoff `design_handoff_dashboard_agenda/`: fundo carvão neutro,
+  acento azul, cards planos (sem vidro, sem sombra — elevação só por
+  background + border). Instrument Sans é mantida (o handoff diz para manter a
+  sans do repo quando já houver uma); o mono passa de IBM Plex Mono para
+  JetBrains Mono, recomendado no handoff para horários/valores/percentuais.
 
-  Regra mantida do v5: todo texto informativo precisa passar em AA (4.5:1). Por
+  Regra mantida do v6: todo texto informativo precisa passar em AA (4.5:1). Por
   isso os cinzas de texto são cores sólidas com contraste verificado sobre
   --surface, não branco com opacidade baixa (que varia com o que está atrás).
 
-  Os nomes das variáveis são os mesmos do v5 de propósito — o redesign vive
-  aqui, os componentes não mudam de API.
+  Os nomes das variáveis são os mesmos das versões anteriores de propósito — o
+  redesign vive aqui, os componentes não mudam de API. Tokens sem equivalente
+  direto no v6 (bg-sidebar, bg-row, border-control etc.) foram adicionados no
+  fim do bloco de superfícies, não substituem nomes existentes.
 */
 
 :root {
-  /* Superfícies e texto
-     Fundo plum em degraus; o gradiente radial da tela fica em --bg-gradient,
-     aplicado no body (src/index.css). */
-  --bg-app: #140810;
-  --bg-app-mobile: #1a0b14;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #4a1e3e 0%, #2e1324 42%, #1c0b15 72%, #140810 100%);
+  /* Superfícies e texto — carvão neutro (handoff, seção "Design Tokens"). */
+  --bg-app: #0b0d10;
+  --bg-app-mobile: #0b0d10;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #12161c 0%, #0d0f12 45%, #0b0d10 100%);
 
-  --surface: #24121d;
-  --surface-2: #2e1727;
-  --surface-3: #3a2033;
-  --surface-inset: #180a12;
+  --surface: #12161c; /* bg/card */
+  --surface-2: #161c24; /* bg/raised — linha destacada, item interno */
+  --surface-3: #1e2732; /* tom acima, usado em controles/toggles ativos */
+  --surface-inset: #0e1217; /* bg/inset — fundo de toggle segmentado */
 
-  --border: #3d2438;
-  --border-strong: #573650;
+  /* Tokens sem equivalente no v6, adicionados para casar 1:1 com o handoff. */
+  --bg-sidebar: #0f1216;
+  --bg-row: #12171e; /* linha normal de lista (levemente distinta do card) */
+  --bg-nav-active: #182234;
+  --bg-control: #232d3a; /* botão secundário */
+  --bg-avatar: #24303f; /* avatar fallback */
 
-  /* Vidro — cards translúcidos do protótipo. Use com fallback @supports:
-     quando não houver backdrop-filter, cair em --surface sólido. */
-  --glass-bg: rgba(255, 255, 255, 0.055);
-  --glass-bg-strong: rgba(255, 255, 255, 0.09);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --glass-blur: 14px;
+  --border: #1f2733; /* border/default (cards) */
+  --border-strong: #232c38; /* border/strong (itens internos) */
+  --border-subtle: #1b2027; /* divisores */
+  --border-control: #2e3a48; /* botões */
+  --border-dashed: #2a3441;
 
-  /* Elevação — sombra suave + brilho lilás dos cards do protótipo. */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.35), 0 14px 34px -16px rgba(120, 80, 220, 0.45);
-  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 220, 0.6);
+  /* Vidro — mantido só por compatibilidade de API; o handoff não usa vidro
+     (cards são planos). @supports sem backdrop-filter já cai em --surface. */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-bg-strong: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 10px;
 
-  --text: #f5eef3;
-  --text-2: #cbbcd4; /* ~9:1 sobre --surface */
-  /* --text-3: mauve claro sólido. ~5.4:1 sobre --surface — passa AA em qualquer
-     tamanho. Não usar rgba(255,255,255,.5) para texto: o contraste real depende
-     do card atrás e quebra o AA de forma não determinística. */
-  --text-3: #a99bb4;
+  /* Elevação — o handoff pede "nenhuma sombra": elevação só por
+     background + border. Mantidas como no-op para não quebrar componentes
+     que ainda referenciam --shadow-sm/--shadow-raised. */
+  --shadow-sm: none;
+  --shadow-raised: none;
+
+  --text: #e7eaee; /* text/primary */
+  --text-2: #c6cdd6; /* text/secondary */
+  --text-3: #8a94a2; /* text/muted */
   --text-3-aa: var(--text-3); /* alias mantido por compatibilidade — use --text-3 */
-  --text-4: #6e5c76; /* ~2.9:1 — SÓ decoração, nunca texto informativo */
+  --text-4: #5a6472; /* text/disabled — decoração, nunca texto informativo */
+
+  /* Degraus extras do handoff sem slot correspondente no v6. */
+  --text-subtle: #7c8794;
+  --text-faint: #6b7684;
+  --text-out-of-range: #3e4753;
+  --icon-faint: #4c5764;
 
   /* Acentos semânticos
-     Acento: lavanda-violeta do protótipo. --primary é a cor de preenchimento
-     (botões, fills, navegação ativa); --primary-text é a variante clara para
+     Acento: azul do handoff. --primary é a cor de preenchimento (botões,
+     fills, navegação ativa); --primary-text é a variante para
      texto/links/ícones sobre fundo escuro (AA). */
-  --primary: #8e6aea;
-  --primary-strong: #7b55de;
-  --primary-text: #c6b0f5; /* ~7:1 sobre --surface */
-  --primary-soft: #d8c9ff;
-  --primary-rgb: 142, 106, 234; /* para rgba() de tints — em sincronia com --primary */
+  --primary: #3b82f6;
+  --primary-strong: #2f72e0;
+  --primary-text: #6ea8fe; /* accent/text — links, eyebrow, ícones de ação */
+  --primary-soft: #9cc4ff; /* accent/light — hover de link */
+  --primary-rgb: 59, 130, 246; /* para rgba() de tints — em sincronia com --primary */
+  --accent-soft-icon: #7fb0ff; /* accent/soft — só ícone de menu ativo */
 
-  --success: #3fcf8e;
-  --success-text: #63dca7;
-  --warning: #f2b07a;
-  --warning-text: #f6c8a1;
-  --info: #6ba8f5;
+  --success: #34d399;
+  --success-text: #34d399;
+  --success-rgb: 52, 211, 153;
+  --warning: #fbbf24;
+  --warning-text: #fbbf24;
+  --warning-rgb: 251, 191, 36;
+  --warning-dot: #f59e0b; /* dot de notificação */
+  --info: #6ea8fe;
+  --info-rgb: 110, 168, 254;
   --pink: #e86aa6;
-  --amber: #f2c08a; /* pêssego do protótipo — badges "agora"/pendências. Texto escuro por cima: --on-amber */
-  --on-amber: #4a2a10;
-  /* --danger: rosa dessaturado para o único status realmente negativo ("falta"). */
+  --amber: #fbbf24; /* badges "agora"/pendências. Texto escuro por cima: --on-amber */
+  --on-amber: #1c1305;
+  /* --danger: sem token próprio no handoff — status negativo usa --warning. */
   --danger: #e29cad;
+  --danger-rgb: 226, 156, 173;
   --danger-text: #ecb3c0;
 
-  --gradient-primary: linear-gradient(150deg, #bca6f9, #8e6aea);
-  --gradient-card: linear-gradient(158deg, #bca6f9 0%, #9873ee 58%, #8963e8 100%);
+  --gradient-primary: linear-gradient(160deg, #3b82f6, #2563eb);
+  --gradient-card: linear-gradient(160deg, #3b82f6 0%, #2f72e0 100%);
   --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */
   --whatsapp: #25d366;
-  --checkbox-vazio: #3a2b3f;
+  --checkbox-vazio: #2e3a48;
 
-  /* Tipografia — Instrument Sans em todos os papéis (o protótipo usa uma família
-     só, variando peso e itálico). Fallback para Inter e system-ui. */
+  /* Gráficos — sequência de 3 cores do handoff (barra de convênios etc.). */
+  --chart-1: #3b82f6;
+  --chart-2: #6ea8fe;
+  --chart-3: #34d399;
+
+  /* Tipografia — Instrument Sans mantida (handoff: "se o repo já usa outra
+     sans, manter a do repo e aplicar só a escala/pesos"). Fallback Inter e
+     system-ui, inalterado. */
   --font-body: "Instrument Sans", "Inter", system-ui, sans-serif;
   --font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
-  /* Dados: mono técnica — horários, valores, CID, CPF. */
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  /* Dados: mono técnica — horários, valores, percentuais. JetBrains Mono
+     recomendada pelo handoff no lugar de IBM Plex Mono. */
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Peso dos títulos display: o protótipo usa 400 (leve) com uma linha em
-     itálico para ênfase. Componentes que queriam bold devem usar --weight-display. */
-  --weight-display: 400;
+  /* Peso dos títulos display: o handoff usa 800 (h1 do header, "Olá, Raquel"),
+     bem mais pesado que o 400 do v6. */
+  --weight-display: 800;
 
   /* Escala tipográfica — 7 degraus (inalterada do v5). */
   --fs-2xs: 0.6875rem; /* 11px */
@@ -109,20 +139,25 @@
   --space-16: 16px;
   --space-18: 18px;
 
-  /* Raios — mais arredondados, alinhados ao protótipo (cards 26px, painel 26px). */
-  --radius-panel: 26px;
-  --radius-kpi: 22px;
-  --radius-row: 18px;
-  --radius-chip: 12px;
+  /* Raios — escala do handoff (dashboard denso, flat), bem menos arredondada
+     que o v6 (cards 26px). --radius-row segue sendo o raio de controle
+     genérico usado em todo o app (botão, input); os raios só do Dashboard
+     (linha de atendimento 13px, botão-ícone 8px etc.) ficam direto nos
+     componentes, não em token. */
+  --radius-panel: 16px; /* card principal */
+  --radius-kpi: 14px;
+  --radius-row: 11px; /* controle, item interno, avatar */
+  --radius-chip: 6px; /* tag */
+  --radius-badge: 20px; /* badge/pílula de status */
   --radius-pill: 999px;
   --radius-checkbox: 6px;
   --radius-avatar-desktop: 16px;
   --radius-avatar-mobile: 14px;
   --radius-sheet: 32px;
 
-  /* Layout (inalterado do v5) */
-  --sidebar-width: 236px;
-  --right-column-width: 322px;
+  /* Layout — sidebar e coluna direita no valor do handoff (232px / 344px). */
+  --sidebar-width: 232px;
+  --right-column-width: 344px;
   --content-padding: 18px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -131,8 +166,9 @@
 
 /*
   Variações de acento — Configurações → Aparência (src/lib/tema.js).
-  O lavanda do :root acima é o padrão ("padrao"). As demais trocam só a cor de
-  destaque. Cada bloco que redefine --primary também redefine --primary-rgb.
+  O azul do :root acima já é o padrão ("azul"), por isso não tem um bloco
+  próprio aqui — as demais trocam só a cor de destaque. Cada bloco que
+  redefine --primary também redefine --primary-rgb.
 */
 :root[data-accent="azul"] {
   --primary: #3b82f6;
@@ -289,6 +325,45 @@
   --on-primary: #ffffff;
   --whatsapp: #0f7a39;
   --checkbox-vazio: #cdbfca;
+}
+
+/*
+  Variações de acento no tema claro — mesma escolha de Configurações →
+  Aparência, mas com --primary-rgb e --primary-strong próprios porque o texto
+  precisa continuar em AA sobre fundo branco. Ficam como blocos
+  [data-mode="claro"][data-accent="…"] (dois atributos) de propósito: como o
+  bloco base [data-mode="claro"] também redefine --primary, um bloco de
+  especificidade igual perderia por ordem de origem — dois atributos
+  garante especificidade maior e a vitória independente da ordem.
+*/
+:root[data-mode="claro"][data-accent="azul"] {
+  --primary: #2f6fe0;
+  --primary-strong: #2560c7;
+  --primary-text: #1d5cc9;
+  --primary-soft: #123f8f;
+  --primary-rgb: 47, 111, 224;
+  --gradient-primary: linear-gradient(150deg, #4a8aef, #2560c7);
+  --gradient-card: linear-gradient(158deg, #6ba8f5 0%, #2f6fe0 58%, #2560c7 100%);
+}
+
+:root[data-mode="claro"][data-accent="rosa"] {
+  --primary: #c23d80;
+  --primary-strong: #a8306d;
+  --primary-text: #a8306d;
+  --primary-soft: #7d2451;
+  --primary-rgb: 194, 61, 128;
+  --gradient-primary: linear-gradient(150deg, #d1548f, #a8306d);
+  --gradient-card: linear-gradient(158deg, #e8639a 0%, #c23d80 58%, #a8306d 100%);
+}
+
+:root[data-mode="claro"][data-accent="verde"] {
+  --primary: #17806f;
+  --primary-strong: #106b5d;
+  --primary-text: #106b5d;
+  --primary-soft: #0b4d43;
+  --primary-rgb: 23, 128, 111;
+  --gradient-primary: linear-gradient(150deg, #1f9382, #106b5d);
+  --gradient-card: linear-gradient(158deg, #1f9382 0%, #17806f 58%, #106b5d 100%);
 }
 
 /* Carvão claro — cinza neutro sobre branco. */

@@ -11,11 +11,18 @@ function escaparLike(texto) {
   return texto.replace(/[\\%_]/g, (c) => `\\${c}`);
 }
 
+/** `busca` casa por nome sempre; se parecer CPF (3+ dígitos), casa por CPF também. */
 export async function buscarPacientes(busca = "") {
   let query = supabase.from("pacientes").select(SELECT_PACIENTE).order("nome", { ascending: true });
 
-  if (busca.trim()) {
-    query = query.ilike("nome", `%${escaparLike(busca.trim())}%`);
+  const termo = busca.trim();
+  if (termo) {
+    const somenteDigitos = termo.replace(/\D/g, "");
+    if (somenteDigitos.length >= 3) {
+      query = query.or(`nome.ilike.%${escaparLike(termo)}%,cpf.ilike.%${somenteDigitos}%`);
+    } else {
+      query = query.ilike("nome", `%${escaparLike(termo)}%`);
+    }
   }
 
   const { data, error } = await query;

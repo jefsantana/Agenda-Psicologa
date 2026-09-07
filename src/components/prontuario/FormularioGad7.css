@@ -1,0 +1,83 @@
+.gad7-form {
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.gad7-form__legenda {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.gad7-form__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+  margin-top: var(--space-16);
+}
+
+.gad7-form__item {
+  padding-bottom: var(--space-14);
+  border-bottom: 1px solid var(--border);
+}
+
+.gad7-form__item:last-child {
+  border-bottom: none;
+}
+
+.gad7-form__pergunta {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.gad7-form__opcoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  margin-top: var(--space-10);
+}
+
+.gad7-form__opcao {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  padding: var(--space-7) var(--space-10);
+  border-radius: var(--radius-row);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.gad7-form__opcao:has(input:checked) {
+  border-color: var(--primary);
+  color: var(--text);
+  background: rgba(var(--primary-rgb), 0.12);
+}
+
+.gad7-form__opcao input {
+  accent-color: var(--primary);
+}
+
+.gad7-form__erro {
+  margin-top: var(--space-12);
+  font-size: var(--fs-sm);
+  color: var(--warning);
+}
+
+.gad7-form__salvar {
+  width: 100%;
+  margin-top: var(--space-16);
+  padding: var(--space-12);
+  border-radius: var(--radius-row);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  text-align: center;
+}
+
+.gad7-form__salvar:disabled {
+  opacity: 0.5;
+}

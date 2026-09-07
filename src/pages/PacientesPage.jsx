@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AppShell from "../components/layout/AppShell.jsx";
 import PacienteCard from "../components/pacientes/PacienteCard.jsx";
 import PacienteForm from "../components/pacientes/PacienteForm.jsx";
@@ -8,16 +9,23 @@ import { buscarConvenios, buscarPacientes, buscarProximosAtendimentosPorPaciente
 import { buscarPerfil } from "../lib/perfil.js";
 import "./PacientesPage.css";
 
+const ABAS = [
+  { id: "ativos", rotulo: "Ativos", statuses: ["ativo", "novo"] },
+  { id: "espera", rotulo: "Em espera", statuses: ["pendente"] },
+  { id: "alta", rotulo: "Alta", statuses: ["inativo"] },
+];
+
 export default function PacientesPage() {
+  const navigate = useNavigate();
   const [perfil, setPerfil] = useState(null);
   const [pacientes, setPacientes] = useState([]);
   const [proximos, setProximos] = useState(new Map());
   const [convenios, setConvenios] = useState([]);
   const [busca, setBusca] = useState("");
+  const [aba, setAba] = useState("ativos");
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
   const [formAberto, setFormAberto] = useState(false);
-  const [pacienteEditando, setPacienteEditando] = useState(null);
   const [pacienteWhatsapp, setPacienteWhatsapp] = useState(null);
 
   const carregar = useCallback(async (termoBusca) => {
@@ -48,23 +56,21 @@ export default function PacientesPage() {
   }, [busca, carregar]);
 
   function abrirNovo() {
-    setPacienteEditando(null);
     setFormAberto(true);
   }
 
-  function abrirEdicao(paciente) {
-    setPacienteEditando(paciente);
-    setFormAberto(true);
-  }
+  const abaAtual = ABAS.find((item) => item.id === aba) ?? ABAS[0];
+  const pacientesDaAba = pacientes.filter((paciente) => abaAtual.statuses.includes(paciente.status));
+  const gruposPorLetra = agruparPorLetra(pacientesDaAba);
 
   return (
-    <AppShell perfil={perfil} title="Pacientes" subtitle={`${pacientes.length} cadastrados`}>
+    <AppShell perfil={perfil} title="Pacientes" subtitle={`${pacientesDaAba.length} ${abaAtual.rotulo.toLowerCase()}`}>
       <div className="pacientes-toolbar">
         <label className="pacientes-busca">
-          <span className="sr-only">Buscar paciente por nome</span>
+          <span className="sr-only">Buscar paciente por nome ou CPF</span>
           <input
             type="search"
-            placeholder="Buscar por nome…"
+            placeholder="Buscar por nome ou CPF"
             value={busca}
             onChange={(event) => setBusca(event.target.value)}
           />
@@ -75,6 +81,21 @@ export default function PacientesPage() {
         </button>
       </div>
 
+      <div className="pacientes-abas" role="tablist" aria-label="Filtrar por status">
+        {ABAS.map((item) => (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            aria-selected={aba === item.id}
+            className={aba === item.id ? "pacientes-abas__item--ativo" : "pacientes-abas__item"}
+            onClick={() => setAba(item.id)}
+          >
+            {item.rotulo}
+          </button>
+        ))}
+      </div>
+
       {erro && (
         <p className="erro-aviso" role="alert">
           {erro}
@@ -83,27 +104,36 @@ export default function PacientesPage() {
 
       {carregando ? (
         <p className="pacientes-vazio">Carregando…</p>
-      ) : pacientes.length === 0 ? (
+      ) : pacientesDaAba.length === 0 ? (
         <p className="pacientes-vazio">
-          {busca ? "Nenhum paciente encontrado." : 'Nenhum paciente cadastrado ainda. Toque em "Novo paciente".'}
+          {busca
+            ? "Nenhum paciente encontrado."
+            : pacientes.length === 0
+              ? 'Nenhum paciente cadastrado ainda. Toque em "Novo paciente".'
+              : `Nenhum paciente em "${abaAtual.rotulo}".`}
         </p>
       ) : (
-        <ul className="pacientes-lista">
-          {pacientes.map((paciente) => (
-            <PacienteCard
-              key={paciente.id}
-              paciente={paciente}
-              proximoAtendimento={proximos.get(paciente.id)}
-              onClick={() => abrirEdicao(paciente)}
-              onWhatsapp={() => setPacienteWhatsapp(paciente)}
-            />
-          ))}
-        </ul>
+        gruposPorLetra.map(({ letra, itens }) => (
+          <div className="pacientes-grupo" key={letra}>
+            <h2 className="pacientes-grupo__letra">{letra}</h2>
+            <ul className="pacientes-lista">
+              {itens.map((paciente) => (
+                <PacienteCard
+                  key={paciente.id}
+                  paciente={paciente}
+                  proximoAtendimento={proximos.get(paciente.id)}
+                  onClick={() => navigate(`/pacientes/${paciente.id}`)}
+                  onWhatsapp={() => setPacienteWhatsapp(paciente)}
+                />
+              ))}
+            </ul>
+          </div>
+        ))
       )}
 
       <PacienteForm
         aberto={formAberto}
-        paciente={pacienteEditando}
+        paciente={null}
         convenios={convenios}
         aoFechar={() => setFormAberto(false)}
         aoSalvar={() => carregar(busca)}
@@ -117,4 +147,16 @@ export default function PacientesPage() {
       />
     </AppShell>
   );
+}
+
+/** Agrupa por inicial do nome — a lista já vem ordenada por nome (buscarPacientes). */
+function agruparPorLetra(pacientes) {
+  const grupos = [];
+  for (const paciente of pacientes) {
+    const letra = paciente.nome.trim().charAt(0).toUpperCase();
+    const grupoAtual = grupos[grupos.length - 1];
+    if (grupoAtual?.letra === letra) grupoAtual.itens.push(paciente);
+    else grupos.push({ letra, itens: [paciente] });
+  }
+  return grupos;
 }

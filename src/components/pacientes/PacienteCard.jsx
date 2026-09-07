@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import PacienteStatusBadge from "./PacienteStatusBadge.jsx";
 import { IconeWhatsapp } from "../dashboard/icons.jsx";
+import { formatarHora, mesmaData, rotuloDia } from "../../lib/date.js";
 import "./PacienteCard.css";
 
 const FAIXA_ETARIA_LABEL = { crianca: "Criança", adolescente: "Adolescente", adulto: "Adulto" };
@@ -16,11 +17,9 @@ export default function PacienteCard({ paciente, proximoAtendimento, onClick, on
         <div className="paciente-card__texto">
           <p className="paciente-card__nome">{paciente.nome}</p>
           <span className="paciente-card__sub">
+            {proximoAtendimento ? `${rotuloProximaSessao(proximoAtendimento)} · ` : ""}
             {paciente.convenio?.nome ?? "Particular"}
             {faixaEtaria ? ` · ${faixaEtaria}` : ""}
-            {proximoAtendimento
-              ? ` · próxima ${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(proximoAtendimento)}`
-              : ""}
           </span>
         </div>
         <PacienteStatusBadge status={paciente.status} />
@@ -52,6 +51,15 @@ export default function PacienteCard({ paciente, proximoAtendimento, onClick, on
       </div>
     </li>
   );
+}
+
+function rotuloProximaSessao(data) {
+  const dia = mesmaData(data, new Date()) ? "Hoje" : capitalizar(rotuloDia(data));
+  return `${dia} ${formatarHora(data)}`;
+}
+
+function capitalizar(texto) {
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
 }
 
 function iniciaisDoNome(nome) {

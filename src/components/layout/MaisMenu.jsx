@@ -7,12 +7,14 @@ import {
   IconeConfiguracoes,
   IconeConvenios,
   IconeMensagens,
+  IconeProntuarios,
   IconeRelatorios,
   IconeSair,
 } from "./icons.jsx";
 import "./MaisMenu.css";
 
 const ITENS = [
+  { rotulo: "Prontuários", icone: IconeProntuarios, path: "/prontuarios" },
   { rotulo: "Atendimentos", icone: IconeAtendimentos, path: "/atendimentos" },
   { rotulo: "Convênios", icone: IconeConvenios, path: "/convenios" },
   { rotulo: "Relatórios", icone: IconeRelatorios, path: "/relatorios" },

@@ -5,6 +5,7 @@ import PacienteForm from "../components/pacientes/PacienteForm.jsx";
 import AbasProntuario from "../components/prontuario/AbasProntuario.jsx";
 import AbaHistorico from "../components/prontuario/AbaHistorico.jsx";
 import AbaDados from "../components/prontuario/AbaDados.jsx";
+import WorklistProntuarios from "../components/prontuario/WorklistProntuarios.jsx";
 import {
   buscarHistoricoAtendimentos,
   buscarOuCriarProntuario,
@@ -19,6 +20,10 @@ import "./ProntuarioPage.css";
 export default function ProntuarioPage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const pacienteId = searchParams.get("paciente");
+  // "busca" também é um parâmetro de URL (não estado local) para que o link
+  // "Prontuários" da barra lateral — que navega para /prontuarios sem
+  // parâmetros — sempre volte para a fila, mesmo depois de "Ver por paciente".
+  const buscaAberta = searchParams.get("busca") === "1";
 
   const [perfil, setPerfil] = useState(null);
 
@@ -27,15 +32,13 @@ export default function ProntuarioPage() {
   }, []);
 
   return (
-    <AppShell perfil={perfil} title="Prontuário" subtitle="Evolução, registro de sessões e geração de PDF.">
+    <AppShell perfil={perfil} title="Prontuários" subtitle="Evolução, registro de sessões e geração de PDF.">
       {pacienteId ? (
-        <ProntuarioDoPaciente
-          pacienteId={pacienteId}
-          perfil={perfil}
-          onTrocarPaciente={() => setSearchParams({})}
-        />
-      ) : (
+        <ProntuarioDoPaciente pacienteId={pacienteId} perfil={perfil} onTrocarPaciente={() => setSearchParams({})} />
+      ) : buscaAberta ? (
         <SeletorDePaciente onEscolher={(id) => setSearchParams({ paciente: id })} />
+      ) : (
+        <WorklistProntuarios onBuscarPaciente={() => setSearchParams({ busca: "1" })} />
       )}
     </AppShell>
   );

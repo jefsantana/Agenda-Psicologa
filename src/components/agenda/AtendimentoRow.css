@@ -109,7 +109,7 @@
 
 /* Hoje, aguardando confirmação de rotina — informativo, não é um problema. */
 .atd-linha--pendente .atd-linha__botao {
-  border-color: rgba(78, 168, 245, 0.35);
+  border-color: rgba(var(--info-rgb), 0.35);
 }
 
 .atd-linha--pendente .atd-linha__sub {
@@ -119,10 +119,29 @@
 
 /* De um dia anterior — atraso de verdade, precisa de atenção. */
 .atd-linha--atrasado .atd-linha__botao {
-  border-color: rgba(245, 166, 78, 0.4);
+  border-color: rgba(var(--warning-rgb), 0.4);
 }
 
 .atd-linha--atrasado .atd-linha__sub {
   color: var(--warning);
   font-weight: 600;
+}
+
+.atd-linha__sessao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
+  border-radius: var(--radius-pill);
+  color: var(--primary-text);
+  font-size: 13px;
+  transition: background-color 0.15s var(--ease-out);
+}
+
+@media (hover: hover) {
+  .atd-linha__sessao:hover {
+    background: var(--surface-3);
+  }
 }

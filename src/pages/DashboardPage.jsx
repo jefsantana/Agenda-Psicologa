@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Bell, Plus, Search } from "lucide-react";
 import AppShell from "../components/layout/AppShell.jsx";
 import DashboardKpis from "../components/dashboard/DashboardKpis.jsx";
+import DashboardChips from "../components/dashboard/DashboardChips.jsx";
+import ProximaSessaoCard from "../components/dashboard/ProximaSessaoCard.jsx";
 import AgendaDoDia from "../components/dashboard/AgendaDoDia.jsx";
 import DonutConvenios from "../components/dashboard/DonutConvenios.jsx";
 import AcoesRapidas from "../components/dashboard/AcoesRapidas.jsx";
@@ -18,7 +21,7 @@ import { buscarPerfil } from "../lib/perfil.js";
 import { buscarTarefas, buscarCompromissosPessoais } from "../lib/tarefas.js";
 import { buscarLancamentos } from "../lib/financeiro.js";
 import { buscarConvenios } from "../lib/pacientes.js";
-import { formatarHora, inicioDoMes, fimDoMes, minutosAte, paraISO } from "../lib/date.js";
+import { formatarHora, formatarMinutos, inicioDoMes, fimDoMes, minutosAte, paraISO } from "../lib/date.js";
 import "./DashboardPage.css";
 
 const STATUS_RESOLVIDOS = ["realizado", "falta", "remarcar", "cancelado"];
@@ -141,6 +144,27 @@ export default function DashboardPage() {
     carregarDia(dataSelecionada);
   }, [dataSelecionada, ehHoje, carregarDia]);
 
+  // Atalho "N": abre "Novo atendimento" — só quando nenhum campo de texto está
+  // focado e nenhuma folha/modal já está aberta.
+  useEffect(() => {
+    function aoTeclar(event) {
+      if (event.key !== "n" && event.key !== "N") return;
+      if (event.metaKey || event.ctrlKey || event.altKey) return;
+      const alvo = event.target;
+      const editavel =
+        alvo instanceof HTMLElement &&
+        (alvo.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(alvo.tagName));
+      if (editavel) return;
+      if (sheetAberta || whatsappAberto || pacienteFormAberto || formEdicaoAberto) return;
+
+      event.preventDefault();
+      setSheetAberta(true);
+    }
+
+    document.addEventListener("keydown", aoTeclar);
+    return () => document.removeEventListener("keydown", aoTeclar);
+  }, [sheetAberta, whatsappAberto, pacienteFormAberto, formEdicaoAberto]);
+
   function aoAtualizarAgenda() {
     carregar();
     if (!ehHoje) carregarDia(dataSelecionada);
@@ -155,12 +179,39 @@ export default function DashboardPage() {
   const pendentesConfirmacao = itensHoje.filter(
     (item) => item.tipoLinha !== "bloqueio" && item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status)
   ).length;
+  const tarefasAtrasadas = tarefas.filter((t) => t.vence_em && t.vence_em < paraISO(new Date())).length;
+  const temAvisosPendentes = pendentesConfirmacao > 0 || pendenciasAnteriores.total > 0;
+
+  const diasComSessao = new Set(atendimentosDoMes.map((item) => paraISO(item.inicio)));
+  const diasComPendencia = new Set(
+    atendimentosDoMes
+      .filter((item) => item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status))
+      .map((item) => paraISO(item.inicio))
+  );
+
+  const subtitulo = montarSubtitulo(kpis);
 
   return (
     <AppShell
       perfil={perfil}
+      eyebrow={new Intl.DateTimeFormat("pt-BR", { weekday: "long", day: "numeric", month: "long" }).format(new Date())}
       title={`Olá, ${primeiroNome(perfil?.nome)}`}
-      subtitle="Aqui está o resumo da sua clínica hoje."
+      subtitle={subtitulo}
+      acaoPrimaria={
+        <div className="dashboard__header-acoes">
+          <Link to="/pacientes" className="dashboard__icone-topo" aria-label="Buscar paciente" title="Buscar paciente">
+            <Search size={17} strokeWidth={2} />
+          </Link>
+          <Link to="/agenda" className="dashboard__icone-topo" aria-label="Ver pendências" title="Ver pendências">
+            <Bell size={17} strokeWidth={1.9} />
+            {temAvisosPendentes && <span className="dashboard__icone-topo-dot" aria-hidden="true" />}
+          </Link>
+          <button type="button" className="shell__acao-primaria" onClick={() => setSheetAberta(true)}>
+            <Plus size={16} strokeWidth={2} />
+            Novo atendimento
+          </button>
+        </div>
+      }
     >
       {erro && (
         <p className="erro-aviso" role="alert">
@@ -192,6 +243,11 @@ export default function DashboardPage() {
         </div>
       )}
 
+      {!carregando && kpis.proximo && (
+        <ProximaSessaoCard proximo={kpis.proximo} aoAbrirWhatsapp={() => setWhatsappAberto(true)} />
+      )}
+
+      <DashboardChips kpis={kpis} tarefasAtrasadas={tarefasAtrasadas} carregando={carregando} />
       <DashboardKpis kpis={kpis} carregando={carregando} />
 
       <div className="dashboard__grade">
@@ -205,18 +261,24 @@ export default function DashboardPage() {
             onAtualizado={aoAtualizarAgenda}
             onEditarAtendimento={abrirEdicaoAtendimento}
           />
-          <DonutConvenios atendimentosDoMes={atendimentosDoMes} />
-          <AcoesRapidas
-            aoNovoAtendimento={() => setSheetAberta(true)}
-            aoNovoPaciente={() => setPacienteFormAberto(true)}
-            aoWhatsapp={() => setWhatsappAberto(true)}
-          />
+          <div className="dashboard__par">
+            <DonutConvenios atendimentosDoMes={atendimentosDoMes} carregando={carregando} />
+            <TarefasPainel tarefas={tarefas} aoCriada={carregar} carregando={carregando} />
+          </div>
         </div>
 
         <div className="dashboard__coluna-direita">
-          <CalendarioMes selecionado={dataSelecionada} onSelecionar={setDataSelecionada} />
-          <ProximosCompromissos itens={proximosCompromissos} aoAtualizar={carregar} />
-          <TarefasPainel tarefas={tarefas} aoCriada={carregar} />
+          <CalendarioMes
+            selecionado={dataSelecionada}
+            onSelecionar={setDataSelecionada}
+            marcados={diasComSessao}
+            pendentes={diasComPendencia}
+          />
+          <ProximosCompromissos itens={proximosCompromissos} aoAtualizar={carregar} carregando={carregando} />
+          <AcoesRapidas
+            aoNovoPaciente={() => setPacienteFormAberto(true)}
+            aoWhatsapp={() => setWhatsappAberto(true)}
+          />
         </div>
       </div>
 
@@ -263,9 +325,11 @@ function calcularKpis(agendaDoDia, lancamentos) {
     .sort((a, b) => a.inicio - b.inicio)[0];
   const proximo = proximoAtendimento
     ? {
+        id: proximoAtendimento.id,
         hora: formatarHora(proximoAtendimento.inicio),
         paciente: proximoAtendimento.paciente,
         tipo: proximoAtendimento.tipo,
+        convenio: proximoAtendimento.convenio,
         emMinutos: minutosAte(proximoAtendimento.inicio),
       }
     : null;
@@ -297,4 +361,14 @@ function somarPagosNoMes(lancamentos, mesISO) {
 function primeiroNome(nomeCompleto) {
   if (!nomeCompleto) return "…";
   return nomeCompleto.split(" ")[0];
+}
+
+/** Subtítulo do header: conteúdo acionável (o que tem hoje, quando é o próximo), não boas-vindas. */
+function montarSubtitulo(kpis) {
+  const { total } = kpis.hoje;
+  if (total === 0) return "Nenhum atendimento hoje.";
+
+  const base = `${total} atendimento${total === 1 ? "" : "s"} hoje`;
+  if (!kpis.proximo) return `${base}.`;
+  return `${base} · o próximo começa em ${formatarMinutos(kpis.proximo.emMinutos)}.`;
 }

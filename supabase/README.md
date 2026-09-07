@@ -18,6 +18,7 @@ Rodar **um arquivo de cada vez**, na ordem numérica, no SQL Editor do painel
 | `schema_v9_auditoria_append_only.sql` | `audit_log` à prova de adulteração |
 | `schema_v10_salvar_atendimento_rpc.sql` | Atendimento + lançamento numa transação |
 | `schema_v11_remove_agendamentos.sql` | Remove a tabela `agendamentos` (morta desde a v2) |
+| `schema_v12_gad7.sql` | Escala GAD-7 por sessão (`avaliacoes_gad7`) |
 
 Cada arquivo é a fonte de verdade daquela mudança — este projeto **não** mantém
 um `schema_completo.sql` consolidado; para recriar o banco do zero, rodar todos

@@ -20,6 +20,7 @@ export default function CalendarioMes({
   selecionado: selecionadoControlado,
   onSelecionar,
   marcados,
+  pendentes,
   mesInicial,
   onMesMudar,
   inicioIntervalo,
@@ -73,6 +74,7 @@ export default function CalendarioMes({
             inicioIntervalo && fimIntervalo && dataISO >= paraISO(inicioIntervalo) && dataISO <= paraISO(fimIntervalo);
           const pontaIntervalo =
             (inicioIntervalo && dataISO === paraISO(inicioIntervalo)) || (fimIntervalo && dataISO === paraISO(fimIntervalo));
+          const temPendencia = pendentes?.has(dataISO);
           const temMarca = marcados?.has(dataISO);
           return (
             <button
@@ -86,11 +88,27 @@ export default function CalendarioMes({
               onClick={() => selecionar(data)}
             >
               {data.getDate()}
-              {temMarca && !ehSelecionado && <span className="calendario__ponto" aria-hidden="true" />}
+              {(temMarca || temPendencia) && (
+                <span
+                  className={`calendario__ponto ${temPendencia ? "calendario__ponto--pendencia" : ""}`}
+                  aria-hidden="true"
+                />
+              )}
             </button>
           );
         })}
       </div>
+
+      {(marcados || pendentes) && (
+        <div className="calendario__legenda">
+          <span className="calendario__legenda-item">
+            <span className="calendario__legenda-ponto" /> com sessões
+          </span>
+          <span className="calendario__legenda-item">
+            <span className="calendario__legenda-ponto calendario__legenda-ponto--pendencia" /> pendência
+          </span>
+        </div>
+      )}
     </section>
   );
 

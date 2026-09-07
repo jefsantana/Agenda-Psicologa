@@ -1,3 +1,41 @@
+.dashboard__header-acoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard__icone-topo {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 11px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+}
+
+@media (hover: hover) {
+  .dashboard__icone-topo:hover {
+    color: var(--text);
+    border-color: var(--primary);
+  }
+}
+
+.dashboard__icone-topo-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--warning-dot);
+  border: 1.5px solid var(--surface);
+}
+
 .dashboard__lembrete {
   display: flex;
   flex-direction: column;
@@ -28,10 +66,10 @@
   font-weight: 700;
 }
 
+/* No mobile os 4 KPIs completos viram os 3 chips condensados abaixo — ver
+   .dashboard__chips. Só aparecem de volta a partir do desktop. */
 .dashboard__kpis {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: var(--space-10);
+  display: none;
 }
 
 /*
@@ -39,17 +77,28 @@
   "Recebimentos (mês)"). Entre ~640 e 1024 os cards ficavam estreitos demais e
   o rótulo quebrava no meio da palavra; abaixo de 640, 2 colunas já resolvem.
 */
+.dashboard__chips {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
 @media (min-width: 1024px) {
+  .dashboard__chips {
+    display: none;
+  }
+
   .dashboard__kpis {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-16);
+    gap: 14px;
   }
 }
 
 .dashboard__grade {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  gap: 20px;
 }
 
 @media (min-width: 1024px) {
@@ -59,10 +108,22 @@
   }
 }
 
+.dashboard__par {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+@media (min-width: 640px) {
+  .dashboard__par {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .dashboard__coluna-principal {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  gap: 20px;
   min-width: 0;
   flex: 1;
 }
@@ -70,7 +131,7 @@
 .dashboard__coluna-direita {
   display: flex;
   flex-direction: column;
-  gap: var(--space-16);
+  gap: 20px;
 }
 
 @media (min-width: 1024px) {

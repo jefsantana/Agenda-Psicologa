@@ -46,8 +46,6 @@ export default function LoginPage() {
 
   return (
     <main className="login">
-      <div className="login__glow" aria-hidden="true" />
-
       <div className="login__conteudo">
         <div className="login__marca">
           <span className="login__avatar">RF</span>
@@ -61,10 +59,10 @@ export default function LoginPage() {
           <RecuperarSenha aoVoltar={() => setRecuperarAberto(false)} />
         ) : (
           <form className="login__form" onSubmit={handleSubmit} noValidate>
-            <label className="login__campo">
-              <span className="login__campo-rotulo">E-mail profissional</span>
+            <label className="field">
+              <span className="field__label">E-mail profissional</span>
               <input
-                className="login__input"
+                className="field__input"
                 type="email"
                 autoComplete="username"
                 spellCheck={false}
@@ -74,10 +72,10 @@ export default function LoginPage() {
               />
             </label>
 
-            <label className="login__campo">
-              <span className="login__campo-rotulo">Senha</span>
+            <label className="field">
+              <span className="field__label">Senha</span>
               <input
-                className="login__input"
+                className="field__input"
                 type="password"
                 autoComplete="current-password"
                 value={senha}
@@ -129,10 +127,10 @@ function RecuperarSenha({ aoVoltar }) {
         Digite seu e-mail de acesso. Vamos enviar um link para você criar uma senha nova.
       </p>
 
-      <label className="login__campo">
-        <span className="login__campo-rotulo">E-mail profissional</span>
+      <label className="field">
+        <span className="field__label">E-mail profissional</span>
         <input
-          className="login__input"
+          className="field__input"
           type="email"
           spellCheck={false}
           value={email}
@@ -192,10 +190,10 @@ function NovaSenha({ aoConcluir }) {
     <form className="login__form" onSubmit={handleSubmit}>
       <p className="login__recuperar-texto">Defina sua nova senha para continuar.</p>
 
-      <label className="login__campo">
-        <span className="login__campo-rotulo">Nova senha</span>
+      <label className="field">
+        <span className="field__label">Nova senha</span>
         <input
-          className="login__input"
+          className="field__input"
           type="password"
           autoComplete="new-password"
           value={senha}
@@ -204,10 +202,10 @@ function NovaSenha({ aoConcluir }) {
         />
       </label>
 
-      <label className="login__campo">
-        <span className="login__campo-rotulo">Confirmar nova senha</span>
+      <label className="field">
+        <span className="field__label">Confirmar nova senha</span>
         <input
-          className="login__input"
+          className="field__input"
           type="password"
           autoComplete="new-password"
           value={confirmacao}

@@ -10,8 +10,8 @@
   /* Alvo de toque de 44px (WCAG 2.5.8); o ícone visual continua ~20px. */
   min-width: 44px;
   min-height: 44px;
-  border-radius: var(--radius-pill);
-  color: var(--text-3-aa);
+  border-radius: 8px;
+  color: var(--text-faint);
   transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
 }
 
