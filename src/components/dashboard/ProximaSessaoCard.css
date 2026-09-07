@@ -1,0 +1,110 @@
+.proxima-sessao {
+  padding: 16px 18px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+.proxima-sessao__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--primary-text);
+}
+
+.proxima-sessao__ponto {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--primary-text);
+}
+
+.proxima-sessao__corpo {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+.proxima-sessao__hora {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.proxima-sessao__texto {
+  min-width: 0;
+}
+
+.proxima-sessao__nome {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.proxima-sessao__sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 12.5px;
+  color: var(--text-subtle);
+}
+
+.proxima-sessao__acoes {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.proxima-sessao__iniciar {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-size: 13.5px;
+  font-weight: 700;
+}
+
+@media (hover: hover) {
+  .proxima-sessao__iniciar:hover {
+    filter: brightness(1.06);
+  }
+}
+
+.proxima-sessao__icone {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  color: var(--text-2);
+}
+
+.proxima-sessao__icone svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media (hover: hover) {
+  .proxima-sessao__icone:hover {
+    color: var(--text);
+    border-color: var(--primary);
+  }
+}

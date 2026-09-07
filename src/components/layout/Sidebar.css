@@ -11,19 +11,17 @@
     height: 100dvh;
     position: sticky;
     top: 0;
-    background: var(--bg-app);
-    border-right: 1px solid var(--border);
-    padding: var(--space-18) var(--space-12);
+    background: var(--bg-sidebar);
+    border-right: 1px solid var(--border-subtle);
+    padding: 20px 14px;
   }
 }
 
 .sidebar__perfil {
   display: flex;
   align-items: center;
-  gap: var(--space-10);
-  padding: 0 var(--space-10) var(--space-18);
-  margin-bottom: var(--space-16);
-  border-bottom: 1px solid var(--border);
+  gap: 11px;
+  padding: 6px 8px 22px;
 }
 
 .sidebar__avatar {
@@ -34,9 +32,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--on-primary);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #fff;
   background: var(--gradient-primary);
 }
 
@@ -47,8 +46,9 @@
 }
 
 .sidebar__perfil-nome {
-  font-size: var(--fs-md);
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
@@ -56,63 +56,128 @@
 }
 
 .sidebar__perfil-crp {
-  font-size: var(--fs-xs);
-  color: var(--text-3-aa);
+  margin-top: 1px;
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-subtle);
 }
 
 .sidebar__nav {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: 2px;
   flex: 1;
   overflow-y: auto;
 }
 
 .sidebar__item {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-10);
-  padding: var(--space-10);
-  border-radius: var(--radius-row);
-  font-size: var(--fs-sm);
+  gap: 11px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 13.5px;
   font-weight: 500;
-  color: var(--text-3);
-  border: 1px solid transparent;
+  /* Nunca abaixo deste tom — item de menu inativo com contraste que pareça
+     desabilitado é o bug que este handoff corrige. */
+  color: #a5aeba;
   transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
 }
 
+.sidebar__item svg,
+.sidebar__sair svg {
+  width: 17px;
+  height: 17px;
+  stroke-width: 1.9;
+  flex-shrink: 0;
+}
+
 .sidebar__item:hover {
-  background: var(--surface-3);
+  background: #151a20;
   color: var(--text);
 }
 
 .sidebar__item--ativo {
-  background: rgba(var(--primary-rgb), 0.16);
-  color: var(--primary-soft);
-  border-color: rgba(var(--primary-rgb), 0.3);
+  background: var(--bg-nav-active);
+  color: #fff;
+  font-weight: 600;
+}
+
+.sidebar__item--ativo svg {
+  stroke: var(--accent-soft-icon);
+}
+
+.sidebar__item--ativo::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  bottom: 9px;
+  width: 2.5px;
+  border-radius: 0 3px 3px 0;
+  background: var(--primary);
+}
+
+.sidebar__item-contador {
+  margin-left: auto;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bg-app);
+  background: var(--primary);
+  border-radius: 20px;
+  padding: 2px 7px;
+}
+
+.sidebar__item-dot {
+  margin-left: auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--warning-dot);
 }
 
 .sidebar__rodape {
   display: flex;
   flex-direction: column;
-  gap: var(--space-12);
-  padding-top: var(--space-16);
-  border-top: 1px solid var(--border);
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.sidebar__backup {
+  border-radius: 12px;
+  background: #131922;
+  border: 1px solid var(--border);
+  padding: 13px 14px;
+}
+
+.sidebar__backup-titulo {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.sidebar__backup-linha {
+  margin-top: 3px;
+  font-size: 11.5px;
+  line-height: 1.4;
+  color: var(--text-subtle);
 }
 
 .sidebar__sair {
   display: flex;
   align-items: center;
-  gap: var(--space-10);
-  padding: var(--space-10);
-  font-size: var(--fs-sm);
+  gap: 11px;
+  padding: 12px;
+  font-size: 13px;
   font-weight: 500;
-  color: var(--text-3);
-  border-radius: var(--radius-row);
-  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+  color: var(--text-subtle);
+  border-radius: 10px;
+  transition: color 0.15s var(--ease-out);
 }
 
 .sidebar__sair:hover {
-  background: var(--surface-3);
   color: var(--text);
 }

@@ -1,0 +1,82 @@
+.mensagens-topo {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mensagens-nova {
+  display: flex;
+  align-items: center;
+  gap: var(--space-7);
+  padding: var(--space-10) var(--space-16);
+  border-radius: var(--radius-pill);
+  background: var(--whatsapp);
+  color: #fff;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.mensagens-secao {
+  padding: var(--space-16);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+}
+
+.mensagens-secao h2 {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mensagens-secao__ajuda {
+  margin-top: var(--space-7);
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+}
+
+.mensagens-modelos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-10);
+  margin-top: var(--space-14);
+}
+
+.mensagens-modelo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-7);
+  padding: var(--space-10) var(--space-12);
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-row);
+}
+
+.mensagens-modelo__rotulo {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mensagens-modelo__exemplo {
+  font-size: var(--fs-xs);
+  color: var(--text-3-aa);
+}
+
+.mensagens-secao--aviso {
+  background: rgba(251, 191, 36, 0.1);
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.mensagens-secao--aviso p {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--warning);
+}
+
+.mensagens-secao--indisponivel p {
+  margin-top: var(--space-7);
+  font-size: var(--fs-sm);
+  color: var(--text-3-aa);
+  line-height: 1.5;
+}

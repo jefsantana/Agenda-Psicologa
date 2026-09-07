@@ -1,5 +1,5 @@
 ﻿.proximos {
-  padding: var(--space-16);
+  padding: 18px 18px 18px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-panel);
@@ -7,38 +7,34 @@
 
 .proximos__cabecalho {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
   gap: var(--space-10);
-  margin-bottom: var(--space-12);
 }
 
 .proximos__cabecalho h2 {
-  font-size: var(--fs-md);
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--text);
 }
 
 .proximos__legenda {
   display: block;
-  margin-top: var(--space-2);
-  font-size: var(--fs-2xs);
-  color: var(--text-3-aa);
+  margin-top: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-faint);
 }
 
 .proximos__adicionar {
+  margin-left: auto;
   flex-shrink: 0;
-  font-size: var(--fs-xs);
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--primary-text);
-  background: rgba(var(--primary-rgb), 0.13);
-  border: 1px solid rgba(var(--primary-rgb), 0.28);
-  padding: var(--space-4) var(--space-10);
-  border-radius: var(--radius-chip);
-}
-
-.proximos__adicionar:hover {
-  background: rgba(var(--primary-rgb), 0.22);
 }
 
 .proximos__form {
@@ -107,60 +103,79 @@
 .proximos__lista {
   display: flex;
   flex-direction: column;
-  gap: var(--space-10);
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .proximos__item {
   display: flex;
   align-items: center;
-  gap: var(--space-10);
-  padding-bottom: var(--space-10);
-  border-bottom: 1px solid var(--border);
-}
-
-.proximos__item:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
+  gap: 12px;
+  padding: 12px 13px;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-row);
 }
 
 .proximos__data {
+  flex: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 42px;
+  text-align: center;
+  padding-right: 12px;
+  border-right: 1px solid var(--border-strong);
   font-variant-numeric: tabular-nums;
 }
 
-.proximos__data-dia {
-  font-size: var(--fs-2xs);
-  color: var(--text-3-aa);
+.proximos__data-mes {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
 }
 
-.proximos__data-hora {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--primary-text);
+.proximos__data-dia {
+  margin-top: 1px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--text);
+}
+
+.proximos__corpo {
+  flex: 1;
+  min-width: 0;
 }
 
 .proximos__nome {
-  flex: 1;
-  min-width: 0;
-  font-size: var(--fs-sm);
-  font-weight: 600;
+  font-size: 13.5px;
+  font-weight: 700;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+.proximos__hora {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
 .proximos__concluir {
   position: relative;
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 18px;
   height: 18px;
-  flex-shrink: 0;
   color: transparent;
   border-radius: var(--radius-checkbox);
   border: 1.5px solid var(--checkbox-vazio);

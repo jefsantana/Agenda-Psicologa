@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import StatusBadge from "../dashboard/StatusBadge.jsx";
 import MenuAcoesLinha from "./MenuAcoesLinha.jsx";
 import { apagarAtendimento } from "../../lib/agenda.js";
@@ -42,7 +43,7 @@ export default function AtendimentoRow({ item, onClick, onExcluido }) {
   return (
     <li
       className={`atd-linha ${atrasado ? "atd-linha--atrasado" : precisaConfirmar ? "atd-linha--pendente" : ""}`}
-      style={{ "--linha-cor": item.tipo === "online" ? "var(--info)" : "var(--primary)" }}
+      style={{ "--linha-cor": corDoStatus(item.status) }}
     >
       <div className="atd-linha__envolvedor">
         <button type="button" className="atd-linha__botao" onClick={onClick}>
@@ -59,8 +60,32 @@ export default function AtendimentoRow({ item, onClick, onExcluido }) {
             </span>
           </div>
         </button>
+        <Link
+          to={`/atendimentos/${item.id}/sessao`}
+          className="atd-linha__sessao"
+          onClick={(event) => event.stopPropagation()}
+          aria-label="Iniciar sessão"
+          title="Iniciar sessão"
+        >
+          ▶
+        </Link>
         <MenuAcoesLinha onEditar={onClick} onExcluir={handleExcluir} />
       </div>
     </li>
   );
+}
+
+function corDoStatus(status) {
+  switch (status) {
+    case "realizado":
+      return "var(--success)";
+    case "remarcar":
+      return "var(--warning)";
+    case "falta":
+      return "var(--danger)";
+    case "cancelado":
+      return "var(--border-strong)";
+    default:
+      return "var(--primary)";
+  }
 }

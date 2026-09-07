@@ -1,0 +1,33 @@
+.gad7-grafico__vazio {
+  font-size: var(--fs-sm);
+  color: var(--text-3-aa);
+}
+
+.gad7-grafico__barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  height: 56px;
+}
+
+.gad7-grafico__barra {
+  flex: 1;
+  min-width: 18px;
+  border-radius: 4px 4px 0 0;
+}
+
+.gad7-grafico__tendencia {
+  margin-top: var(--space-10);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-2);
+}
+
+.gad7-grafico__tendencia span {
+  margin-left: var(--space-7);
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--success-text);
+}

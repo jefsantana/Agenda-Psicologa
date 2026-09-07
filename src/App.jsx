@@ -6,13 +6,16 @@ import { useInactivityLogout } from "./lib/useInactivityLogout.js";
 
 const DashboardPage = lazy(() => import("./pages/DashboardPage.jsx"));
 const PacientesPage = lazy(() => import("./pages/PacientesPage.jsx"));
+const PacienteDetalhePage = lazy(() => import("./pages/PacienteDetalhePage.jsx"));
 const AgendaPage = lazy(() => import("./pages/AgendaPage.jsx"));
 const AtendimentosPage = lazy(() => import("./pages/AtendimentosPage.jsx"));
 const ProntuarioPage = lazy(() => import("./pages/ProntuarioPage.jsx"));
+const SessaoPage = lazy(() => import("./pages/SessaoPage.jsx"));
 const ConveniosPage = lazy(() => import("./pages/ConveniosPage.jsx"));
 const FinanceiroPage = lazy(() => import("./pages/FinanceiroPage.jsx"));
 const ConfiguracoesPage = lazy(() => import("./pages/ConfiguracoesPage.jsx"));
-const EmConstrucaoPage = lazy(() => import("./pages/EmConstrucaoPage.jsx"));
+const RelatoriosPage = lazy(() => import("./pages/RelatoriosPage.jsx"));
+const MensagensPage = lazy(() => import("./pages/MensagensPage.jsx"));
 
 export default function App() {
   return (
@@ -38,6 +41,14 @@ export default function App() {
             }
           />
           <Route
+            path="/pacientes/:id"
+            element={
+              <ProtegidaPorLogin>
+                <PacienteDetalhePage />
+              </ProtegidaPorLogin>
+            }
+          />
+          <Route
             path="/agenda"
             element={
               <ProtegidaPorLogin>
@@ -58,6 +69,14 @@ export default function App() {
             element={
               <ProtegidaPorLogin>
                 <ProntuarioPage />
+              </ProtegidaPorLogin>
+            }
+          />
+          <Route
+            path="/atendimentos/:id/sessao"
+            element={
+              <ProtegidaPorLogin>
+                <SessaoPage />
               </ProtegidaPorLogin>
             }
           />
@@ -89,10 +108,7 @@ export default function App() {
             path="/relatorios"
             element={
               <ProtegidaPorLogin>
-                <EmConstrucaoPage
-                  titulo="Relatórios"
-                  descricao="Aqui vão ficar os relatórios de atendimentos, faturamento e convênios para fechamento do mês e envio às operadoras."
-                />
+                <RelatoriosPage />
               </ProtegidaPorLogin>
             }
           />
@@ -100,10 +116,7 @@ export default function App() {
             path="/mensagens"
             element={
               <ProtegidaPorLogin>
-                <EmConstrucaoPage
-                  titulo="Mensagens"
-                  descricao="Aqui vai ficar a central de mensagens com pacientes — lembretes de sessão, confirmações e conversas por WhatsApp."
-                />
+                <MensagensPage />
               </ProtegidaPorLogin>
             }
           />

@@ -1,0 +1,63 @@
+.chip {
+  padding: 12px 13px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-kpi);
+  min-width: 0;
+}
+
+.chip__rotulo {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-transform: capitalize;
+}
+
+.chip__valor {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  margin-top: 6px;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip__valor--mono {
+  font-family: var(--font-mono);
+  font-size: 16px;
+}
+
+.chip__valor-sec {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--icon-faint);
+}
+
+.chip__apoio {
+  display: block;
+  margin-top: 4px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip__apoio--alta {
+  color: var(--success-text);
+}
+
+.chip__apoio--baixa {
+  color: var(--danger-text);
+}

@@ -26,7 +26,6 @@ export const MODOS = [
 const MODOS_VALIDOS = new Set(MODOS.map((m) => m.id));
 
 export const ACENTOS = [
-  { id: "padrao", nome: "Lavanda", cor: "#8e6aea" },
   { id: "azul", nome: "Azul", cor: "#3b82f6" },
   { id: "rosa", nome: "Rosa", cor: "#e8639a" },
   { id: "verde", nome: "Verde consultório", cor: "#1f9382" },
@@ -48,7 +47,10 @@ const PALETAS_VALIDAS = new Set(PALETAS.map((p) => p.id));
 
 export function obterModo() {
   const salvo = localStorage.getItem(CHAVE_MODO);
-  if (!salvo || !MODOS_VALIDOS.has(salvo)) return "auto";
+  // Padrão "escuro" (não "auto"): a marca é o vinho/lavanda escuro do login
+  // (ver README) — sem isto, quem nunca mexeu em Configurações via o app
+  // abrir no modo claro do sistema logo após um login sempre escuro.
+  if (!salvo || !MODOS_VALIDOS.has(salvo)) return "escuro";
   return salvo;
 }
 
@@ -76,9 +78,11 @@ prefereEscuro.addEventListener("change", () => {
 
 export function obterAcento() {
   const salvo = localStorage.getItem(CHAVE_ACENTO);
-  // "roxo" era o id da opção antiga que virou o padrão atual (lavanda).
-  if (salvo === "roxo") return "padrao";
-  if (!salvo || !ACENTOS_VALIDOS.has(salvo)) return "padrao";
+  // "roxo" e "padrao" (Lavanda) são ids de opções antigas removidas — no tema
+  // escuro elas nunca tiveram cor própria e caíam no azul do handoff v7 por
+  // baixo dos panos, então a migração é direta.
+  if (salvo === "roxo" || salvo === "padrao") return "azul";
+  if (!salvo || !ACENTOS_VALIDOS.has(salvo)) return "azul";
   return salvo;
 }
 

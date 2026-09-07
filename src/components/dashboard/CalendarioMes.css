@@ -1,5 +1,5 @@
 ﻿.calendario {
-  padding: var(--space-16);
+  padding: 18px 18px 20px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-panel);
@@ -8,31 +8,46 @@
 .calendario__cabecalho {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--space-12);
+  gap: 8px;
 }
 
 .calendario__cabecalho h2 {
-  font-size: var(--fs-md);
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--text);
 }
 
 .calendario__nav {
+  margin-left: auto;
   display: flex;
-  gap: var(--space-4);
+  gap: 5px;
 }
 
 .calendario__nav button {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-chip);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   color: var(--text-3-aa);
-  background: var(--surface-2);
+  background: #171d25;
+  border: 1px solid var(--border-strong);
   transition: color 0.15s var(--ease-out);
+}
+
+/* Expande a área de toque para 44px sem aumentar o botão visível (WCAG 2.5.8). */
+.calendario__nav button::after {
+  content: "";
+  position: absolute;
+  inset: -8px;
+}
+
+.calendario__nav button svg {
+  width: 14px;
+  height: 14px;
 }
 
 .calendario__nav button:hover {
@@ -42,42 +57,48 @@
 .calendario__grade {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: var(--space-2);
+  gap: 3px;
+  margin-top: 16px;
 }
 
 .calendario__grade--cabecalho {
-  margin-bottom: var(--space-4);
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .calendario__grade--cabecalho span {
   text-align: center;
-  font-size: var(--fs-2xs);
-  font-weight: 600;
-  color: var(--text-3);
-  padding-bottom: var(--space-4);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-4);
+  padding-bottom: 6px;
 }
 
 .calendario__dia {
   position: relative;
-  aspect-ratio: 1;
+  height: 38px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: var(--fs-xs);
+  gap: 3px;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--text-2);
-  border-radius: 50%;
+  border-radius: 9px;
   transition: background-color 0.15s var(--ease-out);
 }
 
 .calendario__ponto {
-  position: absolute;
-  bottom: 3px;
-  left: 50%;
-  transform: translateX(-50%);
   width: 4px;
   height: 4px;
   border-radius: 50%;
   background: var(--primary);
+}
+
+.calendario__ponto--pendencia {
+  background: var(--warning-dot);
 }
 
 .calendario__dia:hover {
@@ -85,12 +106,16 @@
 }
 
 .calendario__dia--fora {
-  color: var(--text-3-aa);
+  color: var(--text-out-of-range);
 }
 
 .calendario__dia--hoje {
-  color: var(--primary-text);
-  font-weight: 600;
+  background: var(--primary);
+  color: #fff;
+}
+
+.calendario__dia--hoje .calendario__ponto {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .calendario__dia--selecionado {
@@ -98,6 +123,10 @@
   color: var(--on-primary);
   font-weight: 600;
   box-shadow: 0 0 0 4px rgba(var(--primary-rgb), 0.22);
+}
+
+.calendario__dia--selecionado .calendario__ponto {
+  background: rgba(255, 255, 255, 0.85);
 }
 
 .calendario__dia--intervalo {
@@ -110,4 +139,33 @@
   background: var(--primary);
   color: var(--on-primary);
   font-weight: 600;
+}
+
+.calendario__legenda {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.calendario__legenda-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
+.calendario__legenda-ponto {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+
+.calendario__legenda-ponto--pendencia {
+  background: var(--warning-dot);
 }

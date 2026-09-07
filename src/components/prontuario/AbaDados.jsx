@@ -21,7 +21,7 @@ export default function AbaDados({ paciente, prontuario, onEditarPaciente, onSal
   );
 }
 
-function SecaoObjetivos({ prontuarioId }) {
+export function SecaoObjetivos({ prontuarioId }) {
   const [objetivos, setObjetivos] = useState([]);
   const [novoObjetivo, setNovoObjetivo] = useState("");
 

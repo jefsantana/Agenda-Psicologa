@@ -1,10 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import AppShell from "../components/layout/AppShell.jsx";
+import AbasHorizontais from "../components/ui/AbasHorizontais.jsx";
+import ResumoFinanceiro from "../components/financeiro/ResumoFinanceiro.jsx";
 import { baixarPagamento, buscarLancamentos, estornarPagamento, statusLancamento } from "../lib/financeiro.js";
 import { buscarPerfil } from "../lib/perfil.js";
 import { formatarMoeda, formatarMoedaResumo, paraISO } from "../lib/date.js";
 import "../components/dashboard/StatusBadge.css";
 import "./FinanceiroPage.css";
+
+const ABAS = [
+  { id: "resumo", rotulo: "Resumo" },
+  { id: "lancamentos", rotulo: "Lançamentos" },
+];
 
 const STATUS_LABEL = { pago: "Pago", pendente: "Pendente", atrasado: "Atrasado" };
 const STATUS_CLASSE = { pago: "badge--realizado", pendente: "badge--agendado", atrasado: "badge--falta" };
@@ -19,6 +26,11 @@ export default function FinanceiroPage() {
   const [baixando, setBaixando] = useState(null);
   const [estornando, setEstornando] = useState(null);
   const [formaEscolhida, setFormaEscolhida] = useState(FORMAS_PAGAMENTO[0]);
+  const [aba, setAba] = useState("resumo");
+  const [mes, setMes] = useState(() => {
+    const hoje = new Date();
+    return new Date(hoje.getFullYear(), hoje.getMonth(), 1);
+  });
 
   const carregar = useCallback(async () => {
     setErro("");
@@ -90,6 +102,18 @@ export default function FinanceiroPage() {
 
   return (
     <AppShell perfil={perfil} title="Financeiro" subtitle="Recebimentos, pendências e recibos.">
+      <AbasHorizontais abas={ABAS} ativa={aba} onMudar={setAba} />
+
+      {aba === "resumo" && (
+        <ResumoFinanceiro
+          lancamentos={lancamentos}
+          mes={mes}
+          onMudarMes={(delta) => setMes((atual) => new Date(atual.getFullYear(), atual.getMonth() + delta, 1))}
+        />
+      )}
+
+      {aba === "lancamentos" && (
+        <>
       <div className="fin-kpis">
         <div className="fin-kpi">
           <span className="fin-kpi__rotulo">Recebido no mês</span>
@@ -196,6 +220,8 @@ export default function FinanceiroPage() {
           </ul>
         )}
       </section>
+        </>
+      )}
     </AppShell>
   );
 }

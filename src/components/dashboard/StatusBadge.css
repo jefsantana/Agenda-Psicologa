@@ -1,78 +1,64 @@
-﻿.badge {
+﻿/*
+  Padrão único de badge (handoff, "Badges de status"): 10.5px/700, uppercase,
+  letter-spacing 0.04em, radius 20px, padding 3px 9px, border 1px solid na cor
+  com 25–28% alpha, background da cor com 13% alpha. Aplicado em toda a app.
+*/
+.badge {
   display: inline-flex;
   align-items: center;
-  padding: var(--space-4) var(--space-10);
+  padding: 3px 9px;
   border: 1px solid transparent;
-  border-radius: var(--radius-chip);
-  font-size: var(--fs-xs); /* era 0.625rem (10px) â€” pequeno demais para carregar status clÃ­nico */
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  border-radius: var(--radius-badge);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
   white-space: nowrap;
 }
 
-/* Agendado: ainda vai acontecer, sem confirmaÃ§Ã£o â€” neutro. */
-.badge--agendado {
-  color: var(--text-3-aa);
-  background: var(--surface-2);
-  border-color: var(--border-strong);
-}
-
-/* Cancelado: mesmo tom neutro do "agendado" â€” a opacidade reduzida usada
-   antes deixava o contraste abaixo do mÃ­nimo AA (2,99:1). */
-.badge--cancelado {
-  color: var(--text-3-aa);
-  background: var(--surface-2);
-  border-color: var(--border-strong);
-}
-
-/* Aguardando confirmaÃ§Ã£o do paciente. */
-.badge--aguardando {
-  color: var(--primary-soft);
-  background: rgba(var(--primary-rgb), 0.16);
-}
-
-/* Confirmado: vai acontecer, jÃ¡ confirmado â€” informativo, ainda nÃ£o Ã© "sucesso". */
-.badge--confirmado {
-  color: var(--info);
-  background: rgba(78, 168, 245, 0.16);
-}
-
-/* Realizado: aconteceu como esperado â€” sucesso. */
-.badge--realizado {
-  color: var(--success-text);
-  background: rgba(63, 207, 142, 0.16);
-}
-
-/* Remarcar: precisa de aÃ§Ã£o, mas nÃ£o Ã© uma falha do paciente. */
-.badge--remarcar {
-  color: var(--warning);
-  background: rgba(245, 162, 93, 0.16);
-}
-
-/* Falta: o paciente nÃ£o compareceu â€” o Ãºnico status realmente negativo. */
-.badge--falta {
-  color: var(--danger-text);
-  background: rgba(217, 138, 158, 0.16);
-}
-
-/* Etiquetas de paciente (Ativo/Pendente/Novo/Inativo) reaproveitam a mesma base .badge */
-.badge--ativo {
-  color: var(--success-text);
-  background: rgba(63, 207, 142, 0.16);
-}
-
-.badge--pendente {
-  color: var(--warning);
-  background: rgba(245, 162, 93, 0.16);
-}
-
-.badge--novo {
-  color: var(--primary-soft);
-  background: rgba(var(--primary-rgb), 0.16);
-}
-
+/* Agendado / cancelado / inativo: sem cor semântica — neutro sólido. */
+.badge--agendado,
+.badge--cancelado,
 .badge--inativo {
   color: var(--text-3-aa);
   background: var(--surface-2);
   border-color: var(--border-strong);
+}
+
+/* Aguardando confirmação do paciente / etiqueta "Novo". */
+.badge--aguardando,
+.badge--novo {
+  color: var(--primary-text);
+  background: rgba(var(--primary-rgb), 0.13);
+  border-color: rgba(var(--primary-rgb), 0.28);
+}
+
+/* Confirmado: vai acontecer, já confirmado — informativo, ainda não é "sucesso". */
+.badge--confirmado {
+  color: var(--info);
+  background: rgba(var(--info-rgb), 0.13);
+  border-color: rgba(var(--info-rgb), 0.28);
+}
+
+/* Realizado / Ativo: sucesso. */
+.badge--realizado,
+.badge--ativo {
+  color: var(--success-text);
+  background: rgba(var(--success-rgb), 0.13);
+  border-color: rgba(var(--success-rgb), 0.26);
+}
+
+/* Remarcar / Pendente: precisa de ação, mas não é uma falha do paciente. */
+.badge--remarcar,
+.badge--pendente {
+  color: var(--warning);
+  background: rgba(var(--warning-rgb), 0.13);
+  border-color: rgba(var(--warning-rgb), 0.26);
+}
+
+/* Falta: o paciente não compareceu — o único status realmente negativo. */
+.badge--falta {
+  color: var(--danger-text);
+  background: rgba(var(--danger-rgb), 0.13);
+  border-color: rgba(var(--danger-rgb), 0.26);
 }

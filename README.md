@@ -45,6 +45,8 @@ schema_v7_lembretes.sql
 schema_v8_seguranca_rls.sql
 schema_v9_auditoria_append_only.sql
 schema_v10_salvar_atendimento_rpc.sql
+schema_v11_remove_agendamentos.sql
+schema_v12_gad7.sql
 ```
 
 `seed_dados_teste.sql` e `gerar_agendamentos_teste_ago2026.sql` são **só para

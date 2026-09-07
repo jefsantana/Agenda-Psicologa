@@ -2,7 +2,7 @@ import { supabase } from "./supabaseClient.js";
 import { paraISO } from "./date.js";
 
 const SELECT =
-  "id, valor, vencimento, pago_em, forma, atendimento:atendimentos(inicio, paciente:pacientes(nome), convenio:convenios(nome))";
+  "id, valor, vencimento, pago_em, forma, atendimento:atendimentos(inicio, paciente:pacientes(nome, telefone), convenio:convenios(nome))";
 
 export function statusLancamento(lancamento) {
   if (lancamento.pagoEm) return "pago";
@@ -21,6 +21,7 @@ export async function buscarLancamentos() {
     pagoEm: linha.pago_em,
     forma: linha.forma,
     paciente: linha.atendimento?.paciente?.nome ?? "Paciente removido",
+    telefone: linha.atendimento?.paciente?.telefone ?? null,
     convenio: linha.atendimento?.convenio?.nome ?? "Particular",
     dataAtendimento: linha.atendimento?.inicio ? new Date(linha.atendimento.inicio) : null,
   }));

@@ -129,9 +129,33 @@ html {
 
 /* Foco visível sempre — acessibilidade, não decoração */
 :focus-visible {
-  outline: 2px solid var(--primary);
+  outline: 2px solid var(--primary-text);
   outline-offset: 2px;
   border-radius: var(--radius-chip);
+}
+
+/*
+  Skeleton de carregamento — usar no lugar do conteúdo real (nunca em cima
+  dele) para o card manter a altura final e não pular quando os dados
+  chegam. `--skeleton-w`/`--skeleton-h` ajustam o tamanho por uso.
+*/
+.skeleton {
+  display: inline-block;
+  width: var(--skeleton-w, 100%);
+  height: var(--skeleton-h, 1em);
+  border-radius: var(--radius-chip);
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -38,7 +38,7 @@ export async function atualizarProntuario(id, dados) {
   if (error) throw error;
 }
 
-/** Linha do tempo de presença do paciente — substitui o antigo registro de evolução por texto livre. */
+/** Linha do tempo de presença do paciente (aba "Histórico" do prontuário). */
 export async function buscarHistoricoAtendimentos(pacienteId) {
   const { data, error } = await supabase
     .from("atendimentos")
@@ -47,6 +47,60 @@ export async function buscarHistoricoAtendimentos(pacienteId) {
     .order("inicio", { ascending: false });
   if (error) throw error;
   return data.map((linha) => ({ ...linha, inicio: new Date(linha.inicio) }));
+}
+
+/**
+ * Fila de evolução entre todos os pacientes — separa atendimentos realizados
+ * em "a escrever" (sem evolução registrada ainda) e "assinados" (já têm ao
+ * menos uma versão salva). Base da tela de Prontuários (worklist).
+ */
+export async function buscarFilaDeEvolucoes() {
+  const { data: atendimentos, error: erroAtendimentos } = await supabase
+    .from("atendimentos")
+    .select("id, inicio, paciente_id, paciente:pacientes(nome)")
+    .eq("status", "realizado")
+    .order("inicio", { ascending: true });
+  if (erroAtendimentos) throw erroAtendimentos;
+  if (atendimentos.length === 0) return { aEscrever: [], assinados: [] };
+
+  const ids = atendimentos.map((a) => a.id);
+  const { data: evolucoes, error: erroEvolucoes } = await supabase
+    .from("evolucoes")
+    .select("atendimento_id, conteudo, criado_em")
+    .in("atendimento_id", ids)
+    .order("criado_em", { ascending: false });
+  if (erroEvolucoes) throw erroEvolucoes;
+
+  const evolucaoPorAtendimento = new Map();
+  for (const evolucao of evolucoes) {
+    if (!evolucaoPorAtendimento.has(evolucao.atendimento_id)) evolucaoPorAtendimento.set(evolucao.atendimento_id, evolucao);
+  }
+
+  const aEscrever = [];
+  const assinados = [];
+  for (const atendimento of atendimentos) {
+    const evolucao = evolucaoPorAtendimento.get(atendimento.id);
+    const item = {
+      id: atendimento.id,
+      inicio: new Date(atendimento.inicio),
+      pacienteId: atendimento.paciente_id,
+      paciente: atendimento.paciente?.nome ?? "Paciente removido",
+    };
+    if (evolucao) {
+      assinados.push({ ...item, resumoEvolucao: resumirTexto(evolucao.conteudo), atualizadoEm: new Date(evolucao.criado_em) });
+    } else {
+      aEscrever.push(item);
+    }
+  }
+
+  assinados.sort((a, b) => b.atualizadoEm - a.atualizadoEm);
+  return { aEscrever, assinados };
+}
+
+function resumirTexto(texto) {
+  if (!texto) return null;
+  const limpo = texto.trim();
+  return limpo.length > 90 ? `${limpo.slice(0, 90)}…` : limpo;
 }
 
 /** Trilha de auditoria LGPD: quem acessou o quê e quando. Nunca bloqueia a ação em caso de falha. */

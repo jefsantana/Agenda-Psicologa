@@ -1,11 +1,10 @@
 .kpi {
   display: flex;
   flex-direction: column;
-  padding: var(--space-16) var(--space-16);
+  padding: 16px 18px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius-kpi);
-  box-shadow: var(--shadow-sm);
   overflow: hidden;
   animation: kpi-in 0.2s var(--ease-out) backwards;
 }
@@ -34,25 +33,30 @@
      vazava do card em telas estreitas antes de ter onde quebrar. */
   min-width: 0;
   overflow-wrap: break-word;
-  font-size: var(--fs-sm);
-  font-weight: 500;
-  color: var(--text-2);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-3);
 }
 
 .kpi__icone {
   display: flex;
   flex-shrink: 0;
-  color: var(--text-4);
+  color: var(--icon-faint);
+}
+
+.kpi__icone svg {
+  width: 15px;
+  height: 15px;
 }
 
 .kpi__valor {
   display: flex;
   align-items: baseline;
-  gap: var(--space-4);
-  font-size: var(--fs-2xl);
-  font-weight: 500;
+  gap: 7px;
+  font-size: 32px;
+  font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   color: var(--text);
 }
 
@@ -70,14 +74,15 @@
 
 .kpi__prefixo {
   align-self: flex-start;
-  font-size: var(--fs-md);
-  font-weight: 500;
-  color: var(--text-3);
+  margin-top: 3px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-faint);
 }
 
 .kpi__valor-sec {
-  font-size: var(--fs-sm);
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   /* Informa o total ("3 / 8") — precisa passar em AA, então --text-3 (sólido,
      ~5.4:1) e nunca --text-4, que é só decorativo. */
   color: var(--text-3);
@@ -85,12 +90,12 @@
 
 .kpi__tag {
   align-self: center;
-  font-size: var(--fs-xs);
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--warning-text);
-  background: rgba(242, 176, 122, 0.14);
+  background: rgba(var(--warning-rgb), 0.12);
   border-radius: var(--radius-chip);
-  padding: 2px var(--space-7);
+  padding: 3px 7px;
 }
 
 .kpi__progresso {
@@ -111,13 +116,14 @@
 
 .kpi__apoio {
   margin-top: var(--space-7);
-  font-size: var(--fs-xs);
-  color: var(--text-3);
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--text-3-aa);
 }
 
 .kpi__apoio-forte {
   margin-top: var(--space-12);
-  font-size: var(--fs-xs);
+  font-size: 12.5px;
   font-weight: 600;
   color: var(--text-2);
 }
@@ -131,8 +137,8 @@
   align-items: center;
   gap: var(--space-4);
   margin-top: var(--space-12);
-  font-size: var(--fs-xs);
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--success-text);
 }
 
@@ -146,6 +152,7 @@
 
 .kpi__delta-ref {
   margin-left: var(--space-3);
+  font-size: 11.5px;
   font-weight: 500;
-  color: var(--text-3);
+  color: var(--text-faint);
 }
