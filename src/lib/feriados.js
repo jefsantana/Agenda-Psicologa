@@ -38,6 +38,27 @@ function somarDias(date, dias) {
   return resultado;
 }
 
+// Feriados personalizados (municipal/estadual/recesso) que vêm do Supabase.
+// Ficam num cache de módulo para o `feriadoEm` seguir síncrono — quem carrega
+// do banco (src/lib/feriadosRemotos.js) chama `definirFeriadosPersonalizados`
+// uma vez no login. `exatos`: "yyyy-mm-dd" → nome. `anuais`: "mm-dd" → nome.
+let personalizados = { exatos: new Map(), anuais: new Map() };
+
+/**
+ * Registra a lista de feriados personalizados vinda do banco.
+ * `lista`: objetos { data: "yyyy-mm-dd", nome, repete_todo_ano }.
+ */
+export function definirFeriadosPersonalizados(lista) {
+  const exatos = new Map();
+  const anuais = new Map();
+  for (const item of lista ?? []) {
+    if (!item?.data || !item?.nome) continue;
+    if (item.repete_todo_ano) anuais.set(item.data.slice(5), item.nome);
+    else exatos.set(item.data, item.nome);
+  }
+  personalizados = { exatos, anuais };
+}
+
 const cachePorAno = new Map();
 
 /** Map de "yyyy-mm-dd" → nome do feriado, para o ano informado. */
@@ -66,10 +87,19 @@ export function feriadosDoAno(ano) {
   return feriados;
 }
 
-/** Nome do feriado nessa data ISO ("yyyy-mm-dd"), ou null se não houver. */
+/**
+ * Nome do feriado nessa data ISO ("yyyy-mm-dd"), ou null se não houver.
+ * Considera os feriados nacionais (calculados) e os personalizados
+ * carregados do Supabase.
+ */
 export function feriadoEm(dataISO) {
-  if (typeof dataISO !== "string" || dataISO.length < 4) return null;
+  if (typeof dataISO !== "string" || dataISO.length < 10) return null;
   const ano = Number(dataISO.slice(0, 4));
   if (!Number.isInteger(ano)) return null;
-  return feriadosDoAno(ano).get(dataISO) ?? null;
+  return (
+    feriadosDoAno(ano).get(dataISO) ??
+    personalizados.exatos.get(dataISO) ??
+    personalizados.anuais.get(dataISO.slice(5)) ??
+    null
+  );
 }

@@ -3,6 +3,12 @@ import AppShell from "../components/layout/AppShell.jsx";
 import { buscarPerfil, salvarPerfil } from "../lib/perfil.js";
 import { buscarHorariosSemana, salvarHorarioDia } from "../lib/configuracoes.js";
 import {
+  buscarFeriadosPersonalizados,
+  criarFeriado,
+  apagarFeriado,
+  sincronizarFeriados,
+} from "../lib/feriadosRemotos.js";
+import {
   ACENTOS,
   MODOS,
   PALETAS,
@@ -37,6 +43,7 @@ export default function ConfiguracoesPage() {
           <SecaoPerfil perfil={perfil} onSalvo={setPerfil} />
           <SecaoAparencia />
           <SecaoHorarios />
+          <SecaoFeriados />
           <SecaoSenha />
         </>
       )}
@@ -290,6 +297,169 @@ function SecaoSenha() {
           </button>
         </div>
       </form>
+    </section>
+  );
+}
+
+const ABRANGENCIA_LABEL = {
+  municipal: "Municipal",
+  estadual: "Estadual",
+  personalizado: "Recesso / outro",
+};
+
+function rotuloDataFeriado(feriado) {
+  const [ano, mes, dia] = feriado.data.split("-");
+  if (feriado.repete_todo_ano) return `Todo dia ${dia}/${mes}`;
+  return `${dia}/${mes}/${ano}`;
+}
+
+function SecaoFeriados() {
+  const [feriados, setFeriados] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+  const [salvando, setSalvando] = useState(false);
+
+  const [data, setData] = useState("");
+  const [nome, setNome] = useState("");
+  const [abrangencia, setAbrangencia] = useState("municipal");
+  const [repeteTodoAno, setRepeteTodoAno] = useState(true);
+
+  useEffect(() => {
+    buscarFeriadosPersonalizados()
+      .then(setFeriados)
+      .catch(() => setErro("Não foi possível carregar os feriados."))
+      .finally(() => setCarregando(false));
+  }, []);
+
+  async function recarregar() {
+    const lista = await buscarFeriadosPersonalizados();
+    setFeriados(lista);
+    await sincronizarFeriados();
+  }
+
+  async function handleAdicionar(event) {
+    event.preventDefault();
+    setErro("");
+    if (!data || !nome.trim()) {
+      setErro("Preencha a data e o nome do feriado.");
+      return;
+    }
+    setSalvando(true);
+    try {
+      await criarFeriado({ data, nome, abrangencia, repeteTodoAno });
+      setData("");
+      setNome("");
+      await recarregar();
+    } catch (erroCriar) {
+      console.error(erroCriar);
+      setErro("Não foi possível adicionar. Talvez esse feriado já exista.");
+    } finally {
+      setSalvando(false);
+    }
+  }
+
+  async function handleRemover(id) {
+    setErro("");
+    try {
+      await apagarFeriado(id);
+      await recarregar();
+    } catch (erroRemover) {
+      console.error(erroRemover);
+      setErro("Não foi possível remover agora.");
+    }
+  }
+
+  return (
+    <section className="config-secao">
+      <h2>Feriados e recessos</h2>
+      <p className="config-secao__ajuda">
+        Os feriados nacionais (Natal, 7 de Setembro, Carnaval…) já aparecem sozinhos no calendário. Aqui você adiciona os
+        que variam por cidade/estado ou são decisão da clínica — feriado municipal, estadual, recesso de fim de ano.
+      </p>
+
+      {carregando ? (
+        <p className="config-vazio">Carregando…</p>
+      ) : (
+        <>
+          {feriados.length > 0 && (
+            <ul className="config-feriados">
+              {feriados.map((feriado) => (
+                <li key={feriado.id} className="config-feriado">
+                  <div className="config-feriado__info">
+                    <span className="config-feriado__nome">{feriado.nome}</span>
+                    <span className="config-feriado__meta">
+                      {rotuloDataFeriado(feriado)} · {ABRANGENCIA_LABEL[feriado.abrangencia] ?? feriado.abrangencia}
+                    </span>
+                  </div>
+                  <button
+                    type="button"
+                    className="config-feriado__remover"
+                    onClick={() => handleRemover(feriado.id)}
+                    aria-label={`Remover ${feriado.nome}`}
+                  >
+                    Remover
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <form className="config-feriado-form" onSubmit={handleAdicionar}>
+            <div className="config-feriado-form__linha">
+              <label className="field">
+                <span className="field__label">Data</span>
+                <input
+                  type="date"
+                  className="field__input"
+                  value={data}
+                  onChange={(e) => setData(e.target.value)}
+                />
+              </label>
+              <label className="field">
+                <span className="field__label">Nome</span>
+                <input
+                  type="text"
+                  className="field__input"
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  placeholder="Aniversário da cidade"
+                />
+              </label>
+            </div>
+
+            <div className="config-feriado-form__linha">
+              <label className="field">
+                <span className="field__label">Abrangência</span>
+                <select
+                  className="field__input"
+                  value={abrangencia}
+                  onChange={(e) => setAbrangencia(e.target.value)}
+                >
+                  <option value="municipal">Municipal</option>
+                  <option value="estadual">Estadual</option>
+                  <option value="personalizado">Recesso / outro</option>
+                </select>
+              </label>
+              <label className="config-feriado-form__repete">
+                <input
+                  type="checkbox"
+                  checked={repeteTodoAno}
+                  onChange={(e) => setRepeteTodoAno(e.target.checked)}
+                />
+                <span>Repete todo ano</span>
+              </label>
+            </div>
+
+            {erro && <p className="erro-aviso">{erro}</p>}
+
+            <div className="config-secao__acoes">
+              <button type="submit" className="config-salvar" disabled={salvando}>
+                {salvando ? "Adicionando…" : "Adicionar feriado"}
+              </button>
+            </div>
+          </form>
+        </>
+      )}
     </section>
   );
 }
