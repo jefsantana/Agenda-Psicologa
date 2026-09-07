@@ -1,8 +1,9 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import LoginPage from "./pages/LoginPage.jsx";
 import { useSession } from "./lib/useSession.js";
 import { useInactivityLogout } from "./lib/useInactivityLogout.js";
+import { sincronizarFeriados } from "./lib/feriadosRemotos.js";
 
 const DashboardPage = lazy(() => import("./pages/DashboardPage.jsx"));
 const PacientesPage = lazy(() => import("./pages/PacientesPage.jsx"));
@@ -149,6 +150,10 @@ function TelaCarregando() {
 function ProtegidaPorLogin({ children }) {
   const session = useSession();
   useInactivityLogout(!!session);
+
+  useEffect(() => {
+    if (session) sincronizarFeriados();
+  }, [session]);
 
   if (session === undefined) return null; // ainda checando a sessão
   if (session === null) return <Navigate to="/entrar" replace />;
