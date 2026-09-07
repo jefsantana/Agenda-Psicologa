@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { IconeSeta } from "./icons.jsx";
 import { paraISO } from "../../lib/date.js";
+import { feriadoEm } from "../../lib/feriados.js";
 import "./CalendarioMes.css";
 
 const DIAS_SEMANA = ["D", "S", "T", "Q", "Q", "S", "S"];
@@ -76,6 +77,7 @@ export default function CalendarioMes({
             (inicioIntervalo && dataISO === paraISO(inicioIntervalo)) || (fimIntervalo && dataISO === paraISO(fimIntervalo));
           const temPendencia = pendentes?.has(dataISO);
           const temMarca = marcados?.has(dataISO);
+          const nomeFeriado = feriadoEm(dataISO);
           return (
             <button
               key={data.toISOString()}
@@ -84,8 +86,12 @@ export default function CalendarioMes({
                 ehSelecionado ? "calendario__dia--selecionado" : ""
               } ${ehHoje && !ehSelecionado ? "calendario__dia--hoje" : ""} ${
                 emIntervalo && !pontaIntervalo ? "calendario__dia--intervalo" : ""
-              } ${pontaIntervalo ? "calendario__dia--intervalo-ponta" : ""}`}
+              } ${pontaIntervalo ? "calendario__dia--intervalo-ponta" : ""} ${
+                nomeFeriado ? "calendario__dia--feriado" : ""
+              }`}
               onClick={() => selecionar(data)}
+              title={nomeFeriado ?? undefined}
+              aria-label={nomeFeriado ? `${data.getDate()}, feriado: ${nomeFeriado}` : undefined}
             >
               {data.getDate()}
               {(temMarca || temPendencia) && (
@@ -106,6 +112,9 @@ export default function CalendarioMes({
           </span>
           <span className="calendario__legenda-item">
             <span className="calendario__legenda-ponto calendario__legenda-ponto--pendencia" /> pendência
+          </span>
+          <span className="calendario__legenda-item">
+            <span className="calendario__legenda-ponto calendario__legenda-ponto--feriado" /> feriado
           </span>
         </div>
       )}

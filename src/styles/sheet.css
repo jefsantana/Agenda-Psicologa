@@ -124,6 +124,13 @@
   color: var(--warning);
 }
 
+/* Aviso informativo (não bloqueia o salvar) — ex.: a data escolhida é feriado. */
+.sheet__aviso {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--info);
+}
+
 .sheet__acoes {
   display: flex;
   gap: var(--space-12);

@@ -105,6 +105,13 @@
   background: var(--surface-3);
 }
 
+/* Feriado nacional: número em azul sobre um leve tint. Regras de
+   selecionado/hoje vêm depois no arquivo e continuam vencendo o fundo. */
+.calendario__dia--feriado {
+  color: var(--info);
+  background: rgba(var(--info-rgb), 0.1);
+}
+
 .calendario__dia--fora {
   color: var(--text-out-of-range);
 }
@@ -168,4 +175,8 @@
 
 .calendario__legenda-ponto--pendencia {
   background: var(--warning-dot);
+}
+
+.calendario__legenda-ponto--feriado {
+  background: var(--info);
 }

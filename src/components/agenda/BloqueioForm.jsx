@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { apagarBloqueio, atualizarBloqueio, criarBloqueio } from "../../lib/agenda.js";
 import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import { combinarDataHora, formatarHora, paraISO } from "../../lib/date.js";
+import { feriadoEm } from "../../lib/feriados.js";
 
 export default function BloqueioForm({ aberto, bloqueio, dataPadrao, aoFechar, aoSalvar }) {
   const [data, setData] = useState(paraISO(dataPadrao));
@@ -89,6 +90,12 @@ export default function BloqueioForm({ aberto, bloqueio, dataPadrao, aoFechar, a
             <span className="field__label">Data</span>
             <input className="field__input" type="date" value={data} onChange={(event) => setData(event.target.value)} />
           </label>
+
+          {feriadoEm(data) && (
+            <p className="sheet__aviso" role="status">
+              Feriado nacional: {feriadoEm(data)}
+            </p>
+          )}
 
           <div className="sheet__linha">
             <label className="field">

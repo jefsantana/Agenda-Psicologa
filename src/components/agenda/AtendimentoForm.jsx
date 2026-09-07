@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { apagarAtendimento, salvarAtendimento } from "../../lib/agenda.js";
 import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import { combinarDataHora, formatarHora, paraISO } from "../../lib/date.js";
+import { feriadoEm } from "../../lib/feriados.js";
 import { paraNumero, paraTextoValor } from "../../lib/numero.js";
 import SeletorPacienteCampo from "../pacientes/SeletorPacienteCampo.jsx";
 import OutrasDatasPaciente from "./OutrasDatasPaciente.jsx";
@@ -148,6 +149,12 @@ export default function AtendimentoForm({ aberto, atendimento, dataPadrao, conve
               <input className="field__input" type="time" value={hora} onChange={(event) => setHora(event.target.value)} />
             </label>
           </div>
+
+          {feriadoEm(data) && (
+            <p className="sheet__aviso" role="status">
+              Feriado nacional: {feriadoEm(data)}
+            </p>
+          )}
 
           <div className="sheet__linha">
             <label className="field">
