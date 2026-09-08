@@ -1,10 +1,17 @@
-// Feriados nacionais do Brasil, calculados localmente — sem chamada de rede,
-// para a app seguir funcionando offline como o resto do calendário.
+// Feriados do calendário. Três camadas, todas consultadas por `feriadoEm`:
 //
-// Cobre os feriados nacionais fixos (Leis 662/1949, 6.802/1980, 14.759/2023) e
-// os móveis derivados da Páscoa (Carnaval, Sexta-feira Santa, Corpus Christi).
-// NÃO inclui feriados estaduais/municipais nem pontos facultativos — uma lista
-// editável de feriados locais pode entrar em Configurações mais adiante.
+// 1. Nacionais calculados aqui (offline): fixos por lei (662/1949, 6.802/1980,
+//    14.759/2023) + móveis da Páscoa (Carnaval, Sexta-feira Santa, Corpus
+//    Christi). É a base e a reserva quando não há rede.
+// 2. Nacionais da BrasilAPI (online): quando a sincronização roda, a lista
+//    oficial de um ano entra por cima do cálculo — pega mudanças de lei sem
+//    depender de deploy. A BrasilAPI omite Carnaval/Corpus Christi (ponto
+//    facultativo), por isso a camada 1 continua preenchendo esses.
+// 3. Personalizados do Supabase: municipal, estadual e recesso da clínica.
+//
+// O carregamento das camadas 2 e 3 fica em src/lib/feriadosRemotos.js e é
+// disparado uma vez após o login. `feriadoEm` segue síncrono lendo caches
+// de módulo.
 
 /** Domingo de Páscoa (algoritmo de Meeus/Jones/Butcher, calendário gregoriano). */
 function domingoDePascoa(ano) {
@@ -44,6 +51,10 @@ function somarDias(date, dias) {
 // uma vez no login. `exatos`: "yyyy-mm-dd" → nome. `anuais`: "mm-dd" → nome.
 let personalizados = { exatos: new Map(), anuais: new Map() };
 
+// Camada 2: feriados nacionais oficiais vindos da BrasilAPI, por ano já
+// mesclados sobre o cálculo local. ano → Map("yyyy-mm-dd" → nome).
+const nacionaisOnlinePorAno = new Map();
+
 /**
  * Registra a lista de feriados personalizados vinda do banco.
  * `lista`: objetos { data: "yyyy-mm-dd", nome, repete_todo_ano }.
@@ -57,6 +68,25 @@ export function definirFeriadosPersonalizados(lista) {
     else exatos.set(item.data, item.nome);
   }
   personalizados = { exatos, anuais };
+}
+
+/**
+ * Registra os feriados nacionais de um ano vindos da BrasilAPI, mesclados
+ * sobre o cálculo local (que mantém Carnaval e Corpus Christi, omitidos pela
+ * API). `listaApi`: objetos { date: "yyyy-mm-dd", name }.
+ */
+export function definirFeriadosNacionaisOnline(ano, listaApi) {
+  const mesclado = new Map(feriadosDoAno(ano));
+  for (const item of listaApi ?? []) {
+    if (typeof item?.date === "string" && item?.name) mesclado.set(item.date, item.name);
+  }
+  nacionaisOnlinePorAno.set(ano, mesclado);
+}
+
+/** Zera as camadas carregadas em runtime (uso em logout e nos testes). */
+export function reiniciarFeriados() {
+  personalizados = { exatos: new Map(), anuais: new Map() };
+  nacionaisOnlinePorAno.clear();
 }
 
 const cachePorAno = new Map();
@@ -89,15 +119,16 @@ export function feriadosDoAno(ano) {
 
 /**
  * Nome do feriado nessa data ISO ("yyyy-mm-dd"), ou null se não houver.
- * Considera os feriados nacionais (calculados) e os personalizados
- * carregados do Supabase.
+ * Ordem: nacional oficial da BrasilAPI (se o ano foi sincronizado) ou o
+ * cálculo local; depois os personalizados do Supabase.
  */
 export function feriadoEm(dataISO) {
   if (typeof dataISO !== "string" || dataISO.length < 10) return null;
   const ano = Number(dataISO.slice(0, 4));
   if (!Number.isInteger(ano)) return null;
+  const nacionais = nacionaisOnlinePorAno.get(ano) ?? feriadosDoAno(ano);
   return (
-    feriadosDoAno(ano).get(dataISO) ??
+    nacionais.get(dataISO) ??
     personalizados.exatos.get(dataISO) ??
     personalizados.anuais.get(dataISO.slice(5)) ??
     null

@@ -1,7 +1,13 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { feriadosDoAno, feriadoEm, definirFeriadosPersonalizados } from "./feriados.js";
+import {
+  feriadosDoAno,
+  feriadoEm,
+  definirFeriadosPersonalizados,
+  definirFeriadosNacionaisOnline,
+  reiniciarFeriados,
+} from "./feriados.js";
 
-beforeEach(() => definirFeriadosPersonalizados([]));
+beforeEach(() => reiniciarFeriados());
 
 describe("feriadosDoAno", () => {
   it("inclui os feriados nacionais de data fixa", () => {
@@ -65,6 +71,31 @@ describe("feriados personalizados (do Supabase)", () => {
     definirFeriadosPersonalizados([
       { data: "2026-12-25", nome: "Outro nome", repete_todo_ano: true },
     ]);
+    expect(feriadoEm("2026-12-25")).toBe("Natal");
+  });
+});
+
+describe("feriados nacionais da BrasilAPI", () => {
+  it("a lista da API entra por cima do cálculo, mas preserva Carnaval e Corpus Christi", () => {
+    definirFeriadosNacionaisOnline(2026, [
+      { date: "2026-01-01", name: "Ano Novo" },
+      { date: "2026-09-07", name: "Independência do Brasil" },
+      { date: "2026-12-25", name: "Natal" },
+    ]);
+    expect(feriadoEm("2026-01-01")).toBe("Ano Novo"); // nome da API venceu
+    expect(feriadoEm("2026-02-17")).toBe("Carnaval"); // do cálculo, a API não traz
+    expect(feriadoEm("2026-06-04")).toBe("Corpus Christi"); // idem
+  });
+
+  it("só afeta o ano sincronizado; os demais seguem no cálculo local", () => {
+    definirFeriadosNacionaisOnline(2026, [{ date: "2026-12-25", name: "Natal (API)" }]);
+    expect(feriadoEm("2026-12-25")).toBe("Natal (API)");
+    expect(feriadoEm("2027-12-25")).toBe("Natal");
+  });
+
+  it("reiniciarFeriados limpa as camadas online", () => {
+    definirFeriadosNacionaisOnline(2026, [{ date: "2026-12-25", name: "Natal (API)" }]);
+    reiniciarFeriados();
     expect(feriadoEm("2026-12-25")).toBe("Natal");
   });
 });

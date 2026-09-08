@@ -373,8 +373,9 @@ function SecaoFeriados() {
     <section className="config-secao">
       <h2>Feriados e recessos</h2>
       <p className="config-secao__ajuda">
-        Os feriados nacionais (Natal, 7 de Setembro, Carnaval…) já aparecem sozinhos no calendário. Aqui você adiciona os
-        que variam por cidade/estado ou são decisão da clínica — feriado municipal, estadual, recesso de fim de ano.
+        Os feriados nacionais (Natal, Ano Novo, 7 de Setembro, Carnaval…) já aparecem sozinhos no calendário e se
+        atualizam pela BrasilAPI. Aqui você adiciona só o que varia por cidade/estado ou é decisão da clínica —
+        feriado municipal, estadual, recesso de fim de ano.
       </p>
 
       {carregando ? (
