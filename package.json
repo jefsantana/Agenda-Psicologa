@@ -8,7 +8,8 @@
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
-    "test": "vitest run"
+    "test": "vitest run",
+    "verifica:mobile": "node scripts/verifica-mobile.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.3",

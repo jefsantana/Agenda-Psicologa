@@ -17,6 +17,10 @@ body,
 
 html {
   color-scheme: dark;
+  /* Trava a rolagem horizontal e o "puxão" elástico lateral do iOS —
+     era a faixa vazia que aparecia ao arrastar a tela para o lado. */
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 .sr-only {
@@ -34,6 +38,7 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
+  overscroll-behavior-x: none;
   background: var(--bg-app-mobile);
   background-image: var(--bg-gradient);
   background-attachment: fixed;
