@@ -42,8 +42,13 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-16);
+  /* viewport-fit=cover: soma a área segura do topo/lados para o nome e a
+     data não sumirem atrás da barra de status (notch) no celular / PWA. */
   padding: var(--space-18) var(--space-16) var(--space-12);
-  background: color-mix(in srgb, var(--bg-app-mobile) 85%, transparent);
+  padding-top: calc(var(--space-18) + var(--safe-top));
+  padding-right: calc(var(--space-16) + var(--safe-right));
+  padding-left: calc(var(--space-16) + var(--safe-left));
+  background: color-mix(in srgb, var(--bg-app-mobile) 92%, transparent);
   backdrop-filter: blur(14px) saturate(1.1);
   -webkit-backdrop-filter: blur(14px) saturate(1.1);
 }
@@ -61,6 +66,12 @@
   display: flex;
   align-items: center;
   gap: var(--space-12);
+  min-width: 0;
+}
+
+/* Coluna de texto do cabeçalho — precisa poder encolher para a eyebrow
+   truncar em vez de quebrar em duas linhas e empurrar o título. */
+.shell__header-texto {
   min-width: 0;
 }
 
@@ -86,11 +97,25 @@
 
 .shell__eyebrow {
   display: block;
-  font-size: 12px;
+  max-width: 100%;
+  /* No celular a data divide o espaço com o avatar e os ícones — fonte e
+     espaçamento menores para "segunda-feira, 7 de setembro" caber inteiro.
+     nowrap + ellipsis é a rede de segurança se ainda assim faltar espaço. */
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--primary-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (min-width: 1024px) {
+  .shell__eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
 }
 
 .shell__title {
@@ -158,7 +183,13 @@
 
 .shell__content {
   flex: 1;
-  padding: 0 var(--space-16) var(--space-18);
+  /* Espaço inferior reserva a altura da TabBar fixa (pílula ~66px +
+     margens 12+12) mais a área segura de gestos, para o último card não
+     ficar escondido atrás do menu. */
+  padding: 0 var(--space-16);
+  padding-right: calc(var(--space-16) + var(--safe-right));
+  padding-bottom: calc(96px + var(--safe-bottom));
+  padding-left: calc(var(--space-16) + var(--safe-left));
   display: flex;
   flex-direction: column;
   gap: var(--space-16);
@@ -167,6 +198,7 @@
 
 @media (min-width: 1024px) {
   .shell__content {
+    /* Desktop não tem TabBar — volta ao respiro normal. */
     padding: 0 30px 40px;
     gap: 22px;
   }

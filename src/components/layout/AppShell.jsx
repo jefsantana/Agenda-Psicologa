@@ -27,7 +27,7 @@ export default function AppShell({ perfil, title, subtitle, eyebrow, acaoPrimari
         <header className="shell__header">
           <div className="shell__header-left">
             <span className="shell__avatar-mobile">{iniciais}</span>
-            <div>
+            <div className="shell__header-texto">
               {eyebrow && <span className="shell__eyebrow">{eyebrow}</span>}
               <h1 className="shell__title">{title}</h1>
               {subtitle && <p className="shell__subtitle">{subtitle}</p>}
