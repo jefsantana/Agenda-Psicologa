@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import StatusBadge from "./StatusBadge.jsx";
 import MenuAcoesLinha from "../agenda/MenuAcoesLinha.jsx";
 import { apagarAtendimento, atualizarStatusAtendimento } from "../../lib/agenda.js";
-import { formatarHora, formatarMinutos } from "../../lib/date.js";
+import { formatarHora, formatarMinutos, paraISO } from "../../lib/date.js";
+import { feriadoEm } from "../../lib/feriados.js";
 import "./AgendaDoDia.css";
 
 const TIPO_LABEL = { online: "Online", presencial: "Presencial" };
@@ -24,6 +25,7 @@ function obterVisualizacaoSalva() {
 
 export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarHoje, onAtualizado, onEditarAtendimento }) {
   const [visualizacao, setVisualizacao] = useState(obterVisualizacaoSalva);
+  const feriado = feriadoEm(paraISO(data));
   const sessoes = itens.filter((item) => item.tipoLinha !== "bloqueio");
   const visiveis = sessoes.slice(0, LIMITE_VISIVEL);
   const restantes = sessoes.length - visiveis.length;
@@ -38,7 +40,14 @@ export default function AgendaDoDia({ itens, carregando, data, ehHoje, onVoltarH
     <section className="agenda-dia">
       <div className="agenda-dia__cabecalho">
         <div>
-          <h2>{ehHoje ? "Agenda do dia" : "Agenda de outro dia"}</h2>
+          <div className="agenda-dia__titulo-linha">
+            <h2>{ehHoje ? "Agenda do dia" : "Agenda de outro dia"}</h2>
+            {feriado && (
+              <span className="agenda-dia__feriado" title={feriado}>
+                Feriado · {feriado}
+              </span>
+            )}
+          </div>
           <span className="agenda-dia__data">
             {new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "long", year: "numeric" }).format(data)}
             {sessoes.length > 0 && (

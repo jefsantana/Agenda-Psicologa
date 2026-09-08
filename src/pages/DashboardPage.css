@@ -66,6 +66,37 @@
   font-weight: 700;
 }
 
+/* Aviso de feriado no dia selecionado — mesmo tom informativo dos lembretes. */
+.dashboard__feriado {
+  display: flex;
+  align-items: center;
+  gap: var(--space-10);
+  margin-bottom: var(--space-12);
+  padding: var(--space-10) var(--space-14);
+  border-radius: var(--radius-row);
+  background: rgba(78, 168, 245, 0.1);
+  border: 1px solid rgba(78, 168, 245, 0.3);
+  color: var(--info);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+
+.dashboard__feriado p {
+  margin: 0;
+}
+
+.dashboard__feriado-tag {
+  flex: none;
+  padding: 2px var(--space-7);
+  border-radius: var(--radius-chip);
+  background: var(--info);
+  color: #fff;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
 /* No mobile os 4 KPIs completos viram os 3 chips condensados abaixo — ver
    .dashboard__chips. Só aparecem de volta a partir do desktop. */
 .dashboard__kpis {

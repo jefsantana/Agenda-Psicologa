@@ -22,6 +22,7 @@ import { buscarTarefas, buscarCompromissosPessoais } from "../lib/tarefas.js";
 import { buscarLancamentos } from "../lib/financeiro.js";
 import { buscarConvenios } from "../lib/pacientes.js";
 import { formatarHora, formatarMinutos, inicioDoMes, fimDoMes, minutosAte, paraISO } from "../lib/date.js";
+import { feriadoEm } from "../lib/feriados.js";
 import "./DashboardPage.css";
 
 const STATUS_RESOLVIDOS = ["realizado", "falta", "remarcar", "cancelado"];
@@ -182,6 +183,8 @@ export default function DashboardPage() {
   const tarefasAtrasadas = tarefas.filter((t) => t.vence_em && t.vence_em < paraISO(new Date())).length;
   const temAvisosPendentes = pendentesConfirmacao > 0 || pendenciasAnteriores.total > 0;
 
+  const feriadoDoDia = feriadoEm(paraISO(dataSelecionada));
+
   const diasComSessao = new Set(atendimentosDoMes.map((item) => paraISO(item.inicio)));
   const diasComPendencia = new Set(
     atendimentosDoMes
@@ -217,6 +220,17 @@ export default function DashboardPage() {
         <p className="erro-aviso" role="alert">
           {erro}
         </p>
+      )}
+
+      {feriadoDoDia && (
+        <div className="dashboard__feriado" role="status">
+          <span className="dashboard__feriado-tag">Feriado</span>
+          <p>
+            {ehHoje
+              ? `Hoje é feriado: ${feriadoDoDia}.`
+              : `${new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "long" }).format(dataSelecionada)} é feriado: ${feriadoDoDia}.`}
+          </p>
+        </div>
       )}
 
       {!carregando && (pendentesConfirmacao > 0 || pendenciasAnteriores.total > 0) && (
