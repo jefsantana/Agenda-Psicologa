@@ -1,8 +1,8 @@
 // Verificação de layout mobile via Chrome DevTools Protocol.
 // Sobe um servidor estático do dist/, abre o Chrome headless em 390px com uma
 // sessão-stub (só para renderizar a casca autenticada), injeta conteúdo alto e
-// confere: (a) sem rolagem horizontal; (b) TabBar colada no rodapé em qualquer
-// scroll; (c) o texto do cabeçalho não fica cortado atrás do topo.
+// confere: (a) sem rolagem horizontal em qualquer scroll; (b) o ☰ do cabeçalho
+// existe e tem alvo de toque decente; (c) a data do cabeçalho não quebra linha.
 //
 // Pré-requisitos: `npm run build` já rodou e o Chrome está instalado.
 // Imprime MOBILE_LAYOUT_OK e sai 0 só se todas as checagens passarem.
@@ -11,7 +11,7 @@ import { createServer } from "node:http";
 import { readFile, stat } from "node:fs/promises";
 import { spawn } from "node:child_process";
 import { extname, join, normalize } from "node:path";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, rmSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("../dist/", import.meta.url));
@@ -66,16 +66,20 @@ const server = createServer(async (req, res) => {
 });
 await new Promise((r) => server.listen(PORT, r));
 
-const userDir = join(process.env.TEMP || "/tmp", "verifica-mobile-chrome");
+// user-data-dir novo a cada execução + ServiceWorker desligado: o app é PWA e
+// um perfil reaproveitado servia o bundle velho pelo service worker, fazendo a
+// verificação testar código desatualizado.
+const userDir = join(process.env.TEMP || "/tmp", `verifica-mobile-chrome-${Date.now()}`);
 const chrome = spawn(CHROME, [
-  // --disable-features=ServiceWorker: o app é PWA e o service worker do build
-  // anterior serviria o bundle velho deste mesmo user-data-dir, fazendo a
-  // verificação testar código desatualizado.
   "--headless=new", "--no-sandbox", "--disable-gpu", "--disable-features=ServiceWorker",
   "--remote-debugging-port=9333", `--user-data-dir=${userDir}`, "about:blank",
 ], { stdio: "ignore" });
 
-const cleanup = () => { try { chrome.kill(); } catch {} server.close(); };
+const cleanup = () => {
+  try { chrome.kill(); } catch {}
+  try { rmSync(userDir, { recursive: true, force: true }); } catch {}
+  server.close();
+};
 process.on("exit", cleanup);
 
 async function cdp() {
@@ -118,16 +122,12 @@ const probe = async (y) => {
     returnByValue: true,
     expression: `(() => {
       const de = document.documentElement;
-      const t = document.querySelector('.tabbar');
       const eb = document.querySelector('.shell__eyebrow');
-      const acao = document.querySelector('.tabbar__acao');
-      const tr = t ? t.getBoundingClientRect() : null;
-      const ar = acao ? acao.getBoundingClientRect() : null;
+      const menu = document.querySelector('.shell__header .shell__menu-botao');
+      const mr = menu ? menu.getBoundingClientRect() : null;
       return {
         horizOverflow: de.scrollWidth - de.clientWidth,
-        tabbarBottomGap: tr ? Math.round(window.innerHeight - tr.bottom) : null,
-        tabbarPos: t ? getComputedStyle(t).position : null,
-        acaoOffsetCentro: ar ? Math.round((ar.left + ar.right) / 2 - window.innerWidth / 2) : null,
+        menuBotao: mr ? { w: Math.round(mr.width), h: Math.round(mr.height), top: Math.round(mr.top) } : null,
         eyebrowLines: eb ? Math.round(eb.getBoundingClientRect().height / parseFloat(getComputedStyle(eb).lineHeight || '16')) : null,
         eyebrowClipped: eb ? eb.scrollWidth > eb.clientWidth + 1 : null,
       };
@@ -140,15 +140,12 @@ const problems = [];
 for (const y of [0, 400, 1200, 2500, 99999]) {
   const m = await probe(y);
   if (m.horizOverflow > 1) problems.push(`scroll ${y}: rolagem horizontal de ${m.horizOverflow}px`);
-  if (m.tabbarPos !== "fixed") problems.push(`scroll ${y}: TabBar não é fixed (${m.tabbarPos})`);
-  // TabBar fixa deve ficar a ~24px do fundo (margem 12 + área segura 0 no headless) sempre
-  if (m.tabbarBottomGap === null || m.tabbarBottomGap < 0 || m.tabbarBottomGap > 60) {
-    problems.push(`scroll ${y}: TabBar descolada do rodapé (gap ${m.tabbarBottomGap}px)`);
+  if (!m.menuBotao) {
+    problems.push(`scroll ${y}: ☰ do cabeçalho ausente`);
+  } else if (m.menuBotao.w < 36 || m.menuBotao.h < 36) {
+    problems.push(`scroll ${y}: ☰ do cabeçalho pequeno demais (${m.menuBotao.w}x${m.menuBotao.h})`);
   }
   if (m.eyebrowLines && m.eyebrowLines > 1) problems.push(`scroll ${y}: data do cabeçalho quebrou em ${m.eyebrowLines} linhas`);
-  if (m.acaoOffsetCentro === null || Math.abs(m.acaoOffsetCentro) > 6) {
-    problems.push(`scroll ${y}: botão central da TabBar fora do centro (${m.acaoOffsetCentro}px)`);
-  }
 }
 
 ws.close();

@@ -69,30 +69,36 @@
   min-width: 0;
 }
 
+/* ☰ do celular — única entrada de navegação (não há barra inferior).
+   No desktop a Sidebar assume e este botão some. */
+.shell__menu-botao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  margin-left: calc(var(--space-4) * -1);
+  border-radius: var(--radius-row);
+  color: var(--text-2);
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.shell__menu-botao:active {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+@media (min-width: 1024px) {
+  .shell__menu-botao {
+    display: none;
+  }
+}
+
 /* Coluna de texto do cabeçalho — precisa poder encolher para a eyebrow
    truncar em vez de quebrar em duas linhas e empurrar o título. */
 .shell__header-texto {
   min-width: 0;
-}
-
-.shell__avatar-mobile {
-  width: 38px;
-  height: 38px;
-  flex-shrink: 0;
-  border-radius: var(--radius-avatar-mobile);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--on-primary);
-  background: var(--gradient-primary);
-}
-
-@media (min-width: 1024px) {
-  .shell__avatar-mobile {
-    display: none;
-  }
 }
 
 .shell__eyebrow {
@@ -160,8 +166,8 @@
   transition: background-color 0.15s var(--ease-out);
 }
 
-/* No mobile a TabBar já tem um "+" flutuante — esconde o texto duplicado do
-   header e mantém só os ícones (busca, pendências) nessa largura. */
+/* No mobile "Novo atendimento" vive dentro do ☰ (folha "Menu"); no header
+   ficam só os ícones (busca, pendências) nessa largura. */
 @media (max-width: 1023px) {
   .shell__acao-primaria {
     display: none;
@@ -183,13 +189,11 @@
 
 .shell__content {
   flex: 1;
-  /* Espaço inferior reserva a altura da TabBar fixa (pílula ~72px +
-     margem inferior 12px + folga) mais a área segura de gestos, para o
-     último card não ficar escondido atrás do menu. Com 96px sobrava pouco
-     em aparelhos com barra de gestos e o fim da tela ficava sob a barra. */
+  /* Sem barra inferior no celular — só um respiro no fim mais a área segura
+     de gestos. */
   padding: 0 var(--space-16);
   padding-right: calc(var(--space-16) + var(--safe-right));
-  padding-bottom: calc(112px + var(--safe-bottom));
+  padding-bottom: calc(var(--space-18) + var(--safe-bottom));
   padding-left: calc(var(--space-16) + var(--safe-left));
   display: flex;
   flex-direction: column;
@@ -199,7 +203,6 @@
 
 @media (min-width: 1024px) {
   .shell__content {
-    /* Desktop não tem TabBar — volta ao respiro normal. */
     padding: 0 30px 40px;
     gap: 22px;
   }
