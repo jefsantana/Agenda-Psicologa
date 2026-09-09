@@ -110,8 +110,25 @@
 */
 .dashboard__chips {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  /* 2 colunas no celular: com 3 os rótulos e o texto de apoio ("2 tarefas ·
+     0 remarcar") ficavam pequenos demais e cortavam. O 3º chip ocupa a
+     linha toda embaixo. */
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
+}
+
+.dashboard__chips .chip:nth-child(3) {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 560px) {
+  .dashboard__chips {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .dashboard__chips .chip:nth-child(3) {
+    grid-column: auto;
+  }
 }
 
 @media (min-width: 1024px) {

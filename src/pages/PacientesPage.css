@@ -3,6 +3,25 @@
   gap: var(--space-10);
 }
 
+/* No celular a busca e o "Novo paciente" empilham — lado a lado a busca
+   ficava espremida e o botão desalinhado. */
+@media (max-width: 600px) {
+  .pacientes-toolbar {
+    flex-direction: column;
+  }
+
+  .pacientes-toolbar .pacientes-busca,
+  .pacientes-toolbar .pacientes-novo {
+    width: 100%;
+    flex: none;
+  }
+
+  .pacientes-toolbar .pacientes-novo {
+    justify-content: center;
+    min-height: 44px;
+  }
+}
+
 .pacientes-busca {
   flex: 1;
   display: flex;
