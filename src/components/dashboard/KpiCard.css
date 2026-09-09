@@ -9,6 +9,27 @@
   animation: kpi-in 0.2s var(--ease-out) backwards;
 }
 
+/* No celular os 4 KPIs ficam 2 x 2 (~170px de largura). Valor e recuos um
+   pouco menores para "R$ 1.070" não encostar na borda e os cards não ficarem
+   altos demais. */
+@media (max-width: 640px) {
+  .kpi {
+    padding: 13px 14px;
+  }
+
+  .kpi__topo {
+    margin-bottom: var(--space-10);
+  }
+
+  .kpi__valor {
+    font-size: 25px;
+  }
+
+  .kpi__prefixo {
+    font-size: 13px;
+  }
+}
+
 @keyframes kpi-in {
   from {
     opacity: 0;

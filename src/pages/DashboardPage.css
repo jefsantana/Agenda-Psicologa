@@ -97,48 +97,20 @@
   text-transform: uppercase;
 }
 
-/* No mobile os 4 KPIs completos viram os 3 chips condensados abaixo — ver
-   .dashboard__chips. Só aparecem de volta a partir do desktop. */
-.dashboard__kpis {
-  display: none;
-}
-
 /*
-  4 colunas só quando há largura real para os rótulos ("Próximos atendimentos",
-  "Recebimentos (mês)"). Entre ~640 e 1024 os cards ficavam estreitos demais e
-  o rótulo quebrava no meio da palavra; abaixo de 640, 2 colunas já resolvem.
+  Os 4 KPIs (Hoje, Próximo atendimento, Faltas e remarcações, Recebido no mês):
+  2 x 2 no celular, 4 colunas no desktop. minmax(0, …) para os rótulos longos
+  ("Faltas e remarcações") quebrarem dentro do card em vez de esticar a trilha.
 */
-.dashboard__chips {
+.dashboard__kpis {
   display: grid;
-  /* 2 colunas no celular: com 3 os rótulos e o texto de apoio ("2 tarefas ·
-     0 remarcar") ficavam pequenos demais e cortavam. O 3º chip ocupa a
-     linha toda embaixo. */
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-
-.dashboard__chips .chip:nth-child(3) {
-  grid-column: 1 / -1;
-}
-
-@media (min-width: 560px) {
-  .dashboard__chips {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .dashboard__chips .chip:nth-child(3) {
-    grid-column: auto;
-  }
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
 @media (min-width: 1024px) {
-  .dashboard__chips {
-    display: none;
-  }
-
   .dashboard__kpis {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 14px;
   }
 }

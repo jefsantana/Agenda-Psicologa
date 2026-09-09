@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Bell, Plus, Search } from "lucide-react";
 import AppShell from "../components/layout/AppShell.jsx";
 import DashboardKpis from "../components/dashboard/DashboardKpis.jsx";
-import DashboardChips from "../components/dashboard/DashboardChips.jsx";
 import ProximaSessaoCard from "../components/dashboard/ProximaSessaoCard.jsx";
 import AgendaDoDia from "../components/dashboard/AgendaDoDia.jsx";
 import DonutConvenios from "../components/dashboard/DonutConvenios.jsx";
@@ -180,7 +179,6 @@ export default function DashboardPage() {
   const pendentesConfirmacao = itensHoje.filter(
     (item) => item.tipoLinha !== "bloqueio" && item.inicio <= new Date() && !STATUS_RESOLVIDOS.includes(item.status)
   ).length;
-  const tarefasAtrasadas = tarefas.filter((t) => t.vence_em && t.vence_em < paraISO(new Date())).length;
   const temAvisosPendentes = pendentesConfirmacao > 0 || pendenciasAnteriores.total > 0;
 
   const feriadoDoDia = feriadoEm(paraISO(dataSelecionada));
@@ -261,7 +259,6 @@ export default function DashboardPage() {
         <ProximaSessaoCard proximo={kpis.proximo} aoAbrirWhatsapp={() => setWhatsappAberto(true)} />
       )}
 
-      <DashboardChips kpis={kpis} tarefasAtrasadas={tarefasAtrasadas} carregando={carregando} />
       <DashboardKpis kpis={kpis} carregando={carregando} />
 
       <div className="dashboard__grade">
