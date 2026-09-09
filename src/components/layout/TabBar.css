@@ -1,4 +1,4 @@
-﻿.tabbar {
+.tabbar {
   /* fixed, não sticky: no iOS o sticky bottom se desprendia e a barra
      "flutuava" no meio da rolagem. fixed cola no rodapé sempre. O
      .shell__content reserva o espaço equivalente no padding inferior. */
@@ -7,25 +7,22 @@
   right: 0;
   bottom: 0;
   z-index: 20;
-  display: grid;
-  /* 5 células iguais (2 links + botão central + 2 links): o botão central cai
-     na 3ª de 5, ou seja, no meio real da barra. */
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--space-2);
-  /* Pílula flutuante (protótipo v6): descola das bordas e do rodapé,
-     somando as áreas seguras (gestos embaixo, notch nas laterais). */
+  display: flex;
+  align-items: center;
+  /* Pílula flutuante: descola das bordas e do rodapé, somando as áreas
+     seguras (gestos embaixo, notch nas laterais). */
   margin: 0 calc(var(--space-12) + var(--safe-right)) calc(var(--space-12) + var(--safe-bottom))
     calc(var(--space-12) + var(--safe-left));
-  /* Opaca: com 78% o conteúdo rolava visível atrás da barra e a última linha
-     de cada tela parecia "cortada". O blur fica só pelo aspecto de vidro nas
-     bordas arredondadas. */
+  /* Opaca: conteúdo não vaza por trás da barra ao rolar. O blur fica só
+     pelo aspecto de vidro nas bordas arredondadas. */
   background: var(--surface-2);
   backdrop-filter: blur(22px) saturate(1.1);
   -webkit-backdrop-filter: blur(22px) saturate(1.1);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-pill);
   box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.4);
-  padding: var(--space-7) var(--space-10);
+  padding: var(--space-7) var(--space-14);
+  min-height: 58px;
 }
 
 @media (min-width: 1024px) {
@@ -34,56 +31,35 @@
   }
 }
 
-.tabbar__item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-7) 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--text-3-aa);
-  min-height: 44px;
-  justify-content: center;
-}
-
-.tabbar__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 26px;
-  border-radius: var(--radius-pill);
-  transition: background-color 0.2s var(--ease-out), color 0.2s var(--ease-out);
-}
-
-.tabbar__item--ativo {
-  color: var(--primary-soft);
-}
-
-.tabbar__item--ativo .tabbar__icon {
-  background: rgba(var(--primary-rgb), 0.18);
-  color: var(--primary-text);
-}
-
-.tabbar__item[aria-disabled="true"] {
-  cursor: default;
-}
-
-/* Botão de ação central, elevado acima da barra (protótipo "Modelo App"). */
-.tabbar__acao-slot {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.tabbar__acao {
+/* ☰ à esquerda — abre o menu com todas as telas. */
+.tabbar__menu {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  margin-top: -20px;
+  border-radius: var(--radius-row);
+  color: var(--text-2);
+  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
+}
+
+.tabbar__menu:active {
+  background: var(--surface-3);
+  color: var(--text);
+}
+
+/* "+" no centro, sozinho, elevado acima da barra. Posição absoluta para ficar
+   no meio real da barra, independente do ☰ à esquerda. */
+.tabbar__acao {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) translateY(-12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   color: #fff;
   background: var(--gradient-primary);

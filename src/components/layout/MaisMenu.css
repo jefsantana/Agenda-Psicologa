@@ -1,29 +1,10 @@
-﻿.mais-menu {
+.mais-menu {
   gap: var(--space-16);
 }
 
-.mais-menu__novo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--space-10);
-  width: 100%;
-  min-height: 48px;
-  padding: var(--space-12) var(--space-16);
-  border-radius: var(--radius-row);
-  background: var(--gradient-primary);
-  color: var(--on-primary);
-  font-size: var(--fs-md);
-  font-weight: 700;
-}
-
-.mais-menu__novo svg {
-  flex-shrink: 0;
-}
-
 .mais-menu__nav {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-7);
 }
 
@@ -36,17 +17,25 @@
   font-size: var(--fs-md);
   font-weight: 600;
   color: var(--text-2);
-  min-height: 44px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  min-height: 48px;
+}
+
+.mais-menu__item svg {
+  flex-shrink: 0;
 }
 
 .mais-menu__item--ativo {
   background: rgba(var(--primary-rgb), 0.14);
+  border-color: rgba(var(--primary-rgb), 0.3);
   color: var(--primary-text);
 }
 
 .mais-menu__sair {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--space-12);
   padding: var(--space-12) var(--space-14);
   border-radius: var(--radius-row);
