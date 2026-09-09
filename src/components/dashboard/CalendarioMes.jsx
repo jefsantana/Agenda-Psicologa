@@ -26,13 +26,39 @@ export default function CalendarioMes({
   onMesMudar,
   inicioIntervalo,
   fimIntervalo,
+  recolhivel = false,
 }) {
   const hoje = new Date();
   const [mesVisivel, setMesVisivel] = useState(mesInicial ?? new Date(hoje.getFullYear(), hoje.getMonth(), 1));
   const [selecionadoInterno, setSelecionadoInterno] = useState(hoje);
+  const [aberto, setAberto] = useState(() => {
+    if (!recolhivel) return true;
+    try {
+      return localStorage.getItem("dashboard:calendario-aberto") === "1";
+    } catch {
+      return false;
+    }
+  });
 
   const selecionado = selecionadoControlado ?? selecionadoInterno;
   const celulas = construirCelulas(mesVisivel);
+
+  function alternarAberto() {
+    setAberto((atual) => {
+      const proximo = !atual;
+      try {
+        localStorage.setItem("dashboard:calendario-aberto", proximo ? "1" : "0");
+      } catch {
+        // localStorage indisponível — sem problema, só não fica lembrado
+      }
+      return proximo;
+    });
+  }
+
+  const prefixoMes = `${mesVisivel.getFullYear()}-${String(mesVisivel.getMonth() + 1).padStart(2, "0")}`;
+  const diasComSessaoNoMes = marcados
+    ? [...marcados].filter((iso) => iso.startsWith(prefixoMes)).length
+    : 0;
 
   useEffect(() => {
     onMesMudar?.(mesVisivel);
@@ -45,7 +71,7 @@ export default function CalendarioMes({
   }
 
   return (
-    <section className="calendario">
+    <section className={`calendario ${recolhivel ? "calendario--recolhivel" : ""} ${aberto ? "" : "calendario--fechado"}`}>
       <div className="calendario__cabecalho">
         <h2>
           {NOMES_MES[mesVisivel.getMonth()]} {mesVisivel.getFullYear()}
@@ -57,9 +83,29 @@ export default function CalendarioMes({
           <button type="button" aria-label="Próximo mês" onClick={() => mudarMes(1)}>
             <IconeSeta />
           </button>
+          {recolhivel && (
+            <button
+              type="button"
+              className="calendario__recolher"
+              aria-expanded={aberto}
+              aria-label={aberto ? "Recolher calendário" : "Abrir calendário"}
+              onClick={alternarAberto}
+            >
+              <IconeSeta style={{ transform: aberto ? "rotate(-90deg)" : "rotate(90deg)" }} />
+            </button>
+          )}
         </div>
       </div>
 
+      {recolhivel && !aberto && (
+        <p className="calendario__resumo">
+          {diasComSessaoNoMes > 0
+            ? `${diasComSessaoNoMes} dia${diasComSessaoNoMes === 1 ? "" : "s"} com sessão em ${NOMES_MES[mesVisivel.getMonth()].toLowerCase()}`
+            : `Sem sessões marcadas em ${NOMES_MES[mesVisivel.getMonth()].toLowerCase()}`}
+        </p>
+      )}
+
+      <div className="calendario__corpo">
       <div className="calendario__grade calendario__grade--cabecalho">
         {DIAS_SEMANA.map((dia, index) => (
           <span key={`${dia}-${index}`}>{dia}</span>
@@ -118,6 +164,7 @@ export default function CalendarioMes({
           </span>
         </div>
       )}
+      </div>
     </section>
   );
 

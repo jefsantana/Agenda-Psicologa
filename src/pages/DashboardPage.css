@@ -66,6 +66,30 @@
   font-weight: 700;
 }
 
+/* Ação do lembrete de pendências — botão de verdade, não link no meio do texto.
+   Seletor com duas classes para vencer o `.dashboard__lembrete a` (sublinhado). */
+.dashboard__lembrete .dashboard__lembrete__acao {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  margin-top: var(--space-4);
+  padding: 0 var(--space-16);
+  border-radius: var(--radius-row);
+  background: rgba(245, 166, 78, 0.16);
+  border: 1px solid rgba(245, 166, 78, 0.45);
+  color: var(--warning);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .dashboard__lembrete .dashboard__lembrete__acao:hover {
+    background: rgba(245, 166, 78, 0.24);
+  }
+}
+
 /* Aviso de feriado no dia selecionado — mesmo tom informativo dos lembretes. */
 .dashboard__feriado {
   display: flex;

@@ -238,19 +238,24 @@ export default function DashboardPage() {
         >
           {pendentesConfirmacao > 0 && (
             <p>
-              {pendentesConfirmacao} atendimento{pendentesConfirmacao === 1 ? "" : "s"} de hoje aguardando confirmação —
-              resolva na Agenda do dia, abaixo.
+              {pendentesConfirmacao} atendimento{pendentesConfirmacao === 1 ? "" : "s"} de hoje aguardando confirmação — na
+              Agenda do dia, abaixo.
             </p>
           )}
           {pendenciasAnteriores.total > 0 && (
-            <p>
-              {pendenciasAnteriores.total} atendimento{pendenciasAnteriores.total === 1 ? "" : "s"} de dias anteriores sem
-              confirmação
-              {pendenciasAnteriores.maisAntigo
-                ? ` (desde ${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(pendenciasAnteriores.maisAntigo)})`
-                : ""}{" "}
-              — <Link to="/agenda">resolva na Agenda</Link>.
-            </p>
+            <>
+              <p>
+                {pendenciasAnteriores.total} atendimento{pendenciasAnteriores.total === 1 ? "" : "s"} de dias anteriores sem
+                confirmação
+                {pendenciasAnteriores.maisAntigo
+                  ? ` (desde ${new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit" }).format(pendenciasAnteriores.maisAntigo)})`
+                  : ""}
+                .
+              </p>
+              <Link to="/agenda" className="dashboard__lembrete__acao">
+                Resolver na Agenda
+              </Link>
+            </>
           )}
         </div>
       )}
@@ -284,6 +289,7 @@ export default function DashboardPage() {
             onSelecionar={setDataSelecionada}
             marcados={diasComSessao}
             pendentes={diasComPendencia}
+            recolhivel
           />
           <ProximosCompromissos itens={proximosCompromissos} aoAtualizar={carregar} carregando={carregando} />
           <AcoesRapidas
