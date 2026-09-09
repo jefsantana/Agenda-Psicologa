@@ -162,7 +162,11 @@
   gap: 20px;
 }
 
-@media (min-width: 640px) {
+/* Só divide "Atendimentos por convênio" e "Tarefas" em duas colunas junto com
+   o resto do layout de desktop (>= 1024px). Entre 640 e 1024 esses dois cards
+   ficavam lado a lado e estreitos enquanto Agenda e Calendário seguiam em
+   largura cheia — parecia desalinhado, "jogado para a direita". */
+@media (min-width: 1024px) {
   .dashboard__par {
     grid-template-columns: 1fr 1fr;
   }
