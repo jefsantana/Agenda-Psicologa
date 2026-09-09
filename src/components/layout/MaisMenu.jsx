@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { Plus } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient.js";
 import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import {
@@ -17,8 +18,8 @@ import {
 } from "./icons.jsx";
 import "./MaisMenu.css";
 
-// Todas as telas do app: no celular a barra de baixo tem só o "+", e a
-// navegação inteira mora aqui dentro (aberta pelo ☰).
+// Todas as telas do app: no celular não há barra de navegação, só o ☰ no
+// cabeçalho — a navegação inteira mora aqui dentro.
 const ITENS = [
   { rotulo: "Início", icone: IconeDashboard, path: "/hoje" },
   { rotulo: "Agenda", icone: IconeAgenda, path: "/agenda" },
@@ -32,7 +33,7 @@ const ITENS = [
   { rotulo: "Configurações", icone: IconeConfiguracoes, path: "/configuracoes" },
 ];
 
-export default function MaisMenu({ aberto, aoFechar }) {
+export default function MaisMenu({ aberto, aoFechar, aoNovoAtendimento }) {
   const painelRef = useRef(null);
   useModalDismiss(aberto, aoFechar, painelRef);
 
@@ -44,6 +45,20 @@ export default function MaisMenu({ aberto, aoFechar }) {
       <div className="sheet__painel mais-menu" ref={painelRef}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">Menu</h2>
+
+        {aoNovoAtendimento && (
+          <button
+            type="button"
+            className="mais-menu__novo"
+            onClick={() => {
+              aoFechar();
+              aoNovoAtendimento();
+            }}
+          >
+            <Plus size={18} strokeWidth={2.4} />
+            <span>Novo atendimento</span>
+          </button>
+        )}
 
         <nav className="mais-menu__nav">
           {ITENS.map((item) => (

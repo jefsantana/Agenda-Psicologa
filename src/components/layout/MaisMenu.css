@@ -2,6 +2,25 @@
   gap: var(--space-16);
 }
 
+.mais-menu__novo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-10);
+  width: 100%;
+  min-height: 48px;
+  padding: var(--space-12) var(--space-16);
+  border-radius: var(--radius-row);
+  background: var(--gradient-primary);
+  color: var(--on-primary);
+  font-size: var(--fs-md);
+  font-weight: 700;
+}
+
+.mais-menu__novo svg {
+  flex-shrink: 0;
+}
+
 .mais-menu__nav {
   display: grid;
   grid-template-columns: 1fr 1fr;
