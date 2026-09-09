@@ -158,8 +158,19 @@
 
 .dashboard__par {
   display: grid;
-  grid-template-columns: 1fr;
+  /* minmax(0, 1fr), não 1fr: com 1fr a trilha não encolhe abaixo do
+     min-content dos cards e "Atendimentos por convênio" / "Tarefas"
+     estouravam para fora da tela no celular (a lista de tarefas com nome
+     longo travava a largura). minmax(0, …) deixa a trilha encolher e o
+     conteúdo trunca/quebra dentro do card. */
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
+}
+
+/* Cada card da dupla também precisa poder encolher — senão o min-content
+   dele (lista de tarefas, legenda de convênios) segura a largura da trilha. */
+.dashboard__par > * {
+  min-width: 0;
 }
 
 /* Só divide "Atendimentos por convênio" e "Tarefas" em duas colunas junto com
@@ -168,7 +179,7 @@
    largura cheia — parecia desalinhado, "jogado para a direita". */
 @media (min-width: 1024px) {
   .dashboard__par {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
