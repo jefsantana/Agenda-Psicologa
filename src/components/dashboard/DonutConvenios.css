@@ -65,11 +65,45 @@
   min-width: 2px;
 }
 
+/* No celular a lista por convênio começa recolhida (ver .convenios-toggle);
+   no desktop o @media abaixo a mostra sempre e esconde o botão. */
 .convenios-legenda {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 11px;
-  margin-top: 17px;
+  margin-top: 14px;
+}
+
+.convenios-legenda--aberta {
+  display: flex;
+}
+
+.convenios-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-text);
+}
+
+.convenios-toggle svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.15s var(--ease-out);
+}
+
+@media (min-width: 1024px) {
+  .convenios-toggle {
+    display: none;
+  }
+
+  .convenios-legenda {
+    display: flex;
+    margin-top: 17px;
+  }
 }
 
 .convenios-legenda__item {

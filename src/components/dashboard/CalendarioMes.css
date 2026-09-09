@@ -54,6 +54,31 @@
   color: var(--text);
 }
 
+/* Recolhível no celular (só no dashboard, via prop `recolhivel`): o corpo
+   inteiro — dias da semana, grade e legenda — some atrás do botão do
+   cabeçalho. No desktop o corpo fica sempre visível e o botão/resumo somem. */
+@media (max-width: 1023px) {
+  .calendario--recolhivel.calendario--fechado .calendario__corpo {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* .calendario__nav button tem display:flex — precisa de duas classes para
+     vencer e esconder o botão de recolher no desktop. */
+  .calendario__nav .calendario__recolher,
+  .calendario__resumo {
+    display: none;
+  }
+}
+
+.calendario__resumo {
+  margin-top: var(--space-12);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
 .calendario__grade {
   display: grid;
   grid-template-columns: repeat(7, 1fr);

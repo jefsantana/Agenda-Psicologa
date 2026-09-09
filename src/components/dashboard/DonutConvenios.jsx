@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { IconeSeta } from "./icons.jsx";
 import "./DonutConvenios.css";
 
 const PALETA = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--pink)", "var(--amber)"];
@@ -7,6 +9,7 @@ const NOMES_MES = [
 ];
 
 export default function DonutConvenios({ atendimentosDoMes, carregando }) {
+  const [legendaAberta, setLegendaAberta] = useState(false);
   const contagem = new Map();
   for (const atendimento of atendimentosDoMes) {
     contagem.set(atendimento.convenio, (contagem.get(atendimento.convenio) ?? 0) + 1);
@@ -57,7 +60,20 @@ export default function DonutConvenios({ atendimentosDoMes, carregando }) {
             ))}
           </div>
 
-          <ul className="convenios-legenda">
+          {/* No celular a lista por convênio fica atrás de um toque — o card é
+              consulta mensal, não ação do dia. No desktop o CSS esconde o botão
+              e mostra a lista sempre. */}
+          <button
+            type="button"
+            className="convenios-toggle"
+            onClick={() => setLegendaAberta((v) => !v)}
+            aria-expanded={legendaAberta}
+          >
+            {legendaAberta ? "Ocultar" : `Ver por convênio (${fatias.length})`}
+            <IconeSeta style={legendaAberta ? { transform: "rotate(-90deg)" } : { transform: "rotate(90deg)" }} />
+          </button>
+
+          <ul className={`convenios-legenda ${legendaAberta ? "convenios-legenda--aberta" : ""}`}>
             {fatias.map((fatia) => (
               <li key={fatia.nome} className="convenios-legenda__item">
                 <span className="convenios-legenda__ponto" style={{ background: fatia.cor }} />
