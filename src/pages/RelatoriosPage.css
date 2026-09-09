@@ -6,6 +6,24 @@
   gap: var(--space-10);
 }
 
+/* No celular o seletor de mês e o "Exportar PDF" empilham, cada um na
+   largura toda — lado a lado o botão encostava no seletor. */
+@media (max-width: 560px) {
+  .relatorios-topo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .relatorios-mes-nav {
+    justify-content: space-between;
+  }
+
+  .relatorios-exportar {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
 .relatorios-mes-nav {
   display: flex;
   align-items: center;

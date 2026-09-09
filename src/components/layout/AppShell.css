@@ -48,7 +48,7 @@
   padding-top: calc(var(--space-18) + var(--safe-top));
   padding-right: calc(var(--space-16) + var(--safe-right));
   padding-left: calc(var(--space-16) + var(--safe-left));
-  background: color-mix(in srgb, var(--bg-app-mobile) 92%, transparent);
+  background: color-mix(in srgb, var(--bg-app-mobile) 97%, transparent);
   backdrop-filter: blur(14px) saturate(1.1);
   -webkit-backdrop-filter: blur(14px) saturate(1.1);
 }
@@ -101,7 +101,7 @@
   /* No celular a data divide o espaço com o avatar e os ícones — fonte e
      espaçamento menores para "segunda-feira, 7 de setembro" caber inteiro.
      nowrap + ellipsis é a rede de segurança se ainda assim faltar espaço. */
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -135,7 +135,7 @@
 
 .shell__subtitle {
   margin-top: var(--space-2);
-  font-size: var(--fs-sm);
+  font-size: 14px;
   color: var(--text-3-aa);
 }
 
@@ -183,12 +183,13 @@
 
 .shell__content {
   flex: 1;
-  /* Espaço inferior reserva a altura da TabBar fixa (pílula ~66px +
-     margens 12+12) mais a área segura de gestos, para o último card não
-     ficar escondido atrás do menu. */
+  /* Espaço inferior reserva a altura da TabBar fixa (pílula ~72px +
+     margem inferior 12px + folga) mais a área segura de gestos, para o
+     último card não ficar escondido atrás do menu. Com 96px sobrava pouco
+     em aparelhos com barra de gestos e o fim da tela ficava sob a barra. */
   padding: 0 var(--space-16);
   padding-right: calc(var(--space-16) + var(--safe-right));
-  padding-bottom: calc(96px + var(--safe-bottom));
+  padding-bottom: calc(112px + var(--safe-bottom));
   padding-left: calc(var(--space-16) + var(--safe-left));
   display: flex;
   flex-direction: column;

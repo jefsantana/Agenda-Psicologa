@@ -68,8 +68,11 @@ await new Promise((r) => server.listen(PORT, r));
 
 const userDir = join(process.env.TEMP || "/tmp", "verifica-mobile-chrome");
 const chrome = spawn(CHROME, [
-  "--headless=new", "--no-sandbox", "--disable-gpu", "--remote-debugging-port=9333",
-  `--user-data-dir=${userDir}`, "about:blank",
+  // --disable-features=ServiceWorker: o app é PWA e o service worker do build
+  // anterior serviria o bundle velho deste mesmo user-data-dir, fazendo a
+  // verificação testar código desatualizado.
+  "--headless=new", "--no-sandbox", "--disable-gpu", "--disable-features=ServiceWorker",
+  "--remote-debugging-port=9333", `--user-data-dir=${userDir}`, "about:blank",
 ], { stdio: "ignore" });
 
 const cleanup = () => { try { chrome.kill(); } catch {} server.close(); };
@@ -117,11 +120,14 @@ const probe = async (y) => {
       const de = document.documentElement;
       const t = document.querySelector('.tabbar');
       const eb = document.querySelector('.shell__eyebrow');
+      const acao = document.querySelector('.tabbar__acao');
       const tr = t ? t.getBoundingClientRect() : null;
+      const ar = acao ? acao.getBoundingClientRect() : null;
       return {
         horizOverflow: de.scrollWidth - de.clientWidth,
         tabbarBottomGap: tr ? Math.round(window.innerHeight - tr.bottom) : null,
         tabbarPos: t ? getComputedStyle(t).position : null,
+        acaoOffsetCentro: ar ? Math.round((ar.left + ar.right) / 2 - window.innerWidth / 2) : null,
         eyebrowLines: eb ? Math.round(eb.getBoundingClientRect().height / parseFloat(getComputedStyle(eb).lineHeight || '16')) : null,
         eyebrowClipped: eb ? eb.scrollWidth > eb.clientWidth + 1 : null,
       };
@@ -140,6 +146,9 @@ for (const y of [0, 400, 1200, 2500, 99999]) {
     problems.push(`scroll ${y}: TabBar descolada do rodapé (gap ${m.tabbarBottomGap}px)`);
   }
   if (m.eyebrowLines && m.eyebrowLines > 1) problems.push(`scroll ${y}: data do cabeçalho quebrou em ${m.eyebrowLines} linhas`);
+  if (m.acaoOffsetCentro === null || Math.abs(m.acaoOffsetCentro) > 6) {
+    problems.push(`scroll ${y}: botão central da TabBar fora do centro (${m.acaoOffsetCentro}px)`);
+  }
 }
 
 ws.close();

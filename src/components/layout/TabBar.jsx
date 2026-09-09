@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Plus } from "lucide-react";
-import { IconeAgenda, IconeDashboard, IconeFinanceiro, IconeMais, IconePacientes } from "./icons.jsx";
+import { Menu } from "lucide-react";
+import { IconeAgenda, IconeDashboard, IconeFinanceiro, IconePacientes } from "./icons.jsx";
 import MaisMenu from "./MaisMenu.jsx";
 import "./TabBar.css";
 
@@ -15,9 +15,16 @@ const ITENS_DIREITA = [
   { rotulo: "Financeiro", icone: IconeFinanceiro, path: "/financeiro" },
 ];
 
-/** `aoNovoAtendimento` abre a folha de novo atendimento (montada em AppShell). */
+/**
+ * Barra inferior do celular. 5 células iguais: 2 links à esquerda, o botão
+ * central e 2 links à direita — assim o botão central fica no meio real da
+ * barra (antes eram 6 células com 2+3, e o "+" caía deslocado à esquerda).
+ * O botão central abre a folha "Mais": ali dentro ficam "Novo atendimento"
+ * em destaque e as telas secundárias (Prontuários, Convênios, Relatórios…).
+ * `aoNovoAtendimento` vem do AppShell e é repassado ao menu.
+ */
 export default function TabBar({ aoNovoAtendimento }) {
-  const [maisAberto, setMaisAberto] = useState(false);
+  const [menuAberto, setMenuAberto] = useState(false);
 
   return (
     <>
@@ -39,11 +46,13 @@ export default function TabBar({ aoNovoAtendimento }) {
           <button
             type="button"
             className="tabbar__acao"
-            onClick={aoNovoAtendimento}
-            aria-label="Novo atendimento"
-            title="Novo atendimento"
+            onClick={() => setMenuAberto(true)}
+            aria-label="Mais opções e novo atendimento"
+            aria-haspopup="dialog"
+            aria-expanded={menuAberto}
+            title="Mais"
           >
-            <Plus size={20} strokeWidth={2.4} />
+            <Menu size={20} strokeWidth={2.4} />
           </button>
         </div>
 
@@ -59,16 +68,13 @@ export default function TabBar({ aoNovoAtendimento }) {
             <span>{item.rotulo}</span>
           </NavLink>
         ))}
-
-        <button type="button" className="tabbar__item" onClick={() => setMaisAberto(true)}>
-          <span className="tabbar__icon">
-            <IconeMais />
-          </span>
-          <span>Mais</span>
-        </button>
       </nav>
 
-      <MaisMenu aberto={maisAberto} aoFechar={() => setMaisAberto(false)} />
+      <MaisMenu
+        aberto={menuAberto}
+        aoFechar={() => setMenuAberto(false)}
+        aoNovoAtendimento={aoNovoAtendimento}
+      />
     </>
   );
 }

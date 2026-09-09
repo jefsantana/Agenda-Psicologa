@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { NavLink } from "react-router-dom";
+import { Plus } from "lucide-react";
 import { supabase } from "../../lib/supabaseClient.js";
 import { useModalDismiss } from "../../lib/useModalDismiss.js";
 import {
@@ -22,7 +23,7 @@ const ITENS = [
   { rotulo: "Configurações", icone: IconeConfiguracoes, path: "/configuracoes" },
 ];
 
-export default function MaisMenu({ aberto, aoFechar }) {
+export default function MaisMenu({ aberto, aoFechar, aoNovoAtendimento }) {
   const painelRef = useRef(null);
   useModalDismiss(aberto, aoFechar, painelRef);
 
@@ -34,6 +35,20 @@ export default function MaisMenu({ aberto, aoFechar }) {
       <div className="sheet__painel mais-menu" ref={painelRef}>
         <span className="sheet__grip" aria-hidden="true" />
         <h2 className="sheet__titulo">Mais opções</h2>
+
+        {aoNovoAtendimento && (
+          <button
+            type="button"
+            className="mais-menu__novo"
+            onClick={() => {
+              aoFechar();
+              aoNovoAtendimento();
+            }}
+          >
+            <Plus size={18} strokeWidth={2.4} />
+            <span>Novo atendimento</span>
+          </button>
+        )}
 
         <nav className="mais-menu__nav">
           {ITENS.map((item) => (
