@@ -6,7 +6,7 @@ import "./SeletorPacienteCampo.css";
  * Campo de paciente para formulários de atendimento: busca no cadastro existente
  * em vez de aceitar texto livre, para não criar pacientes duplicados por engano.
  */
-export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar, autoFocus }) {
+export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar, autoFocus, abrirNoFoco = true }) {
   const [busca, setBusca] = useState(nomePaciente ?? "");
   const [aberto, setAberto] = useState(false);
   const [resultados, setResultados] = useState([]);
@@ -54,11 +54,13 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
     if (pacienteId) onMudar({ id: "", nome: valor });
   }
 
-  // Ao abrir um atendimento existente, o foco-trap do modal foca este campo
-  // automaticamente — sem essa checagem, a lista de busca abriria por cima do
-  // paciente já selecionado, sem o usuário ter pedido para trocar.
+  // Ao editar um atendimento existente, o foco-trap do modal foca este campo
+  // automaticamente assim que ele abre — antes mesmo do nome do paciente já
+  // salvo ter sido preenchido no campo (é outro efeito, roda depois). Por
+  // isso quem decide se essa abertura automática faz sentido é o formulário
+  // pai (via `abrirNoFoco`), não o valor atual do campo.
   function handleFocus() {
-    if (!pacienteId) setAberto(true);
+    if (abrirNoFoco) setAberto(true);
   }
 
   function handleSelecionar(paciente) {

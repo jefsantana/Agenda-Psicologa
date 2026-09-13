@@ -130,6 +130,7 @@ export default function AtendimentoForm({ aberto, atendimento, dataPadrao, conve
           <SeletorPacienteCampo
             pacienteId={pacienteId}
             nomePaciente={nomePaciente}
+            abrirNoFoco={!atendimento}
             onMudar={(paciente) => {
               setPacienteId(paciente.id);
               setNomePaciente(paciente.nome);
