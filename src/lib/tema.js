@@ -1,21 +1,18 @@
 /*
-  Aparência do sistema — três escolhas independentes, cada uma um atributo no
-  <html> e uma chave no localStorage:
+  Aparência do sistema — uma escolha só: modo claro / escuro / automático
+  (segue o sistema operacional). Um atributo no <html> (data-mode) e uma
+  chave no localStorage.
 
-  - data-mode    → claro / escuro / automático (segue o sistema operacional).
-  - data-accent  → cor de destaque (botões, foco, navegação ativa, badges).
-  - data-theme   → paleta de fundo e superfícies (o "clima" da tela).
-
-  Os valores de cada uma estão em src/styles/tokens.css (blocos
-  :root[data-accent="…"], :root[data-theme="…"] e o bloco claro). As três se
-  combinam.
-
-  Modo claro e escuro valem para as quatro paletas.
+  Antes existiam mais duas escolhas independentes (cor de destaque e paleta
+  de fundo, combinadas em até 24 variações — ver tokens.css v8). Foram
+  removidas: cada paleta/acento novo exigia redefinir a lista inteira de
+  tokens em cada bloco, e um esquecimento (tokens novos nunca adicionados
+  aos blocos claros) foi o que deixou botões e linhas de lista praticamente
+  pretos no modo claro. Só o modo claro/escuro precisa de dois blocos no CSS
+  (tokens.css), então é a única variação que continua existindo.
 */
 
 const CHAVE_MODO = "espaco-raquel-frois:modo";
-const CHAVE_ACENTO = "espaco-raquel-frois:acento";
-const CHAVE_PALETA = "espaco-raquel-frois:paleta";
 
 export const MODOS = [
   { id: "auto", nome: "Automático" },
@@ -24,26 +21,6 @@ export const MODOS = [
 ];
 
 const MODOS_VALIDOS = new Set(MODOS.map((m) => m.id));
-
-export const ACENTOS = [
-  { id: "azul", nome: "Azul", cor: "#3b82f6" },
-  { id: "rosa", nome: "Rosa", cor: "#e8639a" },
-  { id: "verde", nome: "Verde consultório", cor: "#1f9382" },
-];
-
-/*
-  Paletas de fundo. `amostra` são as cores mostradas no seletor de
-  Configurações (fundo, superfície, texto), só para pré-visualização.
-*/
-export const PALETAS = [
-  { id: "ameixa", nome: "Ameixa", amostra: ["#1c0b15", "#2e1727", "#f5eef3"] },
-  { id: "carvao", nome: "Carvão", amostra: ["#0f1012", "#1e2126", "#e6e8ee"] },
-  { id: "ardosia", nome: "Ardósia", amostra: ["#0e1420", "#1b2334", "#e7ecf5"] },
-  { id: "cafe", nome: "Café", amostra: ["#17110d", "#261c15", "#f3ece4"] },
-];
-
-const ACENTOS_VALIDOS = new Set(ACENTOS.map((a) => a.id));
-const PALETAS_VALIDAS = new Set(PALETAS.map((p) => p.id));
 
 export function obterModo() {
   const salvo = localStorage.getItem(CHAVE_MODO);
@@ -76,32 +53,4 @@ prefereEscuro.addEventListener("change", () => {
   if (obterModo() === "auto") aplicarModo("auto");
 });
 
-export function obterAcento() {
-  const salvo = localStorage.getItem(CHAVE_ACENTO);
-  // "roxo" e "padrao" (Lavanda) são ids de opções antigas removidas — no tema
-  // escuro elas nunca tiveram cor própria e caíam no azul do handoff v7 por
-  // baixo dos panos, então a migração é direta.
-  if (salvo === "roxo" || salvo === "padrao") return "azul";
-  if (!salvo || !ACENTOS_VALIDOS.has(salvo)) return "azul";
-  return salvo;
-}
-
-export function definirAcento(id) {
-  document.documentElement.setAttribute("data-accent", id);
-  localStorage.setItem(CHAVE_ACENTO, id);
-}
-
-export function obterPaleta() {
-  const salvo = localStorage.getItem(CHAVE_PALETA);
-  if (!salvo || !PALETAS_VALIDAS.has(salvo)) return "ameixa";
-  return salvo;
-}
-
-export function definirPaleta(id) {
-  document.documentElement.setAttribute("data-theme", id);
-  localStorage.setItem(CHAVE_PALETA, id);
-}
-
 aplicarModo(obterModo());
-document.documentElement.setAttribute("data-accent", obterAcento());
-document.documentElement.setAttribute("data-theme", obterPaleta());

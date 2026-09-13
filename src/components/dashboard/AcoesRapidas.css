@@ -42,6 +42,6 @@
 
 @media (hover: hover) {
   .acao:hover {
-    background: #1a2129;
+    background: var(--surface-3);
   }
 }

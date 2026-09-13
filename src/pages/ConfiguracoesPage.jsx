@@ -8,17 +8,7 @@ import {
   apagarFeriado,
   sincronizarFeriados,
 } from "../lib/feriadosRemotos.js";
-import {
-  ACENTOS,
-  MODOS,
-  PALETAS,
-  definirAcento,
-  definirModo,
-  definirPaleta,
-  obterAcento,
-  obterModo,
-  obterPaleta,
-} from "../lib/tema.js";
+import { MODOS, definirModo, obterModo } from "../lib/tema.js";
 import { supabase } from "../lib/supabaseClient.js";
 import "./ConfiguracoesPage.css";
 
@@ -113,22 +103,10 @@ function SecaoPerfil({ perfil, onSalvo }) {
 
 function SecaoAparencia() {
   const [modo, setModo] = useState(obterModo());
-  const [acento, setAcento] = useState(obterAcento());
-  const [paleta, setPaleta] = useState(obterPaleta());
 
   function escolherModo(id) {
     definirModo(id);
     setModo(id);
-  }
-
-  function escolherAcento(id) {
-    definirAcento(id);
-    setAcento(id);
-  }
-
-  function escolherPaleta(id) {
-    definirPaleta(id);
-    setPaleta(id);
   }
 
   return (
@@ -138,7 +116,6 @@ function SecaoAparencia() {
       <h3 className="config-subtitulo">Tema</h3>
       <p className="config-secao__ajuda">
         &quot;Automático&quot; acompanha o claro/escuro do seu computador ou celular.
-        Funciona com qualquer paleta.
       </p>
       <div className="config-acentos">
         {MODOS.map((item) => (
@@ -149,48 +126,6 @@ function SecaoAparencia() {
             onClick={() => escolherModo(item.id)}
             aria-pressed={modo === item.id}
           >
-            {item.nome}
-          </button>
-        ))}
-      </div>
-
-      <h3 className="config-subtitulo">Paleta de cores</h3>
-      <p className="config-secao__ajuda">
-        Muda o fundo e as superfícies de todo o sistema — telas, cards e menus.
-      </p>
-      <div className="config-paletas">
-        {PALETAS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`config-paleta ${paleta === item.id ? "is-active" : ""}`}
-            onClick={() => escolherPaleta(item.id)}
-            aria-pressed={paleta === item.id}
-          >
-            <span className="config-paleta__amostra" aria-hidden="true">
-              <span style={{ background: item.amostra[0] }} />
-              <span style={{ background: item.amostra[1] }} />
-              <span style={{ background: item.amostra[2] }} />
-            </span>
-            {item.nome}
-          </button>
-        ))}
-      </div>
-
-      <h3 className="config-subtitulo">Cor de destaque</h3>
-      <p className="config-secao__ajuda">
-        A cor de botões, links, foco e navegação ativa. Funciona com qualquer paleta.
-      </p>
-      <div className="config-acentos">
-        {ACENTOS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className={`config-acento ${acento === item.id ? "is-active" : ""}`}
-            onClick={() => escolherAcento(item.id)}
-            aria-pressed={acento === item.id}
-          >
-            <span className="config-acento__cor" style={{ background: item.cor }} />
             {item.nome}
           </button>
         ))}

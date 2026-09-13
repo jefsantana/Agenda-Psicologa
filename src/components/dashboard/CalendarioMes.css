@@ -33,7 +33,7 @@
   height: 28px;
   border-radius: 8px;
   color: var(--text-3-aa);
-  background: #171d25;
+  background: var(--bg-control);
   border: 1px solid var(--border-strong);
   transition: color 0.15s var(--ease-out);
 }

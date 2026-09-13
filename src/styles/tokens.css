@@ -1,21 +1,20 @@
 /*
-  Tokens — v7 (tema escuro carvão/azul).
+  Tokens — v8 (só 2 temas: claro e escuro).
 
-  Substitui o v6 (vinho/lavanda + glassmorphism). Direção definida em set/2026 a
-  partir do handoff `design_handoff_dashboard_agenda/`: fundo carvão neutro,
-  acento azul, cards planos (sem vidro, sem sombra — elevação só por
-  background + border). Instrument Sans é mantida (o handoff diz para manter a
-  sans do repo quando já houver uma); o mono passa de IBM Plex Mono para
-  JetBrains Mono, recomendado no handoff para horários/valores/percentuais.
+  Antes o sistema combinava 3 escolhas independentes (modo claro/escuro ×
+  4 paletas de fundo × 3 cores de destaque = até 24 combinações). Vários
+  tokens novos (bg-row, bg-sidebar, bg-control, bg-avatar, border-control,
+  text-subtle/faint etc.) só tinham valor definido no :root escuro base —
+  nenhum bloco [data-mode="claro"] os redefinia, então no modo claro eles
+  continuavam com a cor escura por baixo dos panos (foi o que deixou linhas
+  da agenda e botões praticamente pretos sobre fundo branco). Simplificado
+  agora pra só duas paletas — a combinação que já era o padrão do sistema
+  (paleta "ameixa" + destaque "azul") — cada uma com TODOS os tokens
+  definidos, pra esse tipo de lacuna não se repetir.
 
-  Regra mantida do v6: todo texto informativo precisa passar em AA (4.5:1). Por
-  isso os cinzas de texto são cores sólidas com contraste verificado sobre
-  --surface, não branco com opacidade baixa (que varia com o que está atrás).
-
-  Os nomes das variáveis são os mesmos das versões anteriores de propósito — o
-  redesign vive aqui, os componentes não mudam de API. Tokens sem equivalente
-  direto no v6 (bg-sidebar, bg-row, border-control etc.) foram adicionados no
-  fim do bloco de superfícies, não substituem nomes existentes.
+  Regra mantida: todo texto informativo precisa passar em AA (4.5:1) sobre a
+  sua própria --surface — os cinzas de texto são cores sólidas com contraste
+  verificado, não branco/preto com opacidade baixa (que varia com o fundo).
 */
 
 :root {
@@ -29,7 +28,6 @@
   --surface-3: #1e2732; /* tom acima, usado em controles/toggles ativos */
   --surface-inset: #0e1217; /* bg/inset — fundo de toggle segmentado */
 
-  /* Tokens sem equivalente no v6, adicionados para casar 1:1 com o handoff. */
   --bg-sidebar: #0f1216;
   --bg-row: #12171e; /* linha normal de lista (levemente distinta do card) */
   --bg-nav-active: #182234;
@@ -61,16 +59,15 @@
   --text-3-aa: var(--text-3); /* alias mantido por compatibilidade — use --text-3 */
   --text-4: #5a6472; /* text/disabled — decoração, nunca texto informativo */
 
-  /* Degraus extras do handoff sem slot correspondente no v6. */
   --text-subtle: #7c8794;
   --text-faint: #6b7684;
   --text-out-of-range: #3e4753;
   --icon-faint: #4c5764;
 
   /* Acentos semânticos
-     Acento: azul do handoff. --primary é a cor de preenchimento (botões,
-     fills, navegação ativa); --primary-text é a variante para
-     texto/links/ícones sobre fundo escuro (AA). */
+     Acento: azul. --primary é a cor de preenchimento (botões, fills,
+     navegação ativa); --primary-text é a variante para texto/links/ícones
+     sobre fundo escuro (AA). */
   --primary: #3b82f6;
   --primary-strong: #2f72e0;
   --primary-text: #6ea8fe; /* accent/text — links, eyebrow, ícones de ação */
@@ -90,7 +87,6 @@
   --pink: #e86aa6;
   --amber: #fbbf24; /* badges "agora"/pendências. Texto escuro por cima: --on-amber */
   --on-amber: #1c1305;
-  /* --danger: sem token próprio no handoff — status negativo usa --warning. */
   --danger: #e29cad;
   --danger-rgb: 226, 156, 173;
   --danger-text: #ecb3c0;
@@ -101,25 +97,20 @@
   --whatsapp: #25d366;
   --checkbox-vazio: #2e3a48;
 
-  /* Gráficos — sequência de 3 cores do handoff (barra de convênios etc.). */
+  /* Gráficos — sequência de 3 cores (barra de convênios etc.). */
   --chart-1: #3b82f6;
   --chart-2: #6ea8fe;
   --chart-3: #34d399;
 
-  /* Tipografia — Instrument Sans mantida (handoff: "se o repo já usa outra
-     sans, manter a do repo e aplicar só a escala/pesos"). Fallback Inter e
-     system-ui, inalterado. */
+  /* Tipografia — Instrument Sans, fallback Inter e system-ui. */
   --font-body: "Instrument Sans", "Inter", system-ui, sans-serif;
   --font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
-  /* Dados: mono técnica — horários, valores, percentuais. JetBrains Mono
-     recomendada pelo handoff no lugar de IBM Plex Mono. */
+  /* Dados: mono técnica — horários, valores, percentuais. */
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Peso dos títulos display: o handoff usa 800 (h1 do header, "Olá, Raquel"),
-     bem mais pesado que o 400 do v6. */
   --weight-display: 800;
 
-  /* Escala tipográfica — 7 degraus (inalterada do v5). */
+  /* Escala tipográfica — 7 degraus. */
   --fs-2xs: 0.6875rem; /* 11px */
   --fs-xs: 0.75rem; /* 12px */
   --fs-sm: 0.8125rem; /* 13px */
@@ -128,7 +119,7 @@
   --fs-xl: 1.375rem; /* 22px */
   --fs-2xl: 1.75rem; /* 28px */
 
-  /* Espaçamento (inalterado do v5) */
+  /* Espaçamento */
   --space-2: 2px;
   --space-3: 3px;
   --space-4: 4px;
@@ -139,11 +130,7 @@
   --space-16: 16px;
   --space-18: 18px;
 
-  /* Raios — escala do handoff (dashboard denso, flat), bem menos arredondada
-     que o v6 (cards 26px). --radius-row segue sendo o raio de controle
-     genérico usado em todo o app (botão, input); os raios só do Dashboard
-     (linha de atendimento 13px, botão-ícone 8px etc.) ficam direto nos
-     componentes, não em token. */
+  /* Raios */
   --radius-panel: 16px; /* card principal */
   --radius-kpi: 14px;
   --radius-row: 11px; /* controle, item interno, avatar */
@@ -155,7 +142,7 @@
   --radius-avatar-mobile: 14px;
   --radius-sheet: 32px;
 
-  /* Layout — sidebar e coluna direita no valor do handoff (232px / 344px). */
+  /* Layout — sidebar e coluna direita. */
   --sidebar-width: 232px;
   --right-column-width: 344px;
   --content-padding: 18px;
@@ -172,118 +159,18 @@
 }
 
 /*
-  Variações de acento — Configurações → Aparência (src/lib/tema.js).
-  O azul do :root acima já é o padrão ("azul"), por isso não tem um bloco
-  próprio aqui — as demais trocam só a cor de destaque. Cada bloco que
-  redefine --primary também redefine --primary-rgb.
-*/
-:root[data-accent="azul"] {
-  --primary: #3b82f6;
-  --primary-strong: #2f6fe0;
-  --primary-text: #9fc1fb;
-  --primary-soft: #c2d7fc;
-  --primary-rgb: 59, 130, 246;
-  --gradient-primary: linear-gradient(150deg, #6ba8f5, #2f6fe0);
-  --gradient-card: linear-gradient(158deg, #7db4f7 0%, #3b82f6 58%, #2f6fe0 100%);
-}
+  ── Modo claro ───────────────────────────────────────────────────────────
+  O <html> sempre carrega data-mode="claro" ou data-mode="escuro" (nunca
+  "auto"): src/lib/tema.js resolve "Automático" lendo prefers-color-scheme e
+  reescreve o atributo quando o sistema muda.
 
-:root[data-accent="rosa"] {
-  --primary: #e8639a;
-  --primary-strong: #d14884;
-  --primary-text: #f4a8c9;
-  --primary-soft: #f7c6db;
-  --primary-rgb: 232, 99, 154;
-  --gradient-primary: linear-gradient(150deg, #f28fb8, #d14884);
-  --gradient-card: linear-gradient(158deg, #f4a0c4 0%, #e8639a 58%, #d14884 100%);
-}
-
-:root[data-accent="verde"] {
-  --primary: #1f9382;
-  --primary-strong: #17806f;
-  --primary-text: #57c6b3;
-  --primary-soft: #7ad6c6;
-  --primary-rgb: 31, 147, 130;
-  --gradient-primary: linear-gradient(150deg, #33b3a0, #17806f);
-  --gradient-card: linear-gradient(158deg, #46c3b0 0%, #1f9382 58%, #17806f 100%);
-}
-
-/*
-  Paletas de fundo — Configurações → Aparência (src/lib/tema.js), atributo
-  data-theme. "ameixa" é o padrão e já está no :root acima. Cada bloco só
-  redefine fundo, superfícies, bordas e texto — nunca o acento, para as duas
-  escolhas ficarem independentes. Todos os cinzas de texto seguem o mesmo
-  padrão do v5 (sólidos, contraste AA sobre a própria --surface).
-*/
-:root[data-theme="carvao"] {
-  --bg-app: #0f1012;
-  --bg-app-mobile: #111214;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #1b1e24 0%, #131519 45%, #0f1012 100%);
-  --surface: #17191d;
-  --surface-2: #1e2126;
-  --surface-3: #262a31;
-  --surface-inset: #121316;
-  --border: #2a2e35;
-  --border-strong: #363c45;
-  --text: #e6e8ee;
-  --text-2: #b4bac8;
-  --text-3: #a0a7b8;
-  --text-4: #616878;
-  --checkbox-vazio: #2e3442;
-}
-
-:root[data-theme="ardosia"] {
-  --bg-app: #0e1420;
-  --bg-app-mobile: #101725;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #1c2740 0%, #131c2e 45%, #0e1420 100%);
-  --surface: #1b2334;
-  --surface-2: #222c40;
-  --surface-3: #2c3852;
-  --surface-inset: #0c1119;
-  --border: #2f3b52;
-  --border-strong: #43516d;
-  --text: #e7ecf5;
-  --text-2: #bcc6d8;
-  --text-3: #9aa6bd;
-  --text-4: #5d6880;
-  --checkbox-vazio: #2f3b52;
-}
-
-:root[data-theme="cafe"] {
-  --bg-app: #17110d;
-  --bg-app-mobile: #1b140f;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #3a2416 0%, #261812 45%, #17110d 100%);
-  --surface: #261c15;
-  --surface-2: #31251c;
-  --surface-3: #3e2f24;
-  --surface-inset: #140f0b;
-  --border: #3a2c22;
-  --border-strong: #55412f;
-  --text: #f3ece4;
-  --text-2: #d3c6b8;
-  --text-3: #b3a595;
-  --text-4: #7a6a5a;
-  --checkbox-vazio: #3a2c22;
-}
-
-/*
-  ── Modo claro ───────────────────────────────────────────────────────────────
-  O <html> sempre carrega data-mode="claro" ou data-mode="escuro" (nunca "auto"):
-  src/lib/tema.js resolve "Automático" lendo prefers-color-scheme e reescreve o
-  atributo quando o sistema muda.
-
-  Estrutura igual à do tema escuro:
-  - o bloco [data-mode="claro"] abaixo define o ACENTO + as cores semânticas
-    (compartilhadas por todas as paletas) e serve de base "Ameixa";
-  - os blocos [data-mode="claro"][data-theme="…"] trocam só o "clima" (fundo,
-    superfícies, bordas, texto) — a mesma divisão dos blocos escuros.
-
-  Regra do projeto mantida: todo texto informativo passa em AA (4.5:1) sobre a
-  sua própria --surface.
+  Único bloco de override — redefine TODOS os tokens de cor do :root acima
+  (mesma lista, sem exceção), pra nunca mais sobrar um token só-escuro
+  vazando pro modo claro.
 */
 :root[data-mode="claro"] {
   color-scheme: light;
 
-  /* Clima base = Ameixa clara */
   --bg-app: #f3ecf1;
   --bg-app-mobile: #f7f2f5;
   --bg-gradient: radial-gradient(120% 75% at 78% -5%, #efe0ec 0%, #f4eaf1 45%, #f7f2f5 100%);
@@ -293,8 +180,17 @@
   --surface-3: #efe5ed;
   --surface-inset: #f2ebf0;
 
+  --bg-sidebar: #ffffff;
+  --bg-row: #faf6f9;
+  --bg-nav-active: #e8f0fe;
+  --bg-control: #efe5ed;
+  --bg-avatar: #e7e0ea;
+
   --border: #e5d9e2;
   --border-strong: #d0bccc;
+  --border-subtle: #efe6ec;
+  --border-control: #d7c9d3;
+  --border-dashed: #d8c8d3;
 
   --glass-bg: rgba(255, 255, 255, 0.55);
   --glass-bg-strong: rgba(255, 255, 255, 0.78);
@@ -309,131 +205,45 @@
   --text-3-aa: var(--text-3);
   --text-4: #9b8d97;
 
-  /* Acento + semânticas — comuns a todas as paletas claras. */
-  --primary: #7a4fd6;
-  --primary-strong: #6a3fc6;
-  --primary-text: #6134c0;
-  --primary-soft: #5a30ad;
-  --primary-rgb: 122, 79, 214;
+  --text-subtle: #7d6f78;
+  --text-faint: #9c8f96;
+  --text-out-of-range: #d8cdd4;
+  --icon-faint: #a8a0a6;
 
-  --success: #1c9a6a;
-  --success-text: #0b6b45;
-  --warning: #8f4e00;
-  --warning-text: #7a4100;
-  --info: #2664c4;
-  --pink: #c33d84;
-  --amber: #e7a24c;
-  --on-amber: #3c2409;
-  --danger: #c23f5e;
-  --danger-text: #a83350;
-
-  --gradient-primary: linear-gradient(150deg, #8a63e0, #7145cf);
-  --gradient-card: linear-gradient(158deg, #9a7ce8 0%, #8460e0 58%, #7548d2 100%);
-  --on-primary: #ffffff;
-  --whatsapp: #0f7a39;
-  --checkbox-vazio: #cdbfca;
-}
-
-/*
-  Variações de acento no tema claro — mesma escolha de Configurações →
-  Aparência, mas com --primary-rgb e --primary-strong próprios porque o texto
-  precisa continuar em AA sobre fundo branco. Ficam como blocos
-  [data-mode="claro"][data-accent="…"] (dois atributos) de propósito: como o
-  bloco base [data-mode="claro"] também redefine --primary, um bloco de
-  especificidade igual perderia por ordem de origem — dois atributos
-  garante especificidade maior e a vitória independente da ordem.
-*/
-:root[data-mode="claro"][data-accent="azul"] {
+  /* Acento azul — mesmo destaque do modo escuro, ajustado pra contraste AA
+     sobre fundo branco. */
   --primary: #2f6fe0;
   --primary-strong: #2560c7;
   --primary-text: #1d5cc9;
   --primary-soft: #123f8f;
   --primary-rgb: 47, 111, 224;
+  --accent-soft-icon: #2f6fe0;
+
+  --success: #1c9a6a;
+  --success-text: #0b6b45;
+  --success-rgb: 28, 154, 106;
+  --warning: #8f4e00;
+  --warning-text: #7a4100;
+  --warning-rgb: 143, 78, 0;
+  --warning-dot: #c97a1a;
+  --info: #2664c4;
+  --info-rgb: 38, 100, 196;
+  --pink: #c33d84;
+  --amber: #e7a24c;
+  --on-amber: #3c2409;
+  --danger: #c23f5e;
+  --danger-rgb: 194, 63, 94;
+  --danger-text: #a83350;
+
   --gradient-primary: linear-gradient(150deg, #4a8aef, #2560c7);
   --gradient-card: linear-gradient(158deg, #6ba8f5 0%, #2f6fe0 58%, #2560c7 100%);
-}
+  --on-primary: #ffffff;
+  --whatsapp: #0f7a39;
+  --checkbox-vazio: #cdbfca;
 
-:root[data-mode="claro"][data-accent="rosa"] {
-  --primary: #c23d80;
-  --primary-strong: #a8306d;
-  --primary-text: #a8306d;
-  --primary-soft: #7d2451;
-  --primary-rgb: 194, 61, 128;
-  --gradient-primary: linear-gradient(150deg, #d1548f, #a8306d);
-  --gradient-card: linear-gradient(158deg, #e8639a 0%, #c23d80 58%, #a8306d 100%);
-}
-
-:root[data-mode="claro"][data-accent="verde"] {
-  --primary: #17806f;
-  --primary-strong: #106b5d;
-  --primary-text: #106b5d;
-  --primary-soft: #0b4d43;
-  --primary-rgb: 23, 128, 111;
-  --gradient-primary: linear-gradient(150deg, #1f9382, #106b5d);
-  --gradient-card: linear-gradient(158deg, #1f9382 0%, #17806f 58%, #106b5d 100%);
-}
-
-/* Carvão claro — cinza neutro sobre branco. */
-:root[data-mode="claro"][data-theme="carvao"] {
-  --bg-app: #eef0f2;
-  --bg-app-mobile: #f3f4f6;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #e6e9ee 0%, #eef0f3 45%, #f3f4f6 100%);
-  --surface: #ffffff;
-  --surface-2: #f2f3f5;
-  --surface-3: #e9ebee;
-  --surface-inset: #eef0f2;
-  --border: #dfe1e5;
-  --border-strong: #c6c9d0;
-  --glass-border: rgba(30, 34, 44, 0.1);
-  --shadow-sm: 0 1px 2px rgba(20, 24, 33, 0.07), 0 14px 34px -16px rgba(40, 50, 80, 0.16);
-  --shadow-raised: 0 22px 44px -18px rgba(40, 50, 80, 0.22);
-  --text: #1c1e22;
-  --text-2: #45484f;
-  --text-3: #5f636c;
-  --text-4: #949aa4;
-  --checkbox-vazio: #c8ccd3;
-}
-
-/* Ardósia clara — azul-cinza frio. */
-:root[data-mode="claro"][data-theme="ardosia"] {
-  --bg-app: #eaeef4;
-  --bg-app-mobile: #eff2f7;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #dfe7f2 0%, #e9eef5 45%, #eff2f7 100%);
-  --surface: #ffffff;
-  --surface-2: #eef2f8;
-  --surface-3: #e4eaf3;
-  --surface-inset: #eef2f7;
-  --border: #d9e0ea;
-  --border-strong: #bcc7d6;
-  --glass-border: rgba(20, 30, 55, 0.1);
-  --shadow-sm: 0 1px 2px rgba(15, 25, 45, 0.08), 0 14px 34px -16px rgba(30, 55, 110, 0.16);
-  --shadow-raised: 0 22px 44px -18px rgba(30, 55, 110, 0.22);
-  --text: #1a212e;
-  --text-2: #414b5c;
-  --text-3: #596579;
-  --text-4: #8e97a8;
-  --checkbox-vazio: #c4cdda;
-}
-
-/* Café claro — creme quente. */
-:root[data-mode="claro"][data-theme="cafe"] {
-  --bg-app: #f3ede4;
-  --bg-app-mobile: #f7f2ea;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #efe3d2 0%, #f4ebdd 45%, #f7f2ea 100%);
-  --surface: #ffffff;
-  --surface-2: #f6efe4;
-  --surface-3: #efe5d6;
-  --surface-inset: #f3ece0;
-  --border: #e7dccb;
-  --border-strong: #d2c2ab;
-  --glass-border: rgba(60, 40, 15, 0.1);
-  --shadow-sm: 0 1px 2px rgba(45, 30, 10, 0.08), 0 14px 34px -16px rgba(120, 80, 30, 0.16);
-  --shadow-raised: 0 22px 44px -18px rgba(120, 80, 30, 0.22);
-  --text: #241c12;
-  --text-2: #4c4030;
-  --text-3: #6b5d48;
-  --text-4: #9a8c76;
-  --checkbox-vazio: #d0c3ac;
+  --chart-1: #2f6fe0;
+  --chart-2: #6ba8f5;
+  --chart-3: #1c9a6a;
 }
 
 /* "Escuro" forçado: garante o color-scheme mesmo com o SO no claro. */

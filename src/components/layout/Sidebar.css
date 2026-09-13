@@ -81,7 +81,7 @@
   font-weight: 500;
   /* Nunca abaixo deste tom — item de menu inativo com contraste que pareça
      desabilitado é o bug que este handoff corrige. */
-  color: #a5aeba;
+  color: var(--text-3);
   transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
 }
 
@@ -94,7 +94,7 @@
 }
 
 .sidebar__item:hover {
-  background: #151a20;
+  background: var(--surface-2);
   color: var(--text);
 }
 
@@ -148,7 +148,7 @@
 
 .sidebar__backup {
   border-radius: 12px;
-  background: #131922;
+  background: var(--surface-2);
   border: 1px solid var(--border);
   padding: 13px 14px;
 }
