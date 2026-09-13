@@ -1,0 +1,73 @@
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .bottom-nav {
+    display: flex;
+    align-items: stretch;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--altura-bottomnav);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    z-index: 90;
+    padding-bottom: var(--safe-bottom);
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+}
+
+.bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  color: var(--text-3);
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.bottom-nav__item svg {
+  width: 20px;
+  height: 20px;
+}
+
+.bottom-nav__item--ativo {
+  color: var(--primary);
+}
+
+.bottom-nav__central {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.bottom-nav__fab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--gradient-primary);
+  color: #fff;
+  box-shadow: var(--shadow-raised);
+  transform: translateY(-14px);
+  transition: transform 0.15s var(--ease-out);
+}
+
+.bottom-nav__fab:active {
+  transform: translateY(-14px) scale(0.94);
+}
+
+.bottom-nav__fab svg {
+  width: 23px;
+  height: 23px;
+  stroke-width: 2.4;
+}

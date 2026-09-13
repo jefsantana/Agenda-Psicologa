@@ -7,7 +7,10 @@
 .sheet {
   position: fixed;
   inset: 0;
-  z-index: 40;
+  /* Acima da BottomNav (z-index 90, celular) — sem isso a barra fixa ficava
+     por cima do rodapé de qualquer modal/folha aberta (ex.: os botões
+     Salvar/Cancelar do formulário de atendimento). */
+  z-index: 100;
   display: flex;
   align-items: flex-end;
   justify-content: center;

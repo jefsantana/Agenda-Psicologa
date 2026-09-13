@@ -69,32 +69,6 @@
   min-width: 0;
 }
 
-/* ☰ do celular — única entrada de navegação (não há barra inferior).
-   No desktop a Sidebar assume e este botão some. */
-.shell__menu-botao {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  flex-shrink: 0;
-  margin-left: calc(var(--space-4) * -1);
-  border-radius: var(--radius-row);
-  color: var(--text-2);
-  transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
-}
-
-.shell__menu-botao:active {
-  background: var(--surface-3);
-  color: var(--text);
-}
-
-@media (min-width: 1024px) {
-  .shell__menu-botao {
-    display: none;
-  }
-}
-
 /* Coluna de texto do cabeçalho — precisa poder encolher para a eyebrow
    truncar em vez de quebrar em duas linhas e empurrar o título. */
 .shell__header-texto {
@@ -189,11 +163,11 @@
 
 .shell__content {
   flex: 1;
-  /* Sem barra inferior no celular — só um respiro no fim mais a área segura
-     de gestos. */
+  /* No celular reserva espaço pra barra de navegação fixa (BottomNav) não
+     tampar o fim do conteúdo, além da área segura de gestos. */
   padding: 0 var(--space-16);
   padding-right: calc(var(--space-16) + var(--safe-right));
-  padding-bottom: calc(var(--space-18) + var(--safe-bottom));
+  padding-bottom: calc(var(--altura-bottomnav) + var(--space-18) + var(--safe-bottom));
   padding-left: calc(var(--space-16) + var(--safe-left));
   display: flex;
   flex-direction: column;

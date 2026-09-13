@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Menu } from "lucide-react";
 import Sidebar from "./Sidebar.jsx";
+import BottomNav from "./BottomNav.jsx";
 import MaisMenu from "./MaisMenu.jsx";
 import NovoAtendimentoSheet from "../dashboard/NovoAtendimentoSheet.jsx";
 import "./AppShell.css";
@@ -27,16 +27,6 @@ export default function AppShell({ perfil, title, subtitle, eyebrow, acaoPrimari
       <div className="shell__main">
         <header className="shell__header">
           <div className="shell__header-left">
-            <button
-              type="button"
-              className="shell__menu-botao"
-              onClick={() => setMenuAberto(true)}
-              aria-label="Abrir menu"
-              aria-haspopup="dialog"
-              aria-expanded={menuAberto}
-            >
-              <Menu size={22} strokeWidth={2.2} />
-            </button>
             <div className="shell__header-texto">
               {eyebrow && <span className="shell__eyebrow">{eyebrow}</span>}
               <h1 className="shell__title">{title}</h1>
@@ -51,11 +41,12 @@ export default function AppShell({ perfil, title, subtitle, eyebrow, acaoPrimari
         </main>
       </div>
 
-      <MaisMenu
-        aberto={menuAberto}
-        aoFechar={() => setMenuAberto(false)}
+      <BottomNav
         aoNovoAtendimento={() => setNovoAtendimentoAberto(true)}
+        aoAbrirMais={() => setMenuAberto(true)}
       />
+
+      <MaisMenu aberto={menuAberto} aoFechar={() => setMenuAberto(false)} />
 
       <NovoAtendimentoSheet
         aberto={novoAtendimentoAberto}
