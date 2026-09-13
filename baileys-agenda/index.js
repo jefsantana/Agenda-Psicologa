@@ -643,6 +643,56 @@ cron.schedule(
   { timezone: FUSO_HORARIO }
 );
 
+// A cada minuto: avisa 10 minutos antes de cada atendimento em aberto.
+// bot_lembretes_enviados evita reenviar o mesmo lembrete (ex: se o bot
+// reiniciar bem na janela do minuto certo).
+cron.schedule(
+  '* * * * *',
+  async () => {
+    try {
+      const agora = DateTime.now().setZone(FUSO_HORARIO);
+      const inicioJanela = agora.plus({ minutes: 10 }).startOf('minute');
+      const fimJanela = inicioJanela.plus({ minutes: 1 });
+
+      const { data: atendimentos, error } = await supabase
+        .from('atendimentos')
+        .select('id, inicio, tipo, pacientes(nome)')
+        .in('status', STATUS_ABERTOS)
+        .gte('inicio', inicioJanela.toISO())
+        .lt('inicio', fimJanela.toISO());
+      if (error) throw new Error(error.message);
+      if (!atendimentos || atendimentos.length === 0) return;
+
+      for (const atendimento of atendimentos) {
+        const { data: jaEnviado, error: erroCheck } = await supabase
+          .from('bot_lembretes_enviados')
+          .select('atendimento_id')
+          .eq('atendimento_id', atendimento.id)
+          .maybeSingle();
+        if (erroCheck) {
+          console.error('Erro ao checar lembrete já enviado:', erroCheck.message);
+          continue;
+        }
+        if (jaEnviado) continue;
+
+        const hora = DateTime.fromISO(atendimento.inicio).setZone(FUSO_HORARIO).toFormat('HH:mm');
+        const nomePaciente = atendimento.pacientes?.nome || 'paciente';
+        await enviarNoGrupo(`🔔 *Lembrete* — ${nomePaciente} em 10 minutos (${hora}) — ${atendimento.tipo}.`);
+
+        const { error: erroInsert } = await supabase
+          .from('bot_lembretes_enviados')
+          .insert({ atendimento_id: atendimento.id });
+        if (erroInsert) console.error('Erro ao registrar lembrete enviado:', erroInsert.message);
+
+        console.log(`🔔 Lembrete de 10min enviado: ${nomePaciente} às ${hora}.`);
+      }
+    } catch (err) {
+      console.error('Erro ao verificar lembretes de 10 minutos:', err.message);
+    }
+  },
+  { timezone: FUSO_HORARIO }
+);
+
 // ===================== Baileys: conexão com o WhatsApp =====================
 async function iniciar() {
   const { state, saveCreds } = await useMultiFileAuthState('auth_info_baileys');
