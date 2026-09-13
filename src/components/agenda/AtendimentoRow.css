@@ -127,6 +127,54 @@
   font-weight: 600;
 }
 
+.atd-linha__confirmacao {
+  margin-top: var(--space-7);
+  padding: var(--space-7) var(--space-12) 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+}
+
+.atd-linha__confirmacao-aviso {
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  color: var(--info);
+}
+
+.atd-linha__confirmacao-aviso--atrasado {
+  color: var(--warning);
+}
+
+/* Grade em vez de flex-wrap: com wrap os quatro botões caíam 2 / 1 / 1 e
+   ficavam desalinhados — mesma solução usada na Agenda do dia (dashboard). */
+.atd-linha__confirmacao-botoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: var(--space-7);
+}
+
+.atd-linha__confirmacao-botoes button {
+  padding: var(--space-4) var(--space-10);
+  border-radius: var(--radius-chip);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-2);
+}
+
+.atd-linha__confirmacao-botoes button:disabled {
+  opacity: 0.5;
+}
+
+@media (hover: hover) {
+  .atd-linha__confirmacao-botoes button:hover {
+    background: var(--surface-3);
+    border-color: var(--primary);
+    color: var(--primary-text);
+  }
+}
+
 .atd-linha__sessao {
   display: flex;
   align-items: center;

@@ -1,14 +1,23 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import StatusBadge from "../dashboard/StatusBadge.jsx";
 import MenuAcoesLinha from "./MenuAcoesLinha.jsx";
-import { apagarAtendimento } from "../../lib/agenda.js";
+import { apagarAtendimento, atualizarStatusAtendimento } from "../../lib/agenda.js";
 import { formatarHora, mesmaData } from "../../lib/date.js";
 import "./AtendimentoRow.css";
 
 const TIPO_LABEL = { online: "Online", presencial: "Presencial" };
 const STATUS_RESOLVIDOS = ["realizado", "falta", "remarcar", "cancelado"];
+const ACOES_CONFIRMACAO = [
+  { status: "realizado", rotulo: "Atendido" },
+  { status: "falta", rotulo: "Faltou" },
+  { status: "remarcar", rotulo: "Reagendou" },
+  { status: "cancelado", rotulo: "Cancelou" },
+];
 
-export default function AtendimentoRow({ item, onClick, onExcluido }) {
+export default function AtendimentoRow({ item, onClick, onAtualizado }) {
+  const [confirmando, setConfirmando] = useState(false);
+
   if (item.tipoLinha === "bloqueio") {
     return (
       <li className="atd-linha atd-linha--bloqueada">
@@ -30,11 +39,21 @@ export default function AtendimentoRow({ item, onClick, onExcluido }) {
   // o lembrete de rotina de fim de expediente — cada um recebe um tom diferente.
   const atrasado = precisaConfirmar && !mesmaData(item.inicio, new Date());
 
+  async function handleConfirmar(status) {
+    setConfirmando(true);
+    try {
+      await atualizarStatusAtendimento(item.id, status);
+      onAtualizado?.();
+    } finally {
+      setConfirmando(false);
+    }
+  }
+
   async function handleExcluir() {
     if (!window.confirm(`Excluir este atendimento de ${item.paciente}? Essa ação não pode ser desfeita.`)) return;
     try {
       await apagarAtendimento(item.id);
-      onExcluido?.();
+      onAtualizado?.();
     } catch (erro) {
       window.alert(erro.message ?? "Não foi possível excluir agora.");
     }
@@ -71,6 +90,21 @@ export default function AtendimentoRow({ item, onClick, onExcluido }) {
         </Link>
         <MenuAcoesLinha onEditar={onClick} onExcluir={handleExcluir} />
       </div>
+
+      {precisaConfirmar && (
+        <div className="atd-linha__confirmacao">
+          <span className={`atd-linha__confirmacao-aviso ${atrasado ? "atd-linha__confirmacao-aviso--atrasado" : ""}`}>
+            Confirme o que aconteceu:
+          </span>
+          <div className="atd-linha__confirmacao-botoes">
+            {ACOES_CONFIRMACAO.map((acao) => (
+              <button key={acao.status} type="button" disabled={confirmando} onClick={() => handleConfirmar(acao.status)}>
+                {acao.rotulo}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
     </li>
   );
 }

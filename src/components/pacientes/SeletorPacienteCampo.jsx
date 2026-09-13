@@ -54,6 +54,13 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
     if (pacienteId) onMudar({ id: "", nome: valor });
   }
 
+  // Ao abrir um atendimento existente, o foco-trap do modal foca este campo
+  // automaticamente — sem essa checagem, a lista de busca abriria por cima do
+  // paciente já selecionado, sem o usuário ter pedido para trocar.
+  function handleFocus() {
+    if (!pacienteId) setAberto(true);
+  }
+
   function handleSelecionar(paciente) {
     setBusca(paciente.nome);
     setAberto(false);
@@ -92,7 +99,8 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
           className="field__input"
           value={busca}
           onChange={handleChange}
-          onFocus={() => setAberto(true)}
+          onFocus={handleFocus}
+          onClick={() => setAberto(true)}
           onKeyDown={handleKeyDown}
           placeholder="Buscar paciente cadastrado…"
           autoComplete="off"

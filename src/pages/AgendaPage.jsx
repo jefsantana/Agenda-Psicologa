@@ -146,7 +146,7 @@ export default function AgendaPage() {
               itens={itensDoPeriodo}
               onClickAtendimento={abrirEdicao}
               onClickBloqueio={abrirEdicaoIntervalo}
-              onExcluido={() => carregarPeriodo(periodo)}
+              onAtualizado={() => carregarPeriodo(periodo)}
             />
           )}
         </section>
@@ -162,7 +162,7 @@ export default function AgendaPage() {
               itens={itens}
               onClickAtendimento={abrirEdicao}
               onClickBloqueio={abrirEdicaoIntervalo}
-              onExcluido={() => carregarPeriodo(periodo)}
+              onAtualizado={() => carregarPeriodo(periodo)}
             />
           </section>
         ))
@@ -188,7 +188,7 @@ export default function AgendaPage() {
   );
 }
 
-function ListaAtendimentos({ itens, onClickAtendimento, onClickBloqueio, onExcluido }) {
+function ListaAtendimentos({ itens, onClickAtendimento, onClickBloqueio, onAtualizado }) {
   return (
     <ul className="agenda-lista-painel__lista">
       {itens.map((item) => (
@@ -196,7 +196,7 @@ function ListaAtendimentos({ itens, onClickAtendimento, onClickBloqueio, onExclu
           key={item.id}
           item={item}
           onClick={item.tipoLinha === "bloqueio" ? () => onClickBloqueio(item) : () => onClickAtendimento(item)}
-          onExcluido={onExcluido}
+          onAtualizado={onAtualizado}
         />
       ))}
     </ul>
