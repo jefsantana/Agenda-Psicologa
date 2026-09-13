@@ -12,7 +12,7 @@
     position: sticky;
     top: 0;
     background: var(--bg-sidebar);
-    border-right: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--sidebar-border);
     padding: 20px 14px;
   }
 }
@@ -49,7 +49,7 @@
   font-size: 14px;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--text);
+  color: var(--sidebar-text-strong);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -59,7 +59,7 @@
   margin-top: 1px;
   font-size: 11.5px;
   font-weight: 500;
-  color: var(--text-subtle);
+  color: var(--sidebar-text);
 }
 
 .sidebar__nav {
@@ -81,7 +81,7 @@
   font-weight: 500;
   /* Nunca abaixo deste tom — item de menu inativo com contraste que pareça
      desabilitado é o bug que este handoff corrige. */
-  color: var(--text-3);
+  color: var(--sidebar-text);
   transition: background-color 0.15s var(--ease-out), color 0.15s var(--ease-out);
 }
 
@@ -94,8 +94,8 @@
 }
 
 .sidebar__item:hover {
-  background: var(--surface-2);
-  color: var(--text);
+  background: var(--bg-nav-active);
+  color: var(--sidebar-text-strong);
 }
 
 .sidebar__item--ativo {
@@ -148,22 +148,22 @@
 
 .sidebar__backup {
   border-radius: 12px;
-  background: var(--surface-2);
-  border: 1px solid var(--border);
+  background: var(--bg-nav-active);
+  border: 1px solid var(--sidebar-border);
   padding: 13px 14px;
 }
 
 .sidebar__backup-titulo {
   font-size: 12px;
   font-weight: 700;
-  color: var(--text);
+  color: var(--sidebar-text-strong);
 }
 
 .sidebar__backup-linha {
   margin-top: 3px;
   font-size: 11.5px;
   line-height: 1.4;
-  color: var(--text-subtle);
+  color: var(--sidebar-text);
 }
 
 .sidebar__sair {
@@ -173,11 +173,11 @@
   padding: 12px;
   font-size: 13px;
   font-weight: 500;
-  color: var(--text-subtle);
+  color: var(--sidebar-text);
   border-radius: 10px;
   transition: color 0.15s var(--ease-out);
 }
 
 .sidebar__sair:hover {
-  color: var(--text);
+  color: var(--sidebar-text-strong);
 }
