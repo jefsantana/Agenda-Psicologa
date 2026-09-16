@@ -28,9 +28,9 @@
   --surface-3: #1e2732; /* tom acima, usado em controles/toggles ativos */
   --surface-inset: #0e1217; /* bg/inset — fundo de toggle segmentado */
 
-  --bg-sidebar: #0f1216;
+  --bg-sidebar: #14121f; /* igual ao sistema financeiro (sidebar escura nos dois temas) */
   --bg-row: #12171e; /* linha normal de lista (levemente distinta do card) */
-  --bg-nav-active: #182234;
+  --bg-nav-active: #201c33;
   --bg-control: #232d3a; /* botão secundário */
   --bg-avatar: #24303f; /* avatar fallback */
 
@@ -40,16 +40,13 @@
   --border-control: #2e3a48; /* botões */
   --border-dashed: #2a3441;
 
-  /* Sidebar tem paleta própria (bg-sidebar/bg-nav-active acima já eram
-     exclusivos dela). No escuro ela já se confunde com o resto do app,
-     então os tokens de TEXTO da sidebar só espelham --text/--text-3 aqui —
-     o valor de verdade diferente entra no bloco claro, onde a sidebar
-     continua escura mesmo com o conteúdo em fundo claro (mesma combinação
-     do sistema financeiro: sidebar sempre escura). */
-  --sidebar-text: #7c8794;
-  --sidebar-text-strong: #e7eaee;
+  /* Sidebar — mesmos valores do sistema financeiro em modo escuro (a
+     sidebar já tinha paleta própria; agora o texto também segue a
+     referência em vez de só espelhar --text/--text-3). */
+  --sidebar-text: #9691b0;
+  --sidebar-text-strong: #ffffff;
   --sidebar-text-faint: #5a6472; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
-  --sidebar-border: #1b2027;
+  --sidebar-border: #2b2645;
 
   /* Vidro — mantido só por compatibilidade de API; o handoff não usa vidro
      (cards são planos). @supports sem backdrop-filter já cai em --surface. */
@@ -76,14 +73,16 @@
   --icon-faint: #4c5764;
 
   /* Acentos semânticos
-     Acento: azul. --primary é a cor de preenchimento (botões, fills,
-     navegação ativa); --primary-text é a variante para texto/links/ícones
-     sobre fundo escuro (AA). */
-  --primary: #3b82f6;
-  --primary-strong: #2f72e0;
-  --primary-text: #6ea8fe; /* accent/text — links, eyebrow, ícones de ação */
-  --primary-soft: #9cc4ff; /* accent/light — hover de link */
-  --primary-rgb: 59, 130, 246; /* para rgba() de tints — em sincronia com --primary */
+     Acento: roxo — igual ao sistema financeiro, mesmo tom nos dois temas
+     (claro e escuro; financeiro também não troca --cor-primaria no escuro).
+     --primary é a cor de preenchimento (botões, fills, navegação ativa);
+     --primary-text é a variante para texto/links/ícones sobre fundo escuro
+     (AA). */
+  --primary: #7b61ff;
+  --primary-strong: #6a4eea;
+  --primary-text: #a996ff; /* accent/text — links, eyebrow, ícones de ação */
+  --primary-soft: #c7bbff; /* accent/light — hover de link */
+  --primary-rgb: 123, 97, 255; /* para rgba() de tints — em sincronia com --primary */
 
   --success: #34d399;
   --success-text: #34d399;
@@ -101,15 +100,15 @@
   --danger-rgb: 226, 156, 173;
   --danger-text: #ecb3c0;
 
-  --gradient-primary: linear-gradient(160deg, #3b82f6, #2563eb);
-  --gradient-card: linear-gradient(160deg, #3b82f6 0%, #2f72e0 100%);
+  --gradient-primary: linear-gradient(160deg, #7b61ff, #6a4eea);
+  --gradient-card: linear-gradient(160deg, #7b61ff 0%, #6a4eea 100%);
   --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */
   --whatsapp: #25d366;
   --checkbox-vazio: #2e3a48;
 
   /* Gráficos — sequência de 3 cores (barra de convênios etc.). */
-  --chart-1: #3b82f6;
-  --chart-2: #6ea8fe;
+  --chart-1: #7b61ff;
+  --chart-2: #ff7a9c;
   --chart-3: #34d399;
 
   /* Tipografia — igual ao sistema financeiro: Plus Jakarta Sans, fallback system-ui. */
