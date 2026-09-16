@@ -40,14 +40,15 @@
   --border-control: #2e3a48; /* botões */
   --border-dashed: #2a3441;
 
-  /* Sidebar tem paleta própria (bg-sidebar/bg-nav-active/accent-soft-icon
-     acima já eram exclusivos dela). No escuro ela já se confunde com o resto
-     do app, então os tokens de TEXTO da sidebar só espelham --text/--text-3
-     aqui — o valor de verdade diferente entra no bloco claro, onde a
-     sidebar continua escura mesmo com o conteúdo em fundo claro (mesma
-     combinação do sistema financeiro: sidebar sempre escura). */
+  /* Sidebar tem paleta própria (bg-sidebar/bg-nav-active acima já eram
+     exclusivos dela). No escuro ela já se confunde com o resto do app,
+     então os tokens de TEXTO da sidebar só espelham --text/--text-3 aqui —
+     o valor de verdade diferente entra no bloco claro, onde a sidebar
+     continua escura mesmo com o conteúdo em fundo claro (mesma combinação
+     do sistema financeiro: sidebar sempre escura). */
   --sidebar-text: #7c8794;
   --sidebar-text-strong: #e7eaee;
+  --sidebar-text-faint: #5a6472; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
   --sidebar-border: #1b2027;
 
   /* Vidro — mantido só por compatibilidade de API; o handoff não usa vidro
@@ -83,7 +84,6 @@
   --primary-text: #6ea8fe; /* accent/text — links, eyebrow, ícones de ação */
   --primary-soft: #9cc4ff; /* accent/light — hover de link */
   --primary-rgb: 59, 130, 246; /* para rgba() de tints — em sincronia com --primary */
-  --accent-soft-icon: #7fb0ff; /* accent/soft — só ícone de menu ativo */
 
   --success: #34d399;
   --success-text: #34d399;
@@ -195,9 +195,8 @@
 
   /* Sidebar continua escura mesmo no modo claro (mesma combinação do
      financeiro: sidebar tom escuro derivado da primária, mesmo com o
-     conteúdo em fundo claro) — bg-nav-active/accent-soft-icon são
-     exclusivos da sidebar, e sidebar-text/-strong/-border cobrem o texto e
-     a borda dela. */
+     conteúdo em fundo claro) — bg-nav-active é exclusivo da sidebar, e
+     sidebar-text/-strong/-faint/-border cobrem o texto e a borda dela. */
   --bg-sidebar: #211d3a;
   --bg-row: #f8f9fc;
   --bg-nav-active: #2c2650;
@@ -212,6 +211,7 @@
 
   --sidebar-text: #b5aedb;
   --sidebar-text-strong: #ffffff;
+  --sidebar-text-faint: #8f88b5; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
   --sidebar-border: #332c5c;
 
   --glass-bg: rgba(255, 255, 255, 0.55);
@@ -238,7 +238,6 @@
   --primary-text: #5b3fd6;
   --primary-soft: #4a3aa8;
   --primary-rgb: 123, 97, 255;
-  --accent-soft-icon: #c7bfff; /* ícone ativo sobre a sidebar escura */
 
   --success: #10b981;
   --success-text: #0b7a54;
