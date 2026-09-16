@@ -6,13 +6,16 @@ import "./KpiCard.css";
  * de cada card é livre — cada KPI tem um conteúdo próprio (barra de progresso,
  * horário, tag de atenção, variação percentual).
  */
-export default function KpiCard({ rotulo, icone, tom, children }) {
+export default function KpiCard({ rotulo, icone, tom, corIcone, children }) {
   return (
     <article className="kpi" data-tom={tom || undefined}>
       <div className="kpi__topo">
         <span className="kpi__rotulo">{rotulo}</span>
         {icone && (
-          <span className="kpi__icone" aria-hidden="true">
+          <span
+            className={`kpi__icone ${corIcone ? `kpi__icone--${corIcone}` : ""}`}
+            aria-hidden="true"
+          >
             {icone}
           </span>
         )}

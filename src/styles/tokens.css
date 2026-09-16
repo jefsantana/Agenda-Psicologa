@@ -112,11 +112,11 @@
   --chart-2: #6ea8fe;
   --chart-3: #34d399;
 
-  /* Tipografia — Instrument Sans, fallback Inter e system-ui. */
-  --font-body: "Instrument Sans", "Inter", system-ui, sans-serif;
-  --font-display: "Instrument Sans", "Inter", system-ui, sans-serif;
+  /* Tipografia — igual ao sistema financeiro: Plus Jakarta Sans, fallback system-ui. */
+  --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   /* Dados: mono técnica — horários, valores, percentuais. */
-  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-mono: "IBM Plex Mono", "Courier New", ui-monospace, monospace;
 
   --weight-display: 800;
 

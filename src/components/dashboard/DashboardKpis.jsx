@@ -34,7 +34,7 @@ function KpiAtendimentosHoje({ dados, carregando }) {
 
   if (carregando) {
     return (
-      <KpiCard rotulo="Atendimentos hoje" icone={<IconeChecklist />}>
+      <KpiCard rotulo="Atendimentos hoje" icone={<IconeChecklist />} corIcone="primaria">
         <p className="kpi__valor">
           <ValorSkeleton />
         </p>
@@ -47,7 +47,7 @@ function KpiAtendimentosHoje({ dados, carregando }) {
   }
 
   return (
-    <KpiCard rotulo="Atendimentos hoje" icone={<IconeChecklist />}>
+    <KpiCard rotulo="Atendimentos hoje" icone={<IconeChecklist />} corIcone="primaria">
       <p className="kpi__valor">
         {concluidos}
         <span className="kpi__valor-sec">/ {total}</span>
@@ -63,7 +63,7 @@ function KpiAtendimentosHoje({ dados, carregando }) {
 function KpiProximo({ dados, carregando }) {
   if (carregando) {
     return (
-      <KpiCard rotulo="Próximo atendimento" icone={<IconeRelogio />}>
+      <KpiCard rotulo="Próximo atendimento" icone={<IconeRelogio />} corIcone="info">
         <p className="kpi__valor">
           <ValorSkeleton largura="4ch" />
         </p>
@@ -78,7 +78,7 @@ function KpiProximo({ dados, carregando }) {
   }
 
   return (
-    <KpiCard rotulo="Próximo atendimento" icone={<IconeRelogio />}>
+    <KpiCard rotulo="Próximo atendimento" icone={<IconeRelogio />} corIcone="info">
       {dados ? (
         <>
           <p className="kpi__valor kpi__valor--mono">{dados.hora}</p>
@@ -104,7 +104,7 @@ function KpiFaltas({ dados, carregando }) {
 
   if (carregando) {
     return (
-      <KpiCard rotulo="Faltas e remarcações" icone={<IconeAlerta />}>
+      <KpiCard rotulo="Faltas e remarcações" icone={<IconeAlerta />} corIcone="perigo">
         <p className="kpi__valor">
           <ValorSkeleton />
         </p>
@@ -119,7 +119,12 @@ function KpiFaltas({ dados, carregando }) {
   }
 
   return (
-    <KpiCard rotulo="Faltas e remarcações" icone={<IconeAlerta />} tom={total > 0 ? "atencao" : undefined}>
+    <KpiCard
+      rotulo="Faltas e remarcações"
+      icone={<IconeAlerta />}
+      corIcone="perigo"
+      tom={total > 0 ? "atencao" : undefined}
+    >
       <p className="kpi__valor">
         {total}
         {total > 0 && <span className="kpi__tag">hoje</span>}
@@ -144,7 +149,7 @@ function KpiFinanceiro({ dados, carregando }) {
 
   if (carregando) {
     return (
-      <KpiCard rotulo={`Recebido em ${nomeMes}`} icone={<IconeCifrao />}>
+      <KpiCard rotulo={`Recebido em ${nomeMes}`} icone={<IconeCifrao />} corIcone="sucesso">
         <p className="kpi__valor">
           <ValorSkeleton largura="5ch" />
         </p>
@@ -156,7 +161,7 @@ function KpiFinanceiro({ dados, carregando }) {
   }
 
   return (
-    <KpiCard rotulo={`Recebido em ${nomeMes}`} icone={<IconeCifrao />}>
+    <KpiCard rotulo={`Recebido em ${nomeMes}`} icone={<IconeCifrao />} corIcone="sucesso">
       <p className="kpi__valor kpi__valor--mono">
         <span className="kpi__prefixo">R$</span>
         {recebido.toLocaleString("pt-BR", { maximumFractionDigits: 0 })}
