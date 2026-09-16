@@ -77,6 +77,40 @@ h4 {
   font-weight: 500;
 }
 
+/* Celular/Android: o peso 800 da Plus Jakarta Sans em h1 fica pesado demais
+   numa tela pequena e de densidade de pixel mais baixa — desce um degrau e
+   afrouxa o tracking negativo, que aperta demais em corpo de texto miúdo. */
+@media (max-width: 640px) {
+  :root {
+    --weight-display: 700;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.01em;
+  }
+
+  body {
+    line-height: 1.5;
+  }
+}
+
+/* Qualquer campo de texto abaixo de 16px força zoom automático ao focar no
+   Safari iOS (e alguns Android com acessibilidade de fonte grande) — trava
+   pro tamanho mínimo só no celular, sem mudar o desenho no desktop.
+   !important de propósito: é um piso de acessibilidade que precisa vencer
+   qualquer font-size específico de componente (ex.: .pacientes-busca input
+   usa --fs-sm = 13px), não uma briga de especificidade comum. */
+@media (max-width: 640px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
 p {
   margin: 0;
 }

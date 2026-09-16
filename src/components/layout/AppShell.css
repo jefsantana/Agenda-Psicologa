@@ -107,6 +107,14 @@
   color: var(--text);
 }
 
+/* No celular o tracking negativo de -0.03em aperta demais no peso já
+   reduzido (ver --weight-display no index.css) — afrouxa junto. */
+@media (max-width: 640px) {
+  .shell__title {
+    letter-spacing: -0.01em;
+  }
+}
+
 @media (min-width: 1024px) {
   .shell__title {
     font-size: 30px;
