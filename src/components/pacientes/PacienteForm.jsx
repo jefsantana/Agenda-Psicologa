@@ -37,6 +37,7 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
   const [dados, setDados] = useState(VAZIO);
   const [salvando, setSalvando] = useState(false);
   const [erro, setErro] = useState("");
+  const [bloqueioProntuario, setBloqueioProntuario] = useState(false);
   const [aba, setAba] = useState("basico");
 
   useEffect(() => {
@@ -72,6 +73,7 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
       setDados(VAZIO);
     }
     setErro("");
+    setBloqueioProntuario(false);
   }, [paciente, aberto]);
 
   function alterar(campo, valor) {
@@ -83,9 +85,39 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
     if (!window.confirm(`Excluir "${paciente.nome}" do cadastro? Essa ação não pode ser desfeita.`)) return;
 
     setErro("");
+    setBloqueioProntuario(false);
     setSalvando(true);
     try {
       await apagarPaciente(paciente.id);
+      aoFechar();
+      aoSalvar?.();
+    } catch (erroExcluir) {
+      setErro(erroExcluir.message ?? "Não foi possível excluir agora.");
+      setBloqueioProntuario(erroExcluir.codigo === "PRONTUARIO_COM_CONTEUDO");
+    } finally {
+      setSalvando(false);
+    }
+  }
+
+  // Confirmação reforçada: só chega aqui depois do bloqueio acima, e só
+  // contorna o prontuário (nunca atendimentos/lançamentos/avaliações — ver
+  // nota em lib/pacientes.js). Pede o nome exato digitado de novo pra evitar
+  // apagar prontuário de verdade por clique duplo/apressado.
+  async function handleExcluirForcado() {
+    if (!paciente) return;
+    const digitado = window.prompt(
+      `Isso vai apagar o prontuário deste paciente para sempre. Digite o nome exato "${paciente.nome}" para confirmar.`
+    );
+    if (digitado === null) return;
+    if (digitado.trim().toLowerCase() !== paciente.nome.trim().toLowerCase()) {
+      setErro("Nome digitado não confere — exclusão cancelada.");
+      return;
+    }
+
+    setErro("");
+    setSalvando(true);
+    try {
+      await apagarPaciente(paciente.id, { forcarProntuario: true });
       aoFechar();
       aoSalvar?.();
     } catch (erroExcluir) {
@@ -406,6 +438,19 @@ export default function PacienteForm({ aberto, paciente, convenios, aoFechar, ao
         {erro && (
           <p className="sheet__erro" role="alert">
             {erro}
+            {bloqueioProntuario && (
+              <>
+                {" "}
+                <button
+                  type="button"
+                  className="sheet__excluir-forcado"
+                  onClick={handleExcluirForcado}
+                  disabled={salvando}
+                >
+                  Excluir mesmo assim
+                </button>
+              </>
+            )}
           </p>
         )}
 

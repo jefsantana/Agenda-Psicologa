@@ -79,13 +79,16 @@ export async function atualizarPaciente(id, dados) {
 // de prontuário cria essa linha automaticamente assim que é aberta (ver
 // lib/prontuario.js), mesmo sem a profissional preencher nada — então só a
 // linha EXISTIR não significa que há dado clínico real; olhamos o conteúdo.
+// "tipo_profissional" fica de fora de propósito: o formulário (AbaDados.jsx)
+// usa "psicologo" como valor padrão do campo, então ele grava algo no banco
+// assim que a aba Prontuário é salva uma vez, mesmo sem edição real —
+// contá-lo aqui bloqueava a exclusão de cadastros feitos por engano.
 const CAMPOS_CONTEUDO_PRONTUARIO = [
   "motivo_consulta",
   "encaminhado_por",
   "avaliacao_objetivo",
   "data_termino_terapia",
   "motivo_termino",
-  "tipo_profissional",
   "nome_profissional",
   "numero_conselho",
 ];
@@ -100,7 +103,16 @@ const CAMPOS_CONTEUDO_PRONTUARIO = [
  * Havendo histórico de verdade, orienta a usar Status "Inativo" em vez de
  * perder o registro.
  */
-export async function apagarPaciente(id) {
+/**
+ * `opcoes.forcarProntuario`: pula só o bloqueio de "prontuário com conteúdo"
+ * (motivo de consulta, avaliação, evoluções, objetivos) — para corrigir um
+ * cadastro errado onde a profissional já chegou a escrever algo por engano.
+ * O bloqueio de atendimentos/lançamentos Unimed/avaliações GAD-7 nunca é
+ * contornável por aqui: são registros de agenda e faturamento de convênio,
+ * não corrigíveis com um clique — exigem cancelar/editar cada um primeiro.
+ */
+export async function apagarPaciente(id, opcoes = {}) {
+  const { forcarProntuario = false } = opcoes;
   const [
     { count: atendimentos, error: erroAtendimentos },
     { count: unimed, error: erroUnimed },
@@ -123,7 +135,7 @@ export async function apagarPaciente(id) {
     );
   }
 
-  if (prontuario) {
+  if (prontuario && !forcarProntuario) {
     const temConteudo = CAMPOS_CONTEUDO_PRONTUARIO.some((campo) => prontuario[campo]);
     const [{ count: evolucoes, error: erroEvolucoes }, { count: objetivos, error: erroObjetivos }] = await Promise.all([
       supabase.from("evolucoes").select("id", { count: "exact", head: true }).eq("prontuario_id", prontuario.id),
@@ -133,14 +145,17 @@ export async function apagarPaciente(id) {
     if (erroObjetivos) throw erroObjetivos;
 
     if (temConteudo || evolucoes > 0 || objetivos > 0) {
-      throw new Error(
-        "Este paciente tem prontuário com conteúdo registrado — não pode ser excluído. Use o Status \"Inativo\" para arquivá-lo."
+      const erro = new Error(
+        "Este paciente tem prontuário com conteúdo registrado — não pode ser excluído. Use o Status \"Inativo\" para arquivá-lo, ou confirme para excluir mesmo assim."
       );
+      erro.codigo = "PRONTUARIO_COM_CONTEUDO";
+      throw erro;
     }
   }
 
-  // O prontuário vazio (se houver) é apagado automaticamente junto — a
-  // coluna prontuarios.paciente_id tem ON DELETE CASCADE.
+  // O prontuário (se houver) é apagado automaticamente junto — a coluna
+  // prontuarios.paciente_id tem ON DELETE CASCADE (e evoluções/objetivos/
+  // anexos em cascata a partir do prontuário).
   const { error } = await supabase.from("pacientes").delete().eq("id", id);
   if (error) throw error;
 }

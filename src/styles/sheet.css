@@ -127,6 +127,21 @@
   color: var(--warning);
 }
 
+/* Confirmação reforçada pra contornar o bloqueio de prontuário — ver
+   handleExcluirForcado em PacienteForm.jsx. Vermelho de perigo de propósito:
+   é mais destrutivo que o "Excluir" normal (ignora a proteção de conteúdo
+   clínico), então precisa se destacar como a opção mais grave da tela. */
+.sheet__excluir-forcado {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--danger-text, var(--danger));
+  text-decoration: underline;
+}
+
+.sheet__excluir-forcado:disabled {
+  opacity: 0.5;
+}
+
 /* Aviso informativo (não bloqueia o salvar) — ex.: a data escolhida é feriado. */
 .sheet__aviso {
   font-size: var(--fs-sm);
