@@ -17,6 +17,23 @@ export default function LoginPage() {
   const [modoNovaSenha, setModoNovaSenha] = useState(false);
 
   useEffect(() => {
+    // Sinal deixado pelo main.jsx: ele já processou o link de recuperação
+    // (ou o erro de link expirado/inválido) antes do HashRouter montar —
+    // ver a nota lá para o motivo. O evento PASSWORD_RECOVERY abaixo não
+    // dispara nesse caminho (a sessão foi setada manualmente), então esse
+    // sinal é a fonte principal; o listener fica como reforço.
+    const bruto = sessionStorage.getItem("recuperacaoSenha");
+    if (bruto) {
+      sessionStorage.removeItem("recuperacaoSenha");
+      try {
+        const sinal = JSON.parse(bruto);
+        if (sinal.ok) setModoNovaSenha(true);
+        else if (sinal.erro) setErro(sinal.erro);
+      } catch {
+        // sinal corrompido — ignora, usuária cai na tela normal de login
+      }
+    }
+
     const { data: subscription } = supabase.auth.onAuthStateChange((event) => {
       if (event === "PASSWORD_RECOVERY") setModoNovaSenha(true);
     });
