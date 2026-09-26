@@ -22,8 +22,8 @@
 }
 
 .whatsapp-modelos button.is-active {
-  background: rgba(63, 207, 142, 0.16);
-  border-color: rgba(63, 207, 142, 0.32);
+  background: rgba(var(--success-rgb), 0.16);
+  border-color: rgba(var(--success-rgb), 0.32);
   color: var(--success-text);
 }
 

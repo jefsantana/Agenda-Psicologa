@@ -93,8 +93,8 @@
   align-items: center;
   padding: var(--space-7) var(--space-12);
   border-radius: var(--radius-chip);
-  background: rgba(78, 168, 245, 0.13);
-  border: 1px solid rgba(78, 168, 245, 0.28);
+  background: rgba(var(--info-rgb), 0.13);
+  border: 1px solid rgba(var(--info-rgb), 0.28);
   color: var(--info);
   font-size: var(--fs-xs);
   font-weight: 600;

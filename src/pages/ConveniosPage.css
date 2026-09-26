@@ -69,7 +69,7 @@
   padding: var(--space-3) var(--space-10);
   border-radius: var(--radius-chip);
   color: var(--success-text);
-  background: rgba(63, 207, 142, 0.16);
+  background: rgba(var(--success-rgb), 0.16);
 }
 
 .convenio-card__situacao--inativo {
