@@ -10,6 +10,7 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
   const [busca, setBusca] = useState(nomePaciente ?? "");
   const [aberto, setAberto] = useState(false);
   const [resultados, setResultados] = useState([]);
+  const [inativosEncontrados, setInativosEncontrados] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [criando, setCriando] = useState(false);
   const containerRef = useRef(null);
@@ -18,9 +19,15 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
     setBusca(nomePaciente ?? "");
   }, [nomePaciente]);
 
+  // Busca sem filtro de status e separa aqui: inativos não entram na lista
+  // de seleção (não dá pra agendar pra quem já saiu de tratamento — precisa
+  // reativar o cadastro na tela Pacientes primeiro), mas quem digitar o nome
+  // exato de um inativo precisa ver esse aviso em vez de "cadastrar novo" —
+  // senão vira cadastro duplicado, fragmentando o histórico da pessoa.
   useEffect(() => {
     if (!aberto) {
       setResultados([]);
+      setInativosEncontrados([]);
       return;
     }
     setCarregando(true);
@@ -28,8 +35,16 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
     const id = setTimeout(
       () => {
         buscarPacientes(termo)
-          .then((lista) => setResultados(lista.slice(0, termo ? 8 : 10)))
-          .catch(() => setResultados([]))
+          .then((lista) => {
+            const ativos = lista.filter((paciente) => paciente.status !== "inativo");
+            const inativos = lista.filter((paciente) => paciente.status === "inativo");
+            setResultados(ativos.slice(0, termo ? 8 : 10));
+            setInativosEncontrados(inativos);
+          })
+          .catch(() => {
+            setResultados([]);
+            setInativosEncontrados([]);
+          })
           .finally(() => setCarregando(false));
       },
       termo ? 200 : 0
@@ -89,7 +104,9 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
   }
 
   const termoNormalizado = busca.trim().toLowerCase();
-  const jaExisteExato = resultados.some((paciente) => paciente.nome.trim().toLowerCase() === termoNormalizado);
+  const jaExisteExato = [...resultados, ...inativosEncontrados].some(
+    (paciente) => paciente.nome.trim().toLowerCase() === termoNormalizado
+  );
   const mostrarDropdown = aberto;
   const semSelecao = !pacienteId && busca.trim().length > 0;
 
@@ -116,7 +133,7 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
       {mostrarDropdown && (
         <ul className="seletor-paciente__lista" role="listbox">
           {carregando && <li className="seletor-paciente__info">Buscando…</li>}
-          {!carregando && resultados.length === 0 && (
+          {!carregando && resultados.length === 0 && inativosEncontrados.length === 0 && (
             <li className="seletor-paciente__info">
               {termoNormalizado ? "Nenhum paciente encontrado." : "Nenhum paciente cadastrado ainda."}
             </li>
@@ -130,6 +147,13 @@ export default function SeletorPacienteCampo({ pacienteId, nomePaciente, onMudar
                 </button>
               </li>
             ))}
+          {!carregando && inativosEncontrados.length > 0 && (
+            <li className="seletor-paciente__info seletor-paciente__info--aviso">
+              {inativosEncontrados.length === 1
+                ? `"${inativosEncontrados[0].nome}" está com Status "Inativo" — reative o cadastro na tela Pacientes para agendar.`
+                : `${inativosEncontrados.length} cadastros inativos encontrados com esse nome — reative na tela Pacientes para agendar.`}
+            </li>
+          )}
           {!carregando && termoNormalizado && !jaExisteExato && (
             <li>
               <button type="button" className="seletor-paciente__criar" onClick={handleCriarNovo} disabled={criando}>

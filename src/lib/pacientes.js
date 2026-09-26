@@ -11,9 +11,19 @@ function escaparLike(texto) {
   return texto.replace(/[\\%_]/g, (c) => `\\${c}`);
 }
 
-/** `busca` casa por nome sempre; se parecer CPF (3+ dígitos), casa por CPF também. */
-export async function buscarPacientes(busca = "") {
+/**
+ * `busca` casa por nome sempre; se parecer CPF (3+ dígitos), casa por CPF
+ * também. `excluirInativos` tira quem está com Status "Inativo" do
+ * resultado — usado no campo de agendamento, pra não deixar marcar sessão
+ * pra quem já saiu de tratamento (a coluna `ativo` NÃO serve pra isso: fica
+ * sempre `true` independente do status, é resquício não usado no app).
+ */
+export async function buscarPacientes(busca = "", { excluirInativos = false } = {}) {
   let query = supabase.from("pacientes").select(SELECT_PACIENTE).order("nome", { ascending: true });
+
+  if (excluirInativos) {
+    query = query.neq("status", "inativo");
+  }
 
   const termo = busca.trim();
   if (termo) {
