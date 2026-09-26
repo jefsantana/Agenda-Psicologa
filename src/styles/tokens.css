@@ -18,34 +18,35 @@
 */
 
 :root {
-  /* Superfícies e texto — carvão quente com viés verde (identidade "consultório",
-     ver frontend-design: paleta verde-mata + terracota em vez do roxo-SaaS genérico). */
-  --bg-app: #10140f;
-  --bg-app-mobile: #10140f;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #161c14 0%, #12160f 45%, #10140f 100%);
+  /* Superfícies e texto — quase-preto neutro, identidade "escuro premium/fintech"
+     (2ª iteração: a paleta verde-mata/terracota leu como "orgânico/artesanal" em
+     vez de moderno — trocada por índigo sobre carvão frio). */
+  --bg-app: #0a0b0f;
+  --bg-app-mobile: #0a0b0f;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #10121a 0%, #0c0e13 45%, #0a0b0f 100%);
 
-  --surface: #171d15; /* bg/card */
-  --surface-2: #1b2318; /* bg/raised — linha destacada, item interno */
-  --surface-3: #232d1f; /* tom acima, usado em controles/toggles ativos */
-  --surface-inset: #12160f; /* bg/inset — fundo de toggle segmentado */
+  --surface: #12141c; /* bg/card */
+  --surface-2: #161926; /* bg/raised — linha destacada, item interno */
+  --surface-3: #1e2230; /* tom acima, usado em controles/toggles ativos */
+  --surface-inset: #0d0f16; /* bg/inset — fundo de toggle segmentado */
 
-  --bg-sidebar: #141b13; /* verde-carvão — substitui o roxo-carvão anterior */
-  --bg-row: #161c13; /* linha normal de lista (levemente distinta do card) */
-  --bg-nav-active: #202b1c;
-  --bg-control: #26301f; /* botão secundário */
-  --bg-avatar: #283322; /* avatar fallback */
+  --bg-sidebar: #0d0f16; /* quase-preto índigo */
+  --bg-row: #11131a; /* linha normal de lista (levemente distinta do card) */
+  --bg-nav-active: #1c2036;
+  --bg-control: #1e2230; /* botão secundário */
+  --bg-avatar: #202541; /* avatar fallback */
 
-  --border: #212a1c; /* border/default (cards) */
-  --border-strong: #26301f; /* border/strong (itens internos) */
-  --border-subtle: #1c231a; /* divisores */
-  --border-control: #313f28; /* botões */
-  --border-dashed: #2c3824;
+  --border: #1c1f2b; /* border/default (cards) */
+  --border-strong: #232838; /* border/strong (itens internos) */
+  --border-subtle: #181b25; /* divisores */
+  --border-control: #2a3044; /* botões */
+  --border-dashed: #262b3c;
 
-  /* Sidebar — mesma família do fundo, tom verde-carvão. */
-  --sidebar-text: #a3ab97;
+  /* Sidebar — mesma família do fundo. */
+  --sidebar-text: #9098b0;
   --sidebar-text-strong: #ffffff;
-  --sidebar-text-faint: #5c6654; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
-  --sidebar-border: #263120;
+  --sidebar-text-faint: #565c72; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
+  --sidebar-border: #202540;
 
   /* Vidro — mantido só por compatibilidade de API; o handoff não usa vidro
      (cards são planos). @supports sem backdrop-filter já cai em --surface. */
@@ -60,27 +61,27 @@
   --shadow-sm: none;
   --shadow-raised: none;
 
-  --text: #ece7de; /* text/primary — ivorí quente (era cinza-azulado) */
-  --text-2: #cac3b6; /* text/secondary */
-  --text-3: #948d80; /* text/muted */
+  --text: #e8e9f0; /* text/primary */
+  --text-2: #c4c7d6; /* text/secondary */
+  --text-3: #888ea6; /* text/muted */
   --text-3-aa: var(--text-3); /* alias mantido por compatibilidade — use --text-3 */
-  --text-4: #635c50; /* text/disabled — decoração, nunca texto informativo */
+  --text-4: #565c72; /* text/disabled — decoração, nunca texto informativo */
 
-  --text-subtle: #86806f;
-  --text-faint: #756f60;
-  --text-out-of-range: #423d33;
-  --icon-faint: #534e42;
+  --text-subtle: #7a8098;
+  --text-faint: #696f85;
+  --text-out-of-range: #3a3f52;
+  --icon-faint: #4c526a;
 
   /* Acentos semânticos
-     Acento: verde-mata — identidade do consultório (era roxo-SaaS genérico,
-     ver plano da skill frontend-design). --primary é a cor de preenchimento
-     (botões, fills, navegação ativa); --primary-text é a variante para
-     texto/links/ícones sobre fundo escuro (AA). */
-  --primary: #5c7a4f;
-  --primary-strong: #4a6440;
-  --primary-text: #9ab88a; /* accent/text — links, eyebrow, ícones de ação */
-  --primary-soft: #c7dab9; /* accent/light — hover de link */
-  --primary-rgb: 92, 122, 79; /* para rgba() de tints — em sincronia com --primary */
+     Acento: índigo — identidade "escuro premium/fintech" (2ª iteração, ver
+     nota acima). --primary é a cor de preenchimento (botões, fills,
+     navegação ativa); --primary-text é a variante para texto/links/ícones
+     sobre fundo escuro (AA). */
+  --primary: #6d84ff;
+  --primary-strong: #5468e6;
+  --primary-text: #96a6ff; /* accent/text — links, eyebrow, ícones de ação */
+  --primary-soft: #c2ccff; /* accent/light — hover de link */
+  --primary-rgb: 109, 132, 255; /* para rgba() de tints — em sincronia com --primary */
 
   --success: #34d399;
   --success-text: #34d399;
@@ -98,20 +99,20 @@
   --danger-rgb: 226, 156, 173;
   --danger-text: #ecb3c0;
 
-  --gradient-primary: linear-gradient(160deg, #6b8f5a, #4a6440);
-  --gradient-card: linear-gradient(160deg, #6b8f5a 0%, #4a6440 100%);
+  --gradient-primary: linear-gradient(160deg, #7d92ff, #5468e6);
+  --gradient-card: linear-gradient(160deg, #7d92ff 0%, #5468e6 100%);
   --on-primary: #fff; /* texto/ícone sobre fundo saturado (gradiente, verde WhatsApp) */
   --whatsapp: #25d366;
-  --checkbox-vazio: #313f28;
+  --checkbox-vazio: #2a3044;
 
   /* Gráficos — sequência de 3 cores (barra de convênios etc.). */
-  --chart-1: #5c7a4f;
+  --chart-1: #6d84ff;
   --chart-2: #ff7a9c;
   --chart-3: #34d399;
 
   /* Tipografia — igual ao sistema financeiro: Plus Jakarta Sans, fallback system-ui. */
   --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  --font-display: "Fraunces", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, system-ui, serif;
+  --font-display: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
   /* Dados: mono técnica — horários, valores, percentuais. */
   --font-mono: "IBM Plex Mono", "Courier New", ui-monospace, monospace;
 
@@ -179,62 +180,61 @@
 :root[data-mode="claro"] {
   color-scheme: light;
 
-  /* Paleta claro — linho quente + verde-mata (identidade "consultório",
-     ver plano da skill frontend-design). Substitui o cinza-azulado/roxo
-     genérico de SaaS por algo com relação ao universo de terapia. */
-  --bg-app: #f6f2ea;
-  --bg-app-mobile: #f6f2ea;
-  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #f9f6ef 0%, #f7f4ec 45%, #f6f2ea 100%);
+  /* Paleta claro — cinza-azulado frio + índigo (identidade "escuro
+     premium/fintech", 2ª iteração — ver nota no :root escuro acima). */
+  --bg-app: #f5f6fa;
+  --bg-app-mobile: #f5f6fa;
+  --bg-gradient: radial-gradient(120% 75% at 78% -5%, #f0f1f7 0%, #f3f4f9 45%, #f5f6fa 100%);
 
-  --surface: #fffefb;
-  --surface-2: #f1ece1;
-  --surface-3: #e8e1d2;
-  --surface-inset: #f0ebe0;
+  --surface: #ffffff;
+  --surface-2: #f0f1f6;
+  --surface-3: #e9ebf2;
+  --surface-inset: #eff0f5;
 
-  /* Sidebar continua escura mesmo no modo claro — agora verde-carvão em vez
-     de roxo-carvão, mesma família do modo escuro. */
-  --bg-sidebar: #1e2a1b;
-  --bg-row: #faf7f0;
-  --bg-nav-active: #283a22;
-  --bg-control: #efeae0;
-  --bg-avatar: #e7e1d3;
+  /* Sidebar continua escura mesmo no modo claro — quase-preto índigo, mesma
+     família do modo escuro. */
+  --bg-sidebar: #12141f;
+  --bg-row: #f8f9fc;
+  --bg-nav-active: #1c2036;
+  --bg-control: #eef0f5;
+  --bg-avatar: #e7e9f0;
 
-  --border: #e6dfd0;
-  --border-strong: #d4cbb6;
-  --border-subtle: #ede7da;
-  --border-control: #d8cfbc;
-  --border-dashed: #d8cfbc;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
+  --border-subtle: #ececf1;
+  --border-control: #d8dbe3;
+  --border-dashed: #d8dbe3;
 
-  --sidebar-text: #b7c2ac;
+  --sidebar-text: #a8b0cc;
   --sidebar-text-strong: #ffffff;
-  --sidebar-text-faint: #8b9880; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
-  --sidebar-border: #33452c;
+  --sidebar-text-faint: #6b7290; /* rótulo de grupo — cor sólida, nunca opacity (ver regra acima) */
+  --sidebar-border: #262b44;
 
-  --glass-bg: rgba(255, 254, 251, 0.55);
-  --glass-bg-strong: rgba(255, 254, 251, 0.78);
-  --glass-border: rgba(45, 40, 30, 0.1);
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-bg-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(20, 22, 31, 0.1);
 
-  --shadow-sm: 0 1px 3px rgba(45, 40, 30, 0.06);
-  --shadow-raised: 0 16px 40px rgba(45, 40, 30, 0.14);
+  --shadow-sm: 0 1px 3px rgba(20, 22, 31, 0.06);
+  --shadow-raised: 0 16px 40px rgba(20, 22, 31, 0.14);
 
-  --text: #332e28;
-  --text-2: #564f44;
-  --text-3: #7a7264;
+  --text: #14161f;
+  --text-2: #3f4354;
+  --text-3: #6b7085;
   --text-3-aa: var(--text-3);
-  --text-4: #a79e8c;
+  --text-4: #9ca1b5;
 
-  --text-subtle: #7a7264;
-  --text-faint: #a79e8c;
-  --text-out-of-range: #ded6c4;
-  --icon-faint: #a39a87;
+  --text-subtle: #6b7085;
+  --text-faint: #9ca1b5;
+  --text-out-of-range: #d5d7e0;
+  --icon-faint: #9aa0b5;
 
-  /* Acento verde-mata — mesmo destaque do modo escuro, ajustado para
-     contraste AA sobre fundo claro. */
-  --primary: #4e7a45;
-  --primary-strong: #3e6337;
-  --primary-text: #3b5f34;
-  --primary-soft: #2f4c29;
-  --primary-rgb: 78, 122, 69;
+  /* Acento índigo — mesmo destaque do modo escuro, ajustado para contraste
+     AA sobre fundo claro. */
+  --primary: #5468e6;
+  --primary-strong: #4457c9;
+  --primary-text: #3d4fc4;
+  --primary-soft: #2f3fa3;
+  --primary-rgb: 84, 104, 230;
 
   --success: #10b981;
   --success-text: #0b7a54;
@@ -252,13 +252,13 @@
   --danger-rgb: 239, 68, 68;
   --danger-text: #b91c1c;
 
-  --gradient-primary: linear-gradient(150deg, #6b9a5e, #3e6337);
-  --gradient-card: linear-gradient(158deg, #6b9a5e 0%, #4e7a45 58%, #3e6337 100%);
+  --gradient-primary: linear-gradient(150deg, #7d92ff, #4457c9);
+  --gradient-card: linear-gradient(158deg, #7d92ff 0%, #5468e6 58%, #4457c9 100%);
   --on-primary: #ffffff;
   --whatsapp: #0f7a39;
-  --checkbox-vazio: #d4cbb6;
+  --checkbox-vazio: #d1d5db;
 
-  --chart-1: #4e7a45;
+  --chart-1: #5468e6;
   --chart-2: #ff7a9c;
   --chart-3: #10b981;
 }
