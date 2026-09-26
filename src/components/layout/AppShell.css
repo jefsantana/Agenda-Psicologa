@@ -99,12 +99,46 @@
 }
 
 .shell__title {
+  position: relative;
+  display: inline-block;
   margin-top: 3px;
+  padding-bottom: 9px;
   font-size: var(--fs-xl);
   font-weight: var(--weight-display);
   letter-spacing: -0.03em;
   line-height: 1.1;
   color: var(--text);
+}
+
+/* Elemento assinatura (handoff "frontend-design"): traço orgânico sob o
+   título de cada tela — referência a anotação manuscrita/assinatura,
+   reforça o clima de acolhimento em vez de decoração genérica. */
+.shell__title::after {
+  content: "";
+  position: absolute;
+  left: 1px;
+  bottom: 0;
+  width: 52px;
+  height: 7px;
+  background-color: var(--primary);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 8'%3E%3Cpath d='M1,5 C6,1 10,1 16,5 C22,9 26,9 32,5 C38,1 42,1 48,5 C54,9 58,9 63,5' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 8'%3E%3Cpath d='M1,5 C6,1 10,1 16,5 C22,9 26,9 32,5 C38,1 42,1 48,5 C54,9 58,9 63,5' stroke='%23000' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  opacity: 0.85;
+}
+
+@media (max-width: 640px) {
+  .shell__title {
+    padding-bottom: 7px;
+  }
+
+  .shell__title::after {
+    width: 42px;
+    height: 6px;
+  }
 }
 
 /* No celular o tracking negativo de -0.03em aperta demais no peso já
