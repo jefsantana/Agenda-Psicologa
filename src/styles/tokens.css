@@ -86,10 +86,10 @@
   --success: #34d399;
   --success-text: #34d399;
   --success-rgb: 52, 211, 153;
-  --warning: #fbbf24;
-  --warning-text: #fbbf24;
-  --warning-rgb: 251, 191, 36;
-  --warning-dot: #f59e0b; /* dot de notificação */
+  --warning: #fb923c;
+  --warning-text: #fb923c;
+  --warning-rgb: 251, 146, 60;
+  --warning-dot: #f97316; /* dot de notificação */
   --info: #6ea8fe;
   --info-rgb: 110, 168, 254;
   --pink: #e86aa6;
@@ -239,10 +239,10 @@
   --success: #10b981;
   --success-text: #0b7a54;
   --success-rgb: 16, 185, 129;
-  --warning: #b45309;
-  --warning-text: #9a4607;
-  --warning-rgb: 180, 83, 9;
-  --warning-dot: #f59e0b;
+  --warning: #c2410c;
+  --warning-text: #9a3412;
+  --warning-rgb: 194, 65, 12;
+  --warning-dot: #f97316;
   --info: #3b82f6;
   --info-rgb: 59, 130, 246;
   --pink: #ff7a9c;
